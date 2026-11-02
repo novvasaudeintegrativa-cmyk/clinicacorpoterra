@@ -63,12 +63,16 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
 - Pagamento de consulta — não discutido ainda; decidir se entra aqui ou fica fora.
 - Notificação automática (lembrete de consulta por WhatsApp) — não discutido ainda, mas é candidato
   natural a reaproveitar a infra de envio de WhatsApp que o NewCRM já tem.
-- **Prontuário (ficha clínica do paciente)** — levantado em 02/11/2026, ainda sem desenho. É dado de
-  saúde (categoria sensível pela LGPD): precisa de acesso mais restrito que o resto do CRM (não
-  necessariamente todo "gestor" deveria ver à vontade — talvez só o profissional responsável), e o
-  paciente precisa virar entidade própria (hoje o desenho trata só `agendamentos` + lead por
-  WhatsApp). Decidir junto com D-05 do backlog do NewCRM (papel de operador de dados / LGPD com
-  clientes de saúde) antes de desenhar a tabela.
+- **Prontuário (ficha clínica do paciente)** — levantado em 02/11/2026. É dado de saúde (categoria
+  sensível pela LGPD), mas como esse cliente tem **um profissional só (Luis Manoel)**, o acesso
+  "só o terapeuta vê" sai de graça da regra padrão do NewCRM (a própria conta de login do tenant já
+  é exclusiva dele — não precisa de login por profissional nem RLS especial). Falta desenhar: página
+  própria por paciente (`/prontuario/:paciente_id`), paciente como entidade própria (hoje só existe
+  `agendamentos` + lead por WhatsApp), e impressão/PDF via CSS de impressão do navegador (sem gerar
+  PDF no servidor). Rever D-05 do backlog do NewCRM (papel de operador de dados / LGPD com clientes
+  de saúde) mesmo assim, por ser dado de saúde.
+- **Atendimento é online** (confirmado 02/11/2026) — não precisa de campo de endereço/local físico
+  no agendamento nem no site.
 
 ## 6. Decisões pendentes
 
