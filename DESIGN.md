@@ -1,4 +1,4 @@
-# Design — Luis Manoel · Terapeuta Integrativo
+# Design — Clínica Corpo Terra
 
 Página de vendas + agendamento online. **Usa o mesmo sistema visual do projeto Ressurgir**
 (`C:\Projetos\Ressurgir\DESIGN.md`, referência viva em `ressurgir-one.vercel.app`): Outfit leve com

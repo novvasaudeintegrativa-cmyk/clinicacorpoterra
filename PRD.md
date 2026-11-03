@@ -1,4 +1,4 @@
-# PRD — Site de agendamento + CRM de clínica (nome provisório: Terapeuta Luis Manoel)
+# PRD — Site de agendamento + CRM de clínica (Clínica Corpo Terra)
 
 > Pasta e nome provisórios — ajustar para o nome real do cliente quando definido.
 > Criado em 02/11/2026, a partir de conversa sobre expandir o NewCRM pra atender clínica (não só
@@ -76,8 +76,8 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
 
 ## 6. Decisões pendentes
 
-1. **Quem é o cliente de verdade** — nome provisório "Terapeuta Luis Manoel" usado só pra criar esta
-   pasta; falta confirmar nome, trocar na pasta e neste documento.
+1. **Cliente** — nome definido em 03/11/2026: **Clínica Corpo Terra** (profissional: Luis Manoel). A pasta
+   do projeto e o repositório ainda usam o nome provisório "terapeutaluismanoel".
 2. **Prioridade/prazo** — o NewCRM está em corrida contra o congelamento do Congresso Câncer
    (16/11/2026); este projeto novo precisa de uma decisão de prioridade: entra em paralelo, ou só
    depois do congelamento?

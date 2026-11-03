@@ -5,10 +5,10 @@ window.CONFIG = {
   MODO: 'mock',
 
   // Nome exibido no topo (provisório, ver PRD §6.1).
-  NOME_CLINICA: 'Luis Manoel',
+  NOME_CLINICA: 'Clínica Corpo Terra',
 
   // Identifica a clínica (tenant) dentro do NewCRM. Segmento do tenant = 'clinica'.
-  TENANT: 'terapeuta-luis-manoel',
+  TENANT: 'clinica-corpo-terra',
 
   // Base das funções públicas do NewCRM (sem login), ex.: URL das Edge Functions do Supabase.
   // Mesmo padrão do `coletar-evento` do Tráfego.
