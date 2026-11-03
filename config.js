@@ -5,7 +5,7 @@ window.CONFIG = {
   MODO: 'mock',
 
   // Nome exibido no topo (provisório, ver PRD §6.1).
-  NOME_CLINICA: 'Luis Manoel · Terapeuta Integrativo',
+  NOME_CLINICA: 'Luis Manoel',
 
   // Identifica a clínica (tenant) dentro do NewCRM. Segmento do tenant = 'clinica'.
   TENANT: 'terapeuta-luis-manoel',

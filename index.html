@@ -3,216 +3,283 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add("js");</script>
   <title>Luis Manoel · Terapeuta Integrativo — Agende sua consulta</title>
-  <meta name="description" content="20 anos de clínica e +48 mil atendimentos. Agende sua consulta com o terapeuta integrativo Luis Manoel em poucos minutos.">
+  <meta name="description" content="20 anos de clínica e +48 mil atendimentos. Agende sua consulta online com o terapeuta integrativo Luis Manoel em poucos minutos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topo">
-    <div class="wrap topo__in">
-      <span class="marca" id="marca">Luis Manoel · Terapeuta Integrativo</span>
-      <a class="btn btn--sm" href="#agendar">Agendar consulta</a>
+  <nav aria-label="Principal">
+    <div class="wrap">
+      <a class="logo" href="#topo" aria-label="Luis Manoel, terapeuta integrativo">
+        <span class="lw"><span id="marca">Luis Manoel</span></span>
+        <small>Terapeuta integrativo</small>
+      </a>
+      <ul>
+        <li><a href="#como">Como funciona</a></li>
+        <li><a href="#sobre">Quem atende</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#faq">Dúvidas</a></li>
+      </ul>
+      <a class="btn btn-primary" href="#agendar">Agendar consulta</a>
+    </div>
+  </nav>
+
+  <!-- 1. Hero -->
+  <header class="hero" id="topo">
+    <div class="wrap">
+      <div class="hero-text">
+        <span class="eyebrow">Terapia integrativa 100% online</span>
+        <h1>Volte a ter <b>energia</b> pra viver</h1>
+        <p class="lead">Um atendimento com escuta e plano individual, feito por quem tem 20 anos de clínica. Agende em menos de 2 minutos.</p>
+      </div>
+      <div class="vsl" role="img" aria-label="Luis Manoel, terapeuta integrativo"></div>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg btn-mint" href="#agendar">Quero agendar minha consulta</a>
+        <span class="fine">A confirmação chega pelo WhatsApp.</span>
+      </div>
     </div>
   </header>
 
-  <!-- 1. Hero -->
-  <section class="wrap hero">
-    <div>
-      <h1>Volte a ter <em>energia</em> pra viver</h1>
-      <p>Um atendimento integrativo, com escuta e plano individual, feito por quem tem 20 anos de clínica. Agende em menos de 2 minutos.</p>
-      <a class="btn btn--lg" href="#agendar">Quero agendar minha consulta</a>
-      <ul class="provas">
-        <li>20 anos de clínica</li>
-        <li>+48 mil atendimentos</li>
-        <li>17 mil pessoas seguem no Instagram</li>
+  <!-- 2. Faixa de números -->
+  <div class="trust">
+    <div class="wrap">
+      <ul>
+        <li><b>20</b><span>anos de clínica</span></li>
+        <li><b>+48 mil</b><span>atendimentos</span></li>
+        <li><b>17 mil</b><span>pessoas seguem no Instagram</span></li>
+        <li><b>100%</b><span>online, de onde você estiver</span></li>
       </ul>
     </div>
-    <div class="hero__img" role="img" aria-label="Ambiente acolhedor da clínica"></div>
-  </section>
+  </div>
 
-  <!-- 2. Identificação com a dor -->
-  <section class="faixa">
+  <!-- 3. Identificação com a dor -->
+  <section class="soft" id="dores">
     <div class="wrap">
-      <h2 class="sec-titulo">Você se reconhece em algum destes sinais?</h2>
-      <ul class="dores">
+      <div class="head reveal">
+        <span class="eyebrow">Você se reconhece?</span>
+        <h2>Sinais de que o corpo <b>pede atenção</b></h2>
+      </div>
+      <ul class="dores reveal">
         <li>Acorda cansada e passa o dia sem disposição</li>
         <li>Já tentou várias coisas e nada parece resolver de vez</li>
         <li>Sente o corpo "desregulado": intestino, sono, humor</li>
         <li>Quer entender o que está por trás dos sintomas, não só tratá-los</li>
         <li>Sente que ninguém escuta o quadro completo</li>
       </ul>
-      <p class="sec-texto">Se você marcou mais de um, a consulta foi feita para você.</p>
+      <p class="dores-fim reveal">Se você marcou mais de um, a consulta foi feita para você.</p>
     </div>
   </section>
 
-  <!-- 3. Como funciona -->
-  <section class="wrap bloco">
-    <h2 class="sec-titulo">Como funciona o atendimento</h2>
-    <ol class="como">
-      <li><b>1</b><h3>Você agenda</h3><p>Escolhe o dia e o horário aqui mesmo e recebe a confirmação pelo WhatsApp.</p></li>
-      <li><b>2</b><h3>Avaliação completa</h3><p>Uma conversa sobre o seu histórico, sintomas e rotina, para enxergar o quadro inteiro.</p></li>
-      <li><b>3</b><h3>Plano individual</h3><p>Você sai com orientações claras e adequadas ao seu caso, sem receita de bolo.</p></li>
-    </ol>
-  </section>
-
-  <!-- 4. Sobre -->
-  <section class="faixa">
-    <div class="wrap sobre">
-      <div class="sobre__img" role="img" aria-label="Luis Manoel" id="foto-luis"></div>
-      <div>
-        <h2 class="sec-titulo">Quem vai te atender</h2>
-        <p>Luis Manoel é terapeuta integrativo, com 20 anos de clínica e mais de 48 mil atendimentos. Seu trabalho é ajudar mulheres a voltar a ter energia para viver, olhando para o corpo como um todo.</p>
-        <p class="muted">Ele também compartilha conteúdo sobre alimentação, chás, suplementos e iridologia no Instagram <a href="https://www.instagram.com/terapeutaluismanoel/" rel="noopener" target="_blank">@terapeutaluismanoel</a>.</p>
+  <!-- 4. Como funciona -->
+  <section class="cream" id="como">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">O atendimento</span>
+        <h2>Como <b>funciona</b></h2>
+      </div>
+      <div class="steps reveal">
+        <div class="step"><span class="n">01</span><div><h3>Você agenda</h3><p>Escolhe o dia e o horário aqui mesmo e recebe a confirmação pelo WhatsApp, com o link da consulta online.</p></div></div>
+        <div class="step"><span class="n">02</span><div><h3>Avaliação completa</h3><p>Uma conversa sobre o seu histórico, sintomas e rotina, para enxergar o quadro inteiro.</p></div></div>
+        <div class="step"><span class="n">03</span><div><h3>Plano individual</h3><p>Você sai com orientações claras e adequadas ao seu caso, sem receita de bolo.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- 5. Depoimentos (EXEMPLOS: trocar por depoimentos reais, ver destaque "Feedbacks" do Instagram) -->
-  <section class="wrap bloco">
-    <h2 class="sec-titulo">O que dizem as pessoas atendidas</h2>
-    <div class="depoimentos">
-      <figure class="dep dep--exemplo"><span class="dep__tag">Exemplo — trocar por depoimento real</span>
-        <blockquote>“Texto do depoimento real aqui.”</blockquote><figcaption>Nome, cidade</figcaption></figure>
-      <figure class="dep dep--exemplo"><span class="dep__tag">Exemplo — trocar por depoimento real</span>
-        <blockquote>“Texto do depoimento real aqui.”</blockquote><figcaption>Nome, cidade</figcaption></figure>
-      <figure class="dep dep--exemplo"><span class="dep__tag">Exemplo — trocar por depoimento real</span>
-        <blockquote>“Texto do depoimento real aqui.”</blockquote><figcaption>Nome, cidade</figcaption></figure>
+  <!-- 5. Sobre -->
+  <section id="sobre">
+    <div class="wrap sobre reveal">
+      <div class="sobre__img" role="img" aria-label="Luis Manoel"></div>
+      <div>
+        <span class="eyebrow">Quem vai te atender</span>
+        <h2>Luis <b>Manoel</b></h2>
+        <p>Terapeuta integrativo, com 20 anos de clínica e mais de 48 mil atendimentos. Seu trabalho é ajudar mulheres a voltar a ter energia para viver, olhando para o corpo como um todo.</p>
+        <p>Ele também compartilha conteúdo sobre alimentação, chás, suplementos e iridologia no Instagram <a href="https://www.instagram.com/terapeutaluismanoel/" rel="noopener" target="_blank">@terapeutaluismanoel</a>.</p>
+      </div>
     </div>
   </section>
 
-  <!-- 6. Quebra de objeções -->
-  <section class="faixa">
+  <!-- 6. Depoimentos (EXEMPLOS: trocar por depoimentos reais com autorização, ver destaque "Feedbacks" do Instagram) -->
+  <section class="soft" id="depoimentos">
     <div class="wrap">
-      <h2 class="sec-titulo">“Mas será que é pra mim?”</h2>
-      <div class="objecoes">
+      <div class="head reveal">
+        <span class="eyebrow">Depoimentos</span>
+        <h2>Quem já foi <b>atendida</b></h2>
+        <p class="lead">Aqui entram apenas relatos com autorização de quem os enviou.</p>
+      </div>
+      <div class="cards reveal">
+        <figure class="dep"><span class="dep__tag">Exemplo — trocar por depoimento real</span>
+          <blockquote>“Texto do depoimento real aqui.”</blockquote><figcaption>Nome, cidade</figcaption></figure>
+        <figure class="dep"><span class="dep__tag">Exemplo — trocar por depoimento real</span>
+          <blockquote>“Texto do depoimento real aqui.”</blockquote><figcaption>Nome, cidade</figcaption></figure>
+        <figure class="dep"><span class="dep__tag">Exemplo — trocar por depoimento real</span>
+          <blockquote>“Texto do depoimento real aqui.”</blockquote><figcaption>Nome, cidade</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Quebra de objeções -->
+  <section id="objecoes">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">Antes de decidir</span>
+        <h2>“Mas será que é <b>pra mim</b>?”</h2>
+      </div>
+      <div class="objecoes reveal">
         <article><h3>“Já tentei de tudo e nada funcionou.”</h3><p>Por isso a consulta começa pela escuta do seu histórico completo. O objetivo é entender o que ainda não foi olhado, e não repetir o que já não deu certo.</p></article>
-        <article><h3>“Não tenho tempo.”</h3><p>O agendamento leva menos de 2 minutos e você escolhe o horário que cabe na sua rotina.</p></article>
+        <article><h3>“Não tenho tempo.”</h3><p>O atendimento é 100% online e o agendamento leva menos de 2 minutos. Você escolhe o horário que cabe na sua rotina.</p></article>
         <article><h3>“Tenho medo de um tratamento complicado.”</h3><p>Você recebe orientações claras, em linguagem simples, e adequadas à sua realidade.</p></article>
         <article><h3>“E se eu não gostar?”</h3><p>Você só confirma depois de ver o resumo do agendamento, e pode tirar dúvidas pelo WhatsApp antes da consulta.</p></article>
       </div>
-      <p class="sec-texto"><a class="btn" href="#agendar">Agendar minha consulta</a></p>
+      <div class="objecoes-cta"><a class="btn btn-primary btn-lg" href="#agendar">Agendar minha consulta</a></div>
     </div>
   </section>
 
-  <!-- 7. Agendamento -->
-  <main class="wrap agendar" id="agendar">
-    <h2 class="sec-titulo sec-titulo--centro">Agende sua consulta</h2>
-    <p class="sec-texto">Escolha o dia e o horário. A confirmação chega pelo WhatsApp.</p>
-
-    <ol class="passos" id="passos" aria-label="Etapas do agendamento">
-      <li data-passo="1">Seus dados</li>
-      <li data-passo="2">Profissional</li>
-      <li data-passo="3">Data</li>
-      <li data-passo="4">Horário</li>
-      <li data-passo="5">Consulta</li>
-      <li data-passo="6">Confirmar</li>
-    </ol>
-
-    <div class="aviso aviso--erro" id="erro" role="alert" hidden></div>
-
-    <!-- 1. Cadastro do paciente -->
-    <section class="etapa" data-etapa="1">
-      <h2>Seus dados</h2>
-      <form id="form-paciente" novalidate>
-        <label>Nome completo
-          <input name="nome" autocomplete="name" required>
-        </label>
-        <label>WhatsApp
-          <input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
-        </label>
-        <label>E-mail
-          <input name="email" type="email" autocomplete="email" required>
-        </label>
-        <label>Data de nascimento <small>(opcional)</small>
-          <input name="nascimento" type="date" autocomplete="bday">
-        </label>
-        <label class="check">
-          <input type="checkbox" name="lgpd" required>
-          <span>Concordo com o uso dos meus dados para agendamento e contato sobre a consulta (LGPD).</span>
-        </label>
-        <div class="acoes"><button class="btn" type="submit">Continuar</button></div>
-      </form>
-    </section>
-
-    <!-- 2. Profissional -->
-    <section class="etapa" data-etapa="2" hidden>
-      <h2>Escolha o profissional</h2>
-      <div class="cards" id="lista-profissionais"></div>
-      <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-    </section>
-
-    <!-- 3. Mês + dia -->
-    <section class="etapa" data-etapa="3" hidden>
-      <h2>Escolha o dia</h2>
-      <div class="meses" id="lista-meses" role="tablist"></div>
-      <div class="calendario" id="calendario" aria-live="polite"></div>
-      <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-    </section>
-
-    <!-- 4. Horário -->
-    <section class="etapa" data-etapa="4" hidden>
-      <h2>Escolha o horário</h2>
-      <p class="muted" id="dia-escolhido"></p>
-      <div class="horarios" id="lista-horarios"></div>
-      <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-    </section>
-
-    <!-- 5. Tipo de consulta -->
-    <section class="etapa" data-etapa="5" hidden>
-      <h2>Tipo de consulta</h2>
-      <div class="cards" id="lista-tipos"></div>
-      <label class="obs">Observações <small>(opcional)</small>
-        <textarea id="observacoes" rows="3" maxlength="500"></textarea>
-      </label>
-      <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-    </section>
-
-    <!-- 6. Confirmação -->
-    <section class="etapa" data-etapa="6" hidden>
-      <h2>Confirme seu agendamento</h2>
-      <dl class="resumo" id="resumo"></dl>
-      <div class="acoes">
-        <button class="btn btn--ghost" data-voltar>Voltar</button>
-        <button class="btn" id="btn-confirmar">Confirmar agendamento</button>
+  <!-- 8. Agendamento -->
+  <section class="soft" id="agendar">
+    <div class="wrap agendar-in">
+      <div class="head center">
+        <span class="eyebrow">Agendamento</span>
+        <h2>Agende sua <b>consulta</b></h2>
+        <p class="lead">Escolha o dia e o horário. A confirmação chega pelo WhatsApp.</p>
       </div>
-    </section>
 
-    <!-- Sucesso -->
-    <section class="etapa" data-etapa="ok" hidden>
-      <div class="sucesso">
-        <h2>Agendamento recebido</h2>
-        <p id="msg-sucesso"></p>
-        <p class="muted">Você receberá a confirmação pelo WhatsApp.</p>
-        <button class="btn" id="btn-novo">Fazer outro agendamento</button>
-      </div>
-    </section>
-  </main>
+      <ol class="passos" id="passos" aria-label="Etapas do agendamento">
+        <li data-passo="1">Seus dados</li>
+        <li data-passo="2">Profissional</li>
+        <li data-passo="3">Data</li>
+        <li data-passo="4">Horário</li>
+        <li data-passo="5">Consulta</li>
+        <li data-passo="6">Confirmar</li>
+      </ol>
 
-  <!-- 8. FAQ -->
-  <section class="wrap bloco faq">
-    <h2 class="sec-titulo">Perguntas frequentes</h2>
-    <details><summary>Como recebo a confirmação da consulta?</summary><p>Pelo WhatsApp informado no cadastro, logo após o agendamento.</p></details>
-    <details><summary>Posso remarcar ou cancelar?</summary><p>Sim. Fale com a equipe pelo WhatsApp para remarcar ou cancelar.</p></details>
-    <details><summary>A consulta é presencial ou online?</summary><p>O atendimento é 100% online. Você recebe o link pelo WhatsApp antes do horário marcado.</p></details>
-    <details><summary>Quanto custa e quais as formas de pagamento?</summary><p>[CONFIRMAR com o cliente: valor e forma de pagamento. PRD §6.4 ainda em aberto.]</p></details>
-    <details><summary>Quanto dura a consulta?</summary><p>Depende do tipo de consulta escolhido no agendamento (a duração aparece na escolha).</p></details>
-    <details><summary>Meus dados estão seguros?</summary><p>Eles são usados só para o agendamento e o contato sobre a consulta, conforme a LGPD.</p></details>
+      <div class="aviso aviso--erro" id="erro" role="alert" hidden></div>
+
+      <!-- 1. Cadastro do paciente -->
+      <section class="etapa" data-etapa="1">
+        <h2>Seus dados</h2>
+        <form id="form-paciente" novalidate>
+          <label>Nome completo
+            <input name="nome" autocomplete="name" required>
+          </label>
+          <label>WhatsApp
+            <input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
+          </label>
+          <label>E-mail
+            <input name="email" type="email" autocomplete="email" required>
+          </label>
+          <label>Data de nascimento <small>(opcional)</small>
+            <input name="nascimento" type="date" autocomplete="bday">
+          </label>
+          <label class="check">
+            <input type="checkbox" name="lgpd" required>
+            <span>Concordo com o uso dos meus dados para agendamento e contato sobre a consulta (LGPD).</span>
+          </label>
+          <div class="acoes"><button class="btn btn-primary" type="submit">Continuar</button></div>
+        </form>
+      </section>
+
+      <!-- 2. Profissional -->
+      <section class="etapa" data-etapa="2" hidden>
+        <h2>Escolha o profissional</h2>
+        <div class="cards" id="lista-profissionais"></div>
+        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
+      </section>
+
+      <!-- 3. Mês + dia -->
+      <section class="etapa" data-etapa="3" hidden>
+        <h2>Escolha o dia</h2>
+        <div class="meses" id="lista-meses" role="tablist"></div>
+        <div class="calendario" id="calendario" aria-live="polite"></div>
+        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
+      </section>
+
+      <!-- 4. Horário -->
+      <section class="etapa" data-etapa="4" hidden>
+        <h2>Escolha o horário</h2>
+        <p class="muted" id="dia-escolhido"></p>
+        <div class="horarios" id="lista-horarios"></div>
+        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
+      </section>
+
+      <!-- 5. Tipo de consulta -->
+      <section class="etapa" data-etapa="5" hidden>
+        <h2>Tipo de consulta</h2>
+        <div class="cards" id="lista-tipos"></div>
+        <label class="obs">Observações <small>(opcional)</small>
+          <textarea id="observacoes" rows="3" maxlength="500"></textarea>
+        </label>
+        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
+      </section>
+
+      <!-- 6. Confirmação -->
+      <section class="etapa" data-etapa="6" hidden>
+        <h2>Confirme seu agendamento</h2>
+        <dl class="resumo" id="resumo"></dl>
+        <div class="acoes">
+          <button class="btn btn--ghost" data-voltar>Voltar</button>
+          <button class="btn btn-primary" id="btn-confirmar">Confirmar agendamento</button>
+        </div>
+      </section>
+
+      <!-- Sucesso -->
+      <section class="etapa" data-etapa="ok" hidden>
+        <div class="sucesso">
+          <h2>Agendamento recebido</h2>
+          <p id="msg-sucesso"></p>
+          <p class="muted">Você receberá a confirmação pelo WhatsApp.</p>
+          <button class="btn btn-primary" id="btn-novo">Fazer outro agendamento</button>
+        </div>
+      </section>
+    </div>
   </section>
 
-  <!-- 9. CTA final -->
-  <section class="faixa faixa--cta">
+  <!-- 9. FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap faq-in">
+      <div class="head center">
+        <span class="eyebrow">Dúvidas</span>
+        <h2>Perguntas <b>frequentes</b></h2>
+      </div>
+      <details><summary>Como recebo a confirmação da consulta?</summary><p>Pelo WhatsApp informado no cadastro, logo após o agendamento.</p></details>
+      <details><summary>Posso remarcar ou cancelar?</summary><p>Sim. Fale com a equipe pelo WhatsApp para remarcar ou cancelar.</p></details>
+      <details><summary>A consulta é presencial ou online?</summary><p>O atendimento é 100% online. Você recebe o link pelo WhatsApp antes do horário marcado.</p></details>
+      <details><summary>Quanto custa e quais as formas de pagamento?</summary><p>[CONFIRMAR com o cliente: valor e forma de pagamento. PRD §6.4 ainda em aberto.]</p></details>
+      <details><summary>Quanto dura a consulta?</summary><p>Depende do tipo de consulta escolhido no agendamento (a duração aparece na escolha).</p></details>
+      <details><summary>Meus dados estão seguros?</summary><p>Eles são usados só para o agendamento e o contato sobre a consulta, conforme a LGPD.</p></details>
+    </div>
+  </section>
+
+  <!-- 10. CTA final -->
+  <section class="cta">
     <div class="wrap">
-      <h2 class="sec-titulo">Dê o primeiro passo pela sua energia</h2>
-      <a class="btn btn--lg btn--claro" href="#agendar">Agendar minha consulta</a>
+      <span class="eyebrow">Luis Manoel</span>
+      <h2>Dê o primeiro passo pela sua <b>energia</b></h2>
+      <p class="lead">Agende sua consulta online em menos de 2 minutos.</p>
+      <a class="btn btn-primary btn-lg" href="#agendar">Agendar minha consulta</a>
     </div>
   </section>
 
-  <footer class="wrap rodape">
-    <small>Seus dados são usados apenas para o agendamento.</small>
-    <small class="aviso-legal">As informações deste site têm caráter educativo e não substituem consulta, diagnóstico ou tratamento médico. Resultados variam de pessoa para pessoa.</small>
+  <footer>
+    <div class="wrap">
+      <a class="logo" href="#topo" aria-label="Luis Manoel, terapeuta integrativo"><span class="lw">Luis Manoel</span><small>Terapeuta integrativo</small></a>
+      <p>As informações deste site têm caráter educativo e não substituem consulta, diagnóstico ou tratamento feito por profissional de saúde habilitado. Resultados variam de pessoa para pessoa e não são garantidos.</p>
+      <p>Seus dados são usados apenas para o agendamento. © <span id="ano"></span> Luis Manoel. Todos os direitos reservados.</p>
+    </div>
   </footer>
+
   <script src="config.js"></script>
   <script src="api.js"></script>
   <script src="app.js"></script>
+  <script>
+    document.getElementById("ano").textContent = new Date().getFullYear();
+    (function () {
+      const els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("in")); return; }
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+      els.forEach((e) => io.observe(e));
+    })();
+  </script>
 </body>
 </html>
