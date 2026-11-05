@@ -40,7 +40,7 @@
   const conteudo = document.getElementById('conteudo');
   const side = document.createElement('nav');
   side.className = 'side'; side.setAttribute('aria-label', 'Principal');
-  side.innerHTML = `<a class="brand" href="${NAV[papel][0][0]}"><span>Clínica<br>Corpo Terra<small>${papel === 'prof' ? 'Sistema da clínica' : 'Área do paciente'}</small></span></a>`
+  side.innerHTML = `<a class="brand" href="${NAV[papel][0][0]}"><span>Clínica<br>Corpo Terra<small>${papel === 'prof' ? 'Software de Gestão de Clínica' : 'Área do paciente'}</small></span></a>`
     + NAV[papel].map(([h, t, i]) => `<a class="nv${h === ativo ? ' on' : ''}" href="${h}"${h === ativo ? ' aria-current="page"' : ''}>${ico(i)}<span>${t}</span></a>`).join('')
     + `<div class="who"><span class="av">${iniciais(eu.nome)}</span><div>${eu.nome}<small>${eu.rotulo}</small></div><button type="button" id="sair" aria-label="Sair">${ico('i-out')}</button></div>`;
 

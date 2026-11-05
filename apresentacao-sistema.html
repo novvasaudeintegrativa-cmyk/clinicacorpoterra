@@ -217,11 +217,21 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
 <section class="slide">
   <p class="eyebrow">Parte 2 · O sistema</p>
   <h2>Quem entra, e <b>com quê</b></h2>
-  <div class="grid g3" style="flex:1">
+  <div class="grid g3" style="flex:1;grid-template-rows:1fr 1fr">
     <div class="card deep">
-      <span class="tag">Atende</span>
-      <h3>Profissional</h3>
-      <p class="txt">Entra com login e senha. Vê a agenda, os pacientes, o prontuário e os exames.</p>
+      <span class="tag">Atendem</span>
+      <h3>Profissionais (terapeutas)</h3>
+      <p class="txt">Entram com login e senha. Veem a agenda, os pacientes, o prontuário e os exames.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Administra a clínica</span>
+      <h3>Gestor</h3>
+      <p class="txt">Entra com login e senha. É o único com acesso ao financeiro, além de agenda e cadastros.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Desenvolvedor</span>
+      <h3>Administrador do Sistema</h3>
+      <p class="txt">É o desenvolvedor do sistema. Cria os acessos, define as permissões e ajusta as configurações. Não abre dados clínicos.</p>
     </div>
     <div class="card">
       <span class="tag">Acompanha</span>
@@ -231,7 +241,7 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
     <div class="card">
       <span class="tag warn">A confirmar</span>
       <h3>Equipe de apoio</h3>
-      <p class="txt">Organiza agendamentos e responde pacientes. Se existir, o acesso ao prontuário clínico é limitado.</p>
+      <p class="txt">Organiza agendamentos e responde pacientes. Se existir, o acesso ao prontuário clínico é limitado. <b>Definir o número de colaboradores.</b></p>
     </div>
   </div>
   <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
@@ -260,14 +270,14 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
 
 <!-- 10. Área do profissional -->
 <section class="slide">
-  <p class="eyebrow">Parte 2 · O sistema · Profissional</p>
-  <h2>O que o <b>profissional</b> usa</h2>
+  <p class="eyebrow">Parte 2 · O sistema · Profissionais</p>
+  <h2>O que os <b>profissionais</b> usam</h2>
   <div class="grid g3" style="flex:1;grid-template-rows:1fr 1fr">
     <div class="card"><span class="n">Agenda</span><h3>Consultas do dia e do mês</h3><p class="txt">Confirmar, remarcar, cancelar e marcar como realizada.</p></div>
-    <div class="card"><span class="n">Pacientes</span><h3>Cadastro com nº de prontuário</h3><p class="txt">Status (ativo, inativo, novo lead), origem, interesses e histórico, ligados a todas as consultas.</p></div>
+    <div class="card"><span class="n">Pacientes</span><h3>Cadastro com nº de prontuário</h3><p class="txt">Status (ativo, inativo, primeira consulta), interesses e histórico, ligados a todas as consultas.</p></div>
     <div class="card deep"><span class="n">Prontuário</span><h3>Ficha do paciente</h3><p class="txt">Queixa, histórico, evolução e condutas. Imprime em PDF.</p></div>
     <div class="card deep"><span class="n">Exames</span><h3>Anexar e consultar</h3><p class="txt">Guarda os arquivos e decide quais o paciente pode ver.</p></div>
-    <div class="card"><span class="n">Financeiro</span><h3>Receitas e despesas</h3><p class="txt">O controle financeiro da clínica.</p></div>
+    <div class="card"><span class="n">Relacionamento</span><h3>Reativar e acompanhar</h3><p class="txt">Aniversário, pós-consulta e pacientes que pararam de vir.</p></div>
     <div class="card"><span class="n">WhatsApp</span><h3>Confirmação e lembrete</h3><p class="txt">Mensagens automáticas ao paciente.</p></div>
   </div>
   <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
@@ -328,10 +338,6 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
   <iframe class="mock" data-src="mockups/index.html?embed=1#s-atendente" title="Mockup do atendente"></iframe>
 </section>
 <section class="slide mockslide">
-  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Integrações</b></h2></div><span class="tag warn">A definir</span></div>
-  <iframe class="mock" data-src="mockups/index.html?embed=1#s-integracoes" title="Mockup das integrações"></iframe>
-</section>
-<section class="slide mockslide">
   <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Privacidade</b> e segurança</h2></div><span class="tag warn">Proposta</span></div>
   <iframe class="mock" data-src="mockups/index.html?embed=1#s-lgpd" title="Mockup da privacidade e segurança"></iframe>
 </section>
@@ -341,7 +347,7 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
   <p class="eyebrow">Parte 2 · O sistema · Paciente</p>
   <h2>O que o <b>paciente</b> vê</h2>
   <div class="grid g2" style="flex:1;grid-template-rows:1fr 1fr">
-    <div class="card"><h3>Minhas consultas</h3><p class="txt">Próximas e anteriores, com dia, horário e link da consulta online.</p></div>
+    <div class="card"><h3>Minhas consultas</h3><p class="txt">Próximas e anteriores, com dia, horário e o link da videochamada pelo Zoom.</p></div>
     <div class="card deep"><h3>Meus exames</h3><p class="txt">Ver e baixar os arquivos que o profissional liberou.</p></div>
     <div class="card"><h3>Meus dados</h3><p class="txt">Contato e informações do cadastro, com pedido de correção.</p></div>
     <div class="card"><h3>Novo agendamento</h3><p class="txt">Volta ao site para marcar a próxima consulta.</p></div>
@@ -392,12 +398,13 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
   <p class="eyebrow">Parte 2 · O sistema · Permissões</p>
   <h2>Quem <b>vê o quê</b></h2>
   <table>
-    <tr><th style="width:30%">Informação</th><th>Profissional</th><th>Paciente</th><th>Equipe de apoio</th></tr>
-    <tr><td>Agenda</td><td class="ok">Sim</td><td>Só as suas consultas</td><td class="ok">Sim</td></tr>
-    <tr><td>Dados cadastrais</td><td class="ok">Sim</td><td>Só os seus</td><td class="ok">Sim</td></tr>
-    <tr><td>Prontuário (queixa, evolução, condutas)</td><td class="ok">Sim</td><td class="no">Não</td><td class="tbd">A definir</td></tr>
-    <tr><td>Exames</td><td class="ok">Sim</td><td>Só os liberados para ele</td><td class="tbd">A definir</td></tr>
-    <tr><td>Financeiro</td><td class="ok">Sim</td><td class="no">Não</td><td class="tbd">A definir</td></tr>
+    <tr><th style="width:24%">Informação</th><th>Profissionais (terapeutas)</th><th>Gestor</th><th>Administrador (desenvolvedor)</th><th>Paciente</th><th>Equipe de apoio</th></tr>
+    <tr><td>Agenda</td><td class="ok">Sim</td><td class="ok">Sim</td><td class="no">Não</td><td>Só as suas consultas</td><td class="ok">Sim</td></tr>
+    <tr><td>Dados cadastrais</td><td class="ok">Sim</td><td class="ok">Sim</td><td class="no">Não</td><td>Só os seus</td><td class="ok">Sim</td></tr>
+    <tr><td>Prontuário (queixa, evolução, condutas)</td><td class="ok">Sim</td><td class="no">Não</td><td class="no">Não</td><td class="no">Não</td><td class="tbd">A definir</td></tr>
+    <tr><td>Exames</td><td class="ok">Sim</td><td class="no">Não</td><td class="no">Não</td><td>Só os liberados para ele</td><td class="tbd">A definir</td></tr>
+    <tr><td>Financeiro</td><td class="no">Não</td><td class="ok">Sim</td><td class="no">Não</td><td class="no">Não</td><td class="tbd">A definir</td></tr>
+    <tr><td>Usuários, permissões e configurações</td><td class="no">Não</td><td class="no">Não</td><td class="ok">Sim</td><td class="no">Não</td><td class="no">Não</td></tr>
   </table>
   <p class="txt">Proposta inicial, para validarmos com a clínica antes de construir.</p>
   <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
@@ -418,48 +425,7 @@ body:hover .ui, .ui:focus-within { opacity: 1; }
   <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
 </section>
 
-<!-- 15. Execução -->
-<section class="slide">
-  <p class="eyebrow">Execução</p>
-  <h2>Quem faz o quê, <b>em 8 fases</b></h2>
-  <table style="font-size:26px">
-    <tr><th style="width:30%">Fase</th><th style="width:30%">Quem conduz</th><th>O que depende da clínica</th></tr>
-    <tr><td>1. Levantamento</td><td>Gestor</td><td>Responder o levantamento e enviar materiais</td></tr>
-    <tr><td>2. Textos e estratégia</td><td>Marketing e copywriter</td><td>Aprovar textos e o que se diz sobre saúde</td></tr>
-    <tr><td>3. Design</td><td>Designer</td><td>Aprovar o visual e enviar fotos</td></tr>
-    <tr><td>4. Site</td><td>Desenvolvedor do site</td><td>Domínio, logo e conteúdos finais</td></tr>
-    <tr><td>5. Sistema com login</td><td>Desenvolvedor do sistema</td><td>Perfis, campos da ficha e regras dos exames</td></tr>
-    <tr><td>6. Integração e testes</td><td>Desenvolvedores e gestor</td><td>Testar com a equipe</td></tr>
-    <tr><td>7. Lançamento</td><td>Marketing</td><td>Acesso às contas de anúncio</td></tr>
-    <tr><td>8. Treinamento</td><td>Gestor e desenvolvedor</td><td>Equipe presente</td></tr>
-  </table>
-  <p class="txt">Um profissional jurídico revisa termos, privacidade e regras de publicidade em saúde.</p>
-  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
-</section>
 
-<!-- 16. Decisões e próximos passos -->
-<section class="slide cream">
-  <p class="eyebrow">Para fechar</p>
-  <h2>O que <b>decidir agora</b></h2>
-  <div class="grid g2" style="flex:1;gap:48px">
-    <table style="font-size:26px">
-      <tr><th>Decisão</th></tr>
-      <tr><td>Pagamento da consulta: no agendamento ou à parte</td></tr>
-      <tr><td>Equipe de apoio: existe e vê o quê</td></tr>
-      <tr><td>Exames: quem envia, formatos e guarda</td></tr>
-      <tr><td>Senha do paciente: quando e como cria</td></tr>
-      <tr><td>Segurança extra: duas etapas ao entrar</td></tr>
-      <tr><td>Data desejada para entrar no ar</td></tr>
-    </table>
-    <div class="card deep" style="justify-content:center">
-      <h3>Próximos passos</h3>
-      <p class="txt" style="font-size:34px">1. Responder o levantamento de informações.</p>
-      <p class="txt" style="font-size:34px">2. Decidir os pontos ao lado.</p>
-      <p class="txt" style="font-size:34px">3. Enviar fotos, logo, textos e acessos.</p>
-    </div>
-  </div>
-  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
-</section>
 
 </main>
 

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="sistema.css">
 </head>
-<body data-papel="prof" data-nav="pacientes.html" data-titulo="Cadastro do paciente" data-sub="Contato, origem, interesses e histórico de atendimento">
+<body data-papel="prof" data-nav="pacientes.html" data-titulo="Cadastro do paciente" data-sub="Contato, interesses e histórico de atendimento">
   <template id="acoes-tpl">
     <a class="bt out sm" href="pacientes.html">Voltar aos pacientes</a>
     <a class="bt sm" id="ir-pront" href="prontuario.html"><svg class="ic"><use href="#i-file"/></svg>Abrir prontuário</a>
@@ -34,7 +34,7 @@
         <div class="cd"><h3>Relacionamento</h3>
           <dl class="resumo" id="p-rel"></dl>
           <label class="fld" style="margin-top:14px">Status do paciente
-            <select id="p-sel"><option>Ativo</option><option>Novo lead</option><option>Inativo</option></select>
+            <select id="p-sel"><option>Ativo</option><option>Primeira consulta</option><option>Inativo</option></select>
           </label>
         </div>
         <div class="cd"><h3>Próxima consulta</h3><p id="p-prox" style="font-weight:600"></p>
@@ -60,7 +60,7 @@
     (function () {
       const { D, el, $, paciente, fmtData, idade, toast } = S;
       const p = paciente(new URLSearchParams(location.search).get('id')) || D.pacientes[0];
-      const cls = { 'Ativo': '', 'Novo lead': 'w', 'Inativo': 'g' };
+      const cls = { 'Ativo': '', 'Primeira consulta': 'w', 'Inativo': 'g' };
       document.title = 'Cadastro · ' + p.nome;
       $('#ir-pront').href = 'prontuario.html?id=' + p.id;
       $('#p-av').textContent = S.iniciais(p.nome);
@@ -83,7 +83,7 @@
       function status() {
         const s = $('#p-status'); s.textContent = p.status; s.className = 'pl sp ' + cls[p.status];
         $('#p-sel').value = p.status; $('#b-reat').hidden = p.status !== 'Inativo';
-        dl('#p-rel', [['Origem', p.origem], ['Faltas', String(p.faltas)], ['Remarcações', String(p.remarc)], ['Última consulta', p.evolucao.length ? fmtData(p.evolucao[0].data) : '—']]);
+        dl('#p-rel', [['Faltas', String(p.faltas)], ['Remarcações', String(p.remarc)], ['Última consulta', p.evolucao.length ? fmtData(p.evolucao[0].data) : '—']]);
       }
       $('#p-sel').onchange = (e) => { p.status = e.target.value; status(); toast('Status alterado (só nesta tela).'); };
       status();

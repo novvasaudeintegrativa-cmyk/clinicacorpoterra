@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="sistema.css">
 </head>
-<body data-papel="prof" data-nav="relacionamento.html" data-titulo="Relacionamento" data-sub="Reativar, parabenizar, acompanhar e avisar os pacientes, só quem autorizou o contato">
+<body data-papel="prof" data-nav="relacionamento.html" data-titulo="Relacionamento" data-sub="Reativar, parabenizar e acompanhar os pacientes, só quem autorizou o contato">
   <main id="conteudo">
     <div class="stats" id="kpis"></div>
     <div class="grid2" style="grid-template-columns:1fr 1fr">
@@ -18,16 +18,6 @@
       </div>
       <div class="gap">
         <div class="cd"><h3>Acompanhamento pós-consulta</h3><p class="mu sm" style="margin-bottom:10px">Consultas dos últimos 20 dias, ainda sem mensagem de acompanhamento.</p><div class="gap" id="pos" style="gap:8px"></div></div>
-        <div class="cd"><h3>Campanha segmentada</h3>
-          <label class="fld">Para quem
-            <select id="seg"><option value="ativo">Pacientes ativos</option><option value="inativo">Pacientes inativos</option><option value="lead">Novos leads</option><option value="Sono">Interesse: Sono</option><option value="Intestino">Interesse: Intestino</option><option value="Energia">Interesse: Energia</option></select>
-          </label>
-          <label class="fld">Mensagem (use {nome} para o primeiro nome)
-            <textarea id="msg" rows="3" maxlength="500">Olá, {nome}! Temos novidades no atendimento da Clínica Corpo Terra. Quer marcar um horário?</textarea>
-          </label>
-          <p class="sm" id="dest" style="margin-bottom:12px"></p>
-          <button class="bt sm" id="enviar" type="button">Enviar campanha</button>
-        </div>
       </div>
     </div>
   </main>
@@ -62,19 +52,6 @@
       aniv.length ? aniv.forEach((p) => $('#aniv').append(linha(p, p.nasc.slice(8) + '/' + p.nasc.slice(5, 7) + ' · faz ' + (idade(p.nasc) + (HOJE < new Date(HOJE.getFullYear(), +p.nasc.slice(5, 7) - 1, +p.nasc.slice(8)) ? 1 : 0)) + ' anos', 'Parabenizar', 'Mensagem de aniversário enviada'))) : vazio('#aniv', 'Nenhum aniversariante neste mês.');
       pos.length ? pos.forEach((p) => $('#pos').append(linha(p, 'Consulta em ' + fmtData(ultima(p)), 'Enviar', 'Mensagem pós-consulta enviada'))) : vazio('#pos', 'Nenhuma pendência.');
 
-      function alvo() {
-        const v = $('#seg').value;
-        const base = v === 'ativo' ? D.pacientes.filter((p) => p.status === 'Ativo') : v === 'inativo' ? inativos : v === 'lead' ? D.pacientes.filter((p) => p.status === 'Novo lead') : D.pacientes.filter((p) => p.interesses.includes(v));
-        return base;
-      }
-      function dest() {
-        const a = alvo(), ok = a.filter((p) => p.lgpd);
-        $('#dest').textContent = ok.length + (ok.length === 1 ? ' pessoa receberá' : ' pessoas receberão') + (a.length > ok.length ? ' · ' + (a.length - ok.length) + ' fora por não ter autorizado o contato' : '') + '.';
-        $('#enviar').disabled = !ok.length;
-      }
-      $('#seg').onchange = dest;
-      $('#enviar').onclick = () => toast('Campanha enviada para ' + alvo().filter((p) => p.lgpd).length + ' pessoa(s) (protótipo, nada foi enviado).');
-      dest();
     })();
   </script>
 </body>

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="sistema.css">
 </head>
-<body data-papel="prof" data-nav="pacientes.html" data-titulo="Pacientes" data-sub="Cadastro de cada pessoa: contato, origem, interesses e histórico de atendimento">
+<body data-papel="prof" data-nav="pacientes.html" data-titulo="Pacientes" data-sub="Cadastro de cada pessoa: contato, interesses e histórico de atendimento">
   <template id="acoes-tpl"><button class="bt sm" id="novo" type="button"><svg class="ic"><use href="#i-plus"/></svg>Novo paciente</button></template>
   <main id="conteudo">
     <div class="stats" id="kpis"></div>
@@ -17,11 +17,10 @@
       <div class="chips" id="filtro" role="group" aria-label="Filtrar por status"></div>
     </div>
     <div class="tbw"><table class="t">
-      <thead><tr><th>Paciente</th><th>Origem</th><th>Última consulta</th><th>Próxima</th><th>Status</th></tr></thead>
+      <thead><tr><th>Paciente</th><th>Última consulta</th><th>Próxima</th><th>Status</th></tr></thead>
       <tbody id="corpo"></tbody>
     </table></div>
     <p class="mu sm" id="contagem"></p>
-    <div class="cd"><h3>Leads que ainda não agendaram</h3><div class="gap" id="leads" style="gap:8px"></div></div>
 
     <dialog id="dlg">
       <h3>Novo paciente</h3>
@@ -39,12 +38,12 @@
     (function () {
       const { D, el, $, $$, fmtData, toast, ico } = S;
       let sit = '', q = '';
-      const SITS = ['Ativo', 'Novo lead', 'Inativo'];
-      const cls = { 'Ativo': '', 'Novo lead': 'w', 'Inativo': 'g' };
+      const SITS = ['Ativo', 'Primeira consulta', 'Inativo'];
+      const cls = { 'Ativo': '', 'Primeira consulta': 'w', 'Inativo': 'g' };
       const cont = (st) => D.pacientes.filter((p) => p.status === st).length;
 
       const k = $('#kpis');
-      [[cont('Ativo'), 'Pacientes ativos'], [cont('Novo lead') + D.leads.length, 'Novos leads'], [cont('Inativo'), 'Inativos (para reativar)'], [D.pacientes.reduce((a, p) => a + p.faltas, 0), 'Faltas no período']].forEach(([n, t]) => {
+      [[cont('Ativo'), 'Pacientes ativos'], [cont('Primeira consulta'), 'Primeiras consultas'], [cont('Inativo'), 'Inativos (para reativar)'], [D.pacientes.reduce((a, p) => a + p.faltas, 0), 'Faltas no período']].forEach(([n, t]) => {
         const d = el('div', 'stat'); d.append(el('b', null, String(n)), el('span', null, t)); k.append(d);
       });
 
@@ -64,23 +63,17 @@
           const go = () => (location.href = 'cadastro.html?id=' + p.id);
           tr.onclick = go; tr.onkeydown = (e) => { if (e.key === 'Enter') go(); };
           const td = el('td'); td.append(el('span', 'pl ' + cls[p.status], p.status));
-          tr.append(el('td', 'n', p.nome), el('td', null, p.origem), el('td', null, ultima(p)), el('td', null, prox(p)), td); corpo.append(tr);
+          tr.append(el('td', 'n', p.nome), el('td', null, ultima(p)), el('td', null, prox(p)), td); corpo.append(tr);
         });
         $('#contagem').textContent = r.length + (r.length === 1 ? ' paciente' : ' pacientes') + ' · dados de exemplo';
       }
-      const lv = $('#leads');
-      D.leads.forEach((l) => {
-        const d = el('div', 'cdt'), ic = el('span', 'ico'); ic.innerHTML = ico('i-users');
-        const t = el('div'); t.append(el('b', null, l.nome), el('small', null, l.origem + ' · interesse: ' + l.interesse + ' · ' + fmtData(l.data)));
-        d.append(ic, t, el('span', 'pl w', l.etapa)); lv.append(d);
-      });
       $('#busca').oninput = (e) => { q = e.target.value.trim().toLowerCase(); lista(); };
       $('#novo').onclick = () => $('#dlg').showModal();
       $('#n-cancel').onclick = () => $('#dlg').close();
       $('#f-novo').onsubmit = () => {
         const nome = $('#n-nome').value.trim(); if (!nome) return;
         const n = D.pacientes.length + 1;
-        D.pacientes.push({ id: 'p' + n, codigo: 'PR-' + String(122 + n).padStart(6, '0'), nome, nasc: '2000-01-01', cidade: '—', whatsapp: $('#n-wa').value, email: $('#n-email').value, desde: new Date().toISOString().slice(0, 10), situacao: 'Primeira consulta', status: 'Novo lead', origem: 'Cadastro manual', interesses: [], lgpd: false, faltas: 0, remarc: 0, proxima: '', queixa: '', evolucao: [], condutas: [] });
+        D.pacientes.push({ id: 'p' + n, codigo: 'PR-' + String(122 + n).padStart(6, '0'), nome, nasc: '2000-01-01', cidade: '—', whatsapp: $('#n-wa').value, email: $('#n-email').value, desde: new Date().toISOString().slice(0, 10), situacao: 'Primeira consulta', status: 'Primeira consulta', interesses: [], lgpd: false, faltas: 0, remarc: 0, proxima: '', queixa: '', evolucao: [], condutas: [] });
         $('#f-novo').reset(); lista(); toast('Paciente cadastrado (só nesta tela).');
       };
       lista();
