@@ -19,4 +19,8 @@ window.CONFIG = {
 
   // Quantos meses à frente o paciente pode agendar.
   MESES_A_FRENTE: 3,
+
+  // Endereço do sistema com login (criar senha / entrar). Vazio = o convite "Criar minha senha"
+  // não aparece na confirmação. Preencher quando o sistema estiver no ar.
+  SISTEMA_URL: '',
 };

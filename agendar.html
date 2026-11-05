@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agendar consulta — Clínica Corpo Terra</title>
+  <meta name="description" content="Escolha o profissional, o dia e o horário e agende sua consulta online.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav aria-label="Principal">
+    <div class="wrap">
+      <a class="logo" href="index.html" aria-label="Clínica Corpo Terra">
+        <span class="lt"><span class="lw"><span id="marca">Clínica Corpo Terra</span></span>
+        <small>Luis Manoel · Terapeuta integrativo</small></span>
+      </a>
+      <ul>
+        <li><a href="index.html#como">Como funciona</a></li>
+        <li><a href="index.html#sobre">Quem atende</a></li>
+        <li><a href="index.html#depoimentos">Depoimentos</a></li>
+        <li><a href="index.html#faq">Dúvidas</a></li>
+      </ul>
+      <div class="nav-acoes">
+        <a class="nav-entrar" href="sistema/login.html">Entrar</a>
+        <a class="btn btn-primary" href="agendar.html">Agendar consulta</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Agendamento: 5 etapas -->
+  <section class="soft" id="agendar">
+    <div class="wrap agendar-in">
+      <div class="head center">
+        <span class="eyebrow">Agendamento</span>
+        <h2>Agende sua <b>consulta</b></h2>
+        <p class="lead">Escolha o dia e o horário. A confirmação chega pelo WhatsApp.</p>
+      </div>
+
+      <ol class="passos" id="passos" aria-label="Etapas do agendamento">
+        <li data-passo="1">Seus dados</li>
+        <li data-passo="2">Profissional</li>
+        <li data-passo="3">Data e horário</li>
+        <li data-passo="4">Consulta</li>
+        <li data-passo="5">Confirmar</li>
+      </ol>
+
+      <div class="aviso aviso--erro" id="erro" role="alert" hidden></div>
+
+      <!-- 1. Cadastro do paciente -->
+      <section class="etapa" data-etapa="1">
+        <h2>Seus dados</h2>
+        <p class="ja-paciente">Já é paciente? <a href="sistema/login.html">Entrar na minha conta</a></p>
+        <form id="form-paciente" novalidate>
+          <label>Nome completo
+            <input name="nome" autocomplete="name" required>
+          </label>
+          <label>WhatsApp
+            <input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
+          </label>
+          <label>E-mail
+            <input name="email" type="email" autocomplete="email" required>
+          </label>
+          <label>Data de nascimento <small>(opcional)</small>
+            <input name="nascimento" type="date" autocomplete="bday">
+          </label>
+          <label class="check">
+            <input type="checkbox" name="lgpd" required>
+            <span>Concordo com o uso dos meus dados para agendamento e contato sobre a consulta (LGPD).</span>
+          </label>
+          <div class="acoes"><button class="btn btn-primary" type="submit">Continuar</button></div>
+        </form>
+      </section>
+
+      <!-- 2. Profissional -->
+      <section class="etapa" data-etapa="2" hidden>
+        <h2>Escolha o profissional</h2>
+        <div class="cards" id="lista-profissionais"></div>
+        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
+      </section>
+
+      <!-- 3. Data e horário (calendário + horários + resumo) -->
+      <section class="etapa etapa--livre" data-etapa="3" hidden>
+        <div class="agenda-grid">
+          <div class="cartao">
+            <h3>Escolha o dia</h3>
+            <div class="meses" id="lista-meses" role="tablist"></div>
+            <div class="calendario" id="calendario" aria-live="polite"></div>
+          </div>
+          <div class="lateral">
+            <div class="cartao">
+              <h3 id="dia-escolhido">Escolha um dia no calendário</h3>
+              <div class="horarios" id="lista-horarios"></div>
+            </div>
+            <div class="cartao">
+              <h3>Resumo</h3>
+              <dl class="resumo" id="resumo-parcial"></dl>
+            </div>
+            <button class="btn btn-primary btn-lg btn-bloco" id="btn-horario" type="button" disabled>Continuar</button>
+            <button class="btn btn--ghost" data-voltar type="button">Voltar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Tipo de consulta -->
+      <section class="etapa" data-etapa="4" hidden>
+        <h2>Tipo de consulta</h2>
+        <div class="cards" id="lista-tipos"></div>
+        <label class="obs">Observações <small>(opcional)</small>
+          <textarea id="observacoes" rows="3" maxlength="500"></textarea>
+        </label>
+        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
+      </section>
+
+      <!-- 5. Confirmação -->
+      <section class="etapa" data-etapa="5" hidden>
+        <h2>Confirme seu agendamento</h2>
+        <dl class="resumo" id="resumo"></dl>
+        <div class="acoes">
+          <button class="btn btn--ghost" data-voltar>Voltar</button>
+          <button class="btn btn-primary" id="btn-confirmar">Confirmar agendamento</button>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a class="logo" href="index.html" aria-label="Clínica Corpo Terra"><span class="lt"><span class="lw">Clínica Corpo Terra</span><small>Luis Manoel · Terapeuta integrativo</small></span></a>
+      <p>As informações deste site têm caráter educativo e não substituem consulta, diagnóstico ou tratamento feito por profissional de saúde habilitado. Resultados variam de pessoa para pessoa e não são garantidos.</p>
+      <p>Seus dados são usados apenas para o agendamento. © <span id="ano"></span> Clínica Corpo Terra. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+  <script>document.getElementById("ano").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -13,8 +13,8 @@
   <nav aria-label="Principal">
     <div class="wrap">
       <a class="logo" href="#topo" aria-label="Clínica Corpo Terra">
-        <span class="lw"><span id="marca">Clínica Corpo Terra</span></span>
-        <small>Luis Manoel · Terapeuta integrativo</small>
+        <span class="lt"><span class="lw"><span id="marca">Clínica Corpo Terra</span></span>
+        <small>Luis Manoel · Terapeuta integrativo</small></span>
       </a>
       <ul>
         <li><a href="#como">Como funciona</a></li>
@@ -22,7 +22,10 @@
         <li><a href="#depoimentos">Depoimentos</a></li>
         <li><a href="#faq">Dúvidas</a></li>
       </ul>
-      <a class="btn btn-primary" href="#agendar">Agendar consulta</a>
+      <div class="nav-acoes">
+        <a class="nav-entrar" href="sistema/login.html">Entrar</a>
+        <a class="btn btn-primary" href="agendar.html">Agendar consulta</a>
+      </div>
     </div>
   </nav>
 
@@ -36,7 +39,7 @@
       </div>
       <div class="vsl" role="img" aria-label="Luis Manoel, terapeuta integrativo"></div>
       <div class="hero-cta">
-        <a class="btn btn-primary btn-lg btn-mint" href="#agendar">Quero agendar minha consulta</a>
+        <a class="btn btn-primary btn-lg btn-mint" href="agendar.html">Quero agendar minha consulta</a>
         <span class="fine">A confirmação chega pelo WhatsApp.</span>
       </div>
     </div>
@@ -132,106 +135,19 @@
         <article><h3>“Tenho medo de um tratamento complicado.”</h3><p>Você recebe orientações claras, em linguagem simples, e adequadas à sua realidade.</p></article>
         <article><h3>“E se eu não gostar?”</h3><p>Você só confirma depois de ver o resumo do agendamento, e pode tirar dúvidas pelo WhatsApp antes da consulta.</p></article>
       </div>
-      <div class="objecoes-cta"><a class="btn btn-primary btn-lg" href="#agendar">Agendar minha consulta</a></div>
+      <div class="objecoes-cta"><a class="btn btn-primary btn-lg" href="agendar.html">Agendar minha consulta</a></div>
     </div>
   </section>
 
-  <!-- 8. Agendamento -->
+  <!-- 8. Chamado para agendar (o agendamento fica em agendar.html) -->
   <section class="soft" id="agendar">
-    <div class="wrap agendar-in">
+    <div class="wrap">
       <div class="head center">
         <span class="eyebrow">Agendamento</span>
         <h2>Agende sua <b>consulta</b></h2>
-        <p class="lead">Escolha o dia e o horário. A confirmação chega pelo WhatsApp.</p>
+        <p class="lead">Escolha o dia e o horário em poucos passos. A confirmação chega pelo WhatsApp.</p>
+        <a class="btn btn-primary btn-lg" href="agendar.html">Escolher dia e horário</a>
       </div>
-
-      <ol class="passos" id="passos" aria-label="Etapas do agendamento">
-        <li data-passo="1">Seus dados</li>
-        <li data-passo="2">Profissional</li>
-        <li data-passo="3">Data</li>
-        <li data-passo="4">Horário</li>
-        <li data-passo="5">Consulta</li>
-        <li data-passo="6">Confirmar</li>
-      </ol>
-
-      <div class="aviso aviso--erro" id="erro" role="alert" hidden></div>
-
-      <!-- 1. Cadastro do paciente -->
-      <section class="etapa" data-etapa="1">
-        <h2>Seus dados</h2>
-        <form id="form-paciente" novalidate>
-          <label>Nome completo
-            <input name="nome" autocomplete="name" required>
-          </label>
-          <label>WhatsApp
-            <input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
-          </label>
-          <label>E-mail
-            <input name="email" type="email" autocomplete="email" required>
-          </label>
-          <label>Data de nascimento <small>(opcional)</small>
-            <input name="nascimento" type="date" autocomplete="bday">
-          </label>
-          <label class="check">
-            <input type="checkbox" name="lgpd" required>
-            <span>Concordo com o uso dos meus dados para agendamento e contato sobre a consulta (LGPD).</span>
-          </label>
-          <div class="acoes"><button class="btn btn-primary" type="submit">Continuar</button></div>
-        </form>
-      </section>
-
-      <!-- 2. Profissional -->
-      <section class="etapa" data-etapa="2" hidden>
-        <h2>Escolha o profissional</h2>
-        <div class="cards" id="lista-profissionais"></div>
-        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-      </section>
-
-      <!-- 3. Mês + dia -->
-      <section class="etapa" data-etapa="3" hidden>
-        <h2>Escolha o dia</h2>
-        <div class="meses" id="lista-meses" role="tablist"></div>
-        <div class="calendario" id="calendario" aria-live="polite"></div>
-        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-      </section>
-
-      <!-- 4. Horário -->
-      <section class="etapa" data-etapa="4" hidden>
-        <h2>Escolha o horário</h2>
-        <p class="muted" id="dia-escolhido"></p>
-        <div class="horarios" id="lista-horarios"></div>
-        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-      </section>
-
-      <!-- 5. Tipo de consulta -->
-      <section class="etapa" data-etapa="5" hidden>
-        <h2>Tipo de consulta</h2>
-        <div class="cards" id="lista-tipos"></div>
-        <label class="obs">Observações <small>(opcional)</small>
-          <textarea id="observacoes" rows="3" maxlength="500"></textarea>
-        </label>
-        <div class="acoes"><button class="btn btn--ghost" data-voltar>Voltar</button></div>
-      </section>
-
-      <!-- 6. Confirmação -->
-      <section class="etapa" data-etapa="6" hidden>
-        <h2>Confirme seu agendamento</h2>
-        <dl class="resumo" id="resumo"></dl>
-        <div class="acoes">
-          <button class="btn btn--ghost" data-voltar>Voltar</button>
-          <button class="btn btn-primary" id="btn-confirmar">Confirmar agendamento</button>
-        </div>
-      </section>
-
-      <!-- Sucesso -->
-      <section class="etapa" data-etapa="ok" hidden>
-        <div class="sucesso">
-          <h2>Agendamento recebido</h2>
-          <p id="msg-sucesso"></p>
-          <p class="muted">Você receberá a confirmação pelo WhatsApp.</p>
-          <button class="btn btn-primary" id="btn-novo">Fazer outro agendamento</button>
-        </div>
-      </section>
     </div>
   </section>
 
@@ -257,21 +173,18 @@
       <span class="eyebrow">Clínica Corpo Terra</span>
       <h2>Dê o primeiro passo pela sua <b>energia</b></h2>
       <p class="lead">Agende sua consulta online em menos de 2 minutos.</p>
-      <a class="btn btn-primary btn-lg" href="#agendar">Agendar minha consulta</a>
+      <a class="btn btn-primary btn-lg" href="agendar.html">Agendar minha consulta</a>
     </div>
   </section>
 
   <footer>
     <div class="wrap">
-      <a class="logo" href="#topo" aria-label="Clínica Corpo Terra"><span class="lw">Clínica Corpo Terra</span><small>Luis Manoel · Terapeuta integrativo</small></a>
+      <a class="logo" href="#topo" aria-label="Clínica Corpo Terra"><span class="lt"><span class="lw">Clínica Corpo Terra</span><small>Luis Manoel · Terapeuta integrativo</small></span></a>
       <p>As informações deste site têm caráter educativo e não substituem consulta, diagnóstico ou tratamento feito por profissional de saúde habilitado. Resultados variam de pessoa para pessoa e não são garantidos.</p>
       <p>Seus dados são usados apenas para o agendamento. © <span id="ano"></span> Clínica Corpo Terra. Todos os direitos reservados.</p>
     </div>
   </footer>
 
-  <script src="config.js"></script>
-  <script src="api.js"></script>
-  <script src="app.js"></script>
   <script>
     document.getElementById("ano").textContent = new Date().getFullYear();
     (function () {

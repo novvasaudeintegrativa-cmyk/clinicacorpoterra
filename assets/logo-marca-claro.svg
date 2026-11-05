@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Clínica Corpo Terra">
+  <circle cx="32" cy="32" r="32" fill="#00dcc0"/>
+  <path d="M15 48c10-4 24-4 34 0" fill="none" stroke="#00454d" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="16" r="5" fill="#00454d"/>
+  <path d="M32 23v22" stroke="#00454d" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M32 34c-8 0-13-5-14-12 7 0 12 4 14 12z" fill="#00262c"/>
+  <path d="M32 34c8 0 13-5 14-12-7 0-12 4-14 12z" fill="#00262c"/>
+</svg>

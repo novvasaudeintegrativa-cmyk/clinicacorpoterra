@@ -1,0 +1,66 @@
+/* Prontuário: usa os tokens do styles.css (sistema do Ressurgir). */
+.pr { background: var(--soft); font-size: 16px; }
+.tag-restrito { font: 600 12px/1 var(--font); letter-spacing: .06em; text-transform: uppercase; color: var(--brand); border: 1px solid var(--brand); border-radius: 9999px; padding: 6px 12px; white-space: nowrap; }
+.demo { background: var(--cream); color: var(--ink); text-align: center; font-size: 13px; padding: 8px 16px; border-bottom: 1px solid var(--line); }
+
+.app { display: grid; gap: 20px; padding: 28px 0 64px; align-items: start; }
+@media (min-width: 900px) { .app { grid-template-columns: 1.35fr 1fr; } .painel--dir { position: sticky; top: 84px; } }
+
+.painel { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-2); display: grid; gap: 24px; }
+.painel h2 { font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 8px; }
+.painel label { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 4px; }
+.painel select, .painel input:not([type=checkbox]), .painel textarea { margin-top: 0; }
+select { display: block; width: 100%; padding: 12px 14px; font: inherit; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); color: var(--ink); }
+select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* cabeçalho do paciente */
+.paciente { display: flex; gap: 16px; align-items: center; }
+.paciente h1 { font-size: 28px; font-weight: 600; }
+.paciente p { margin: 2px 0 8px; }
+.avatar { flex: none; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-dark); color: var(--brand); font: 600 22px/1 var(--font); }
+.chips { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+.chips li { font: 600 12px/1 var(--font); padding: 5px 10px; border-radius: 9999px; background: var(--accent-soft); color: var(--accent); }
+
+.ficha { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0; }
+.ficha div { background: var(--soft); border-radius: 8px; padding: 12px 14px; }
+.ficha dt { font: 700 11px/1 var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.ficha dd { margin: 0; font-weight: 500; }
+.bloco p { margin: 0; color: var(--muted); font-weight: 300; font-size: 17px; }
+
+/* evolução */
+.nova-evo { display: grid; gap: 4px; margin-bottom: 20px; }
+.nova-evo textarea { width: 100%; padding: 12px 14px; font: inherit; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); color: var(--ink); resize: vertical; }
+.nova-evo .acoes { margin-top: 8px; }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 20px; border-left: 2px solid var(--brand); display: grid; gap: 18px; }
+.timeline li { position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--brand); }
+.timeline time { font: 600 13px/1 var(--mono); color: var(--accent); }
+.timeline p { margin: 4px 0 0; font-weight: 300; }
+
+/* condutas */
+.topo-dir { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.topo-dir h2 { margin: 0; }
+.condutas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.conduta { display: grid; grid-template-columns: 48px 1fr auto; gap: 14px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.conduta .ic { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-size: 22px; }
+.conduta strong { display: block; font-weight: 600; }
+.conduta span.pos { color: var(--muted); font-size: 14px; font-weight: 300; }
+.conduta .rm { background: transparent; border: 0; color: var(--muted); font-size: 20px; cursor: pointer; border-radius: 50%; width: 32px; height: 32px; }
+.conduta .rm:hover { background: var(--bad-soft); color: var(--bad); }
+.vazio { color: var(--muted); font-style: italic; padding: 8px 0; }
+
+.add-conduta { display: grid; gap: 4px; padding-top: 4px; border-top: 1px solid var(--line); padding-top: 20px; }
+.add-conduta h3 { margin-bottom: 8px; }
+.add-conduta input, .add-conduta select { margin-bottom: 8px; }
+.add-conduta input { display: block; width: 100%; padding: 12px 14px; font: inherit; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); color: var(--ink); }
+.add-conduta .btn { justify-self: start; margin-top: 4px; }
+.btn-bloco { width: 100%; justify-content: center; margin: 0; }
+
+/* impressão: só o conteúdo clínico */
+@media print {
+  nav, .demo, .busca, .nova-evo, .add-conduta, #btn-imprimir, .conduta .rm { display: none !important; }
+  .pr { background: #fff; color: #000; }
+  .app { display: block; padding: 0; width: 100%; }
+  .painel { box-shadow: none; border: 0; padding: 0; margin-bottom: 16px; position: static; }
+  .conduta, .timeline li { break-inside: avoid; }
+}

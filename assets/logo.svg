@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" width="300" height="64" role="img" aria-label="Clínica Corpo Terra">
+  <!-- Para fundo claro. Exemplo: o texto usa a fonte Outfit (se não estiver instalada, cai numa fonte padrão); a versão final deve ter o texto convertido em curvas. -->
+  <circle cx="32" cy="32" r="32" fill="#00454d"/>
+  <path d="M15 48c10-4 24-4 34 0" fill="none" stroke="#00a99d" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="16" r="5" fill="#00dcc0"/>
+  <path d="M32 23v22" stroke="#00dcc0" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M32 34c-8 0-13-5-14-12 7 0 12 4 14 12z" fill="#7af0dc"/>
+  <path d="M32 34c8 0 13-5 14-12-7 0-12 4-14 12z" fill="#7af0dc"/>
+  <text x="80" y="26" font-family="Outfit, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" letter-spacing="3.6" fill="#00716f">CLÍNICA</text>
+  <text x="79" y="52" font-family="Outfit, 'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5" fill="#00262c">Corpo <tspan fill="#00857f">Terra</tspan></text>
+</svg>

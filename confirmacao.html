@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agendamento recebido — Clínica Corpo Terra</title>
+  <meta name="description" content="Confirmação do seu agendamento.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav aria-label="Principal">
+    <div class="wrap">
+      <a class="logo" href="index.html" aria-label="Clínica Corpo Terra">
+        <span class="lt"><span class="lw"><span id="marca">Clínica Corpo Terra</span></span>
+        <small>Luis Manoel · Terapeuta integrativo</small></span>
+      </a>
+      <ul>
+        <li><a href="index.html#como">Como funciona</a></li>
+        <li><a href="index.html#sobre">Quem atende</a></li>
+        <li><a href="index.html#depoimentos">Depoimentos</a></li>
+        <li><a href="index.html#faq">Dúvidas</a></li>
+      </ul>
+      <div class="nav-acoes">
+        <a class="nav-entrar" href="sistema/login.html">Entrar</a>
+        <a class="btn btn-primary" href="agendar.html">Agendar consulta</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Confirmação -->
+  <section class="soft" id="confirmacao">
+    <div class="wrap agendar-in">
+      <div class="sucesso">
+        <span class="ok-c" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        <h2>Agendamento <b>recebido</b></h2>
+        <div class="cartao" id="cartao-resumo" hidden><dl class="resumo" id="ok-resumo"></dl></div>
+        <p class="muted">A confirmação e o link da consulta chegam pelo WhatsApp.</p>
+        <div class="cta-senha" id="cta-senha" hidden>
+          <div><strong>Acompanhe suas consultas e exames</strong><p>Crie sua senha para entrar no sistema.</p></div>
+          <a class="btn btn-primary" id="link-senha" href="#">Criar minha senha</a>
+        </div>
+        <a class="btn btn--ghost" href="agendar.html">Fazer outro agendamento</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a class="logo" href="index.html" aria-label="Clínica Corpo Terra"><span class="lt"><span class="lw">Clínica Corpo Terra</span><small>Luis Manoel · Terapeuta integrativo</small></span></a>
+      <p>As informações deste site têm caráter educativo e não substituem consulta, diagnóstico ou tratamento feito por profissional de saúde habilitado. Resultados variam de pessoa para pessoa e não são garantidos.</p>
+      <p>Seus dados são usados apenas para o agendamento. © <span id="ano"></span> Clínica Corpo Terra. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script>
+    (function () {
+      const C = window.CONFIG;
+      document.getElementById("ano").textContent = new Date().getFullYear();
+      // Resumo sem dados pessoais: só profissional, consulta, data e código (guardado na aba até ela fechar)
+      let d = null;
+      try { d = JSON.parse(sessionStorage.getItem("agendamento_ok")); } catch (e) {}
+      if (d) {
+        const dl = document.getElementById("ok-resumo");
+        [["Profissional", d.profissional], ["Consulta", d.consulta], ["Data", d.data], ["Código", d.codigo]].forEach(([k, v]) => {
+          const dt = document.createElement("dt"), dd = document.createElement("dd");
+          dt.textContent = k; dd.textContent = v; dl.append(dt, dd);
+        });
+        document.getElementById("cartao-resumo").hidden = false;
+      }
+      // Convite para criar a senha: só aparece quando o endereço do sistema estiver configurado
+      if (C.SISTEMA_URL) {
+        document.getElementById("cta-senha").hidden = false;
+        document.getElementById("link-senha").href = C.SISTEMA_URL;
+      }
+    })();
+  </script>
+</body>
+</html>

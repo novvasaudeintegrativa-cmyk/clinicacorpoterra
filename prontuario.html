@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Prontuário — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="prontuario.css">
+</head>
+<body class="pr">
+  <nav aria-label="Principal">
+    <div class="wrap">
+      <a class="logo" href="#" aria-label="Prontuário">
+        <span class="lw">Prontuário<span>.</span></span>
+        <small>Clínica Corpo Terra</small>
+      </a>
+      <span class="tag-restrito">Acesso restrito ao terapeuta</span>
+    </div>
+  </nav>
+
+  <div class="demo">Protótipo com dados fictícios. Nada é salvo: ao recarregar a página, as alterações somem.</div>
+
+  <main class="wrap app">
+    <!-- Coluna esquerda: paciente + ficha + evolução -->
+    <div class="painel painel--esq">
+      <div class="busca">
+        <label for="sel-paciente">Paciente</label>
+        <select id="sel-paciente"></select>
+      </div>
+
+      <header class="paciente">
+        <div class="avatar" id="p-avatar" aria-hidden="true"></div>
+        <div>
+          <h1 id="p-nome"></h1>
+          <p class="muted" id="p-sub"></p>
+          <ul class="chips" id="p-tags"></ul>
+        </div>
+      </header>
+
+      <dl class="ficha" id="p-ficha"></dl>
+
+      <div class="bloco">
+        <h2>Queixa principal</h2>
+        <p id="p-queixa"></p>
+      </div>
+
+      <div class="bloco">
+        <h2>Histórico de evolução</h2>
+        <form class="nova-evo" id="form-evo">
+          <label for="evo-texto">Nova evolução</label>
+          <textarea id="evo-texto" rows="3" maxlength="2000" placeholder="Registre o que foi observado e orientado nesta consulta"></textarea>
+          <div class="acoes"><button class="btn btn-primary" type="submit">Adicionar evolução</button></div>
+        </form>
+        <ol class="timeline" id="p-evolucao"></ol>
+      </div>
+    </div>
+
+    <!-- Coluna direita: condutas -->
+    <aside class="painel painel--dir">
+      <div class="topo-dir">
+        <h2>Condutas e prescrições</h2>
+        <span class="muted" id="cont-condutas"></span>
+      </div>
+
+      <ul class="condutas" id="p-condutas"></ul>
+
+      <form class="add-conduta" id="form-conduta">
+        <h3>Adicionar conduta</h3>
+        <label for="c-nome">Nome</label>
+        <input id="c-nome" required placeholder="Ex.: Chá de camomila">
+        <label for="c-tipo">Tipo</label>
+        <select id="c-tipo">
+          <option value="cha">Chá</option>
+          <option value="suplemento">Suplemento</option>
+          <option value="habito">Hábito</option>
+          <option value="exame">Exame</option>
+        </select>
+        <label for="c-posologia">Posologia / orientação</label>
+        <input id="c-posologia" placeholder="Ex.: 1 xícara antes de dormir">
+        <button class="btn" type="submit">Incluir na lista</button>
+      </form>
+
+      <button class="btn btn-primary btn-lg btn-bloco" id="btn-imprimir" type="button">Imprimir / salvar PDF</button>
+    </aside>
+  </main>
+
+  <script src="prontuario.js"></script>
+</body>
+</html>

@@ -37,10 +37,19 @@
       li.classList.toggle('on', p === n);
       li.classList.toggle('feito', n === 'ok' || p < n);
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    $('#agendar').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   const dataBR = (iso) => { const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
+  const diaLongo = (iso) => {
+    const [y, m, d] = iso.split('-').map(Number);
+    const t = new Date(y, m - 1, d).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  };
   const duracao = () => S.tipo?.duracao_min ?? 60;
+  function preencher(dl, linhas) {
+    dl.replaceChildren();
+    linhas.forEach(([k, v]) => { dl.append(el('dt', null, k), el('dd', null, v)); });
+  }
 
   // ---------- 1. paciente ----------
   const mascaraTel = (v) => {
@@ -63,6 +72,7 @@
     if (!/^\S+@\S+\.\S+$/.test(email)) return erro('Informe um e-mail válido.');
     if (!f.lgpd.checked) return erro('É necessário concordar com o uso dos dados.');
     S.paciente = { nome, whatsapp: '+55' + wa, email, nascimento: f.nascimento.value || null, consentimento_lgpd: true };
+    S.waTela = f.whatsapp.value; // formato digitado, só para exibir
     ir(2);
   });
 
@@ -74,12 +84,12 @@
       const b = el('button', 'card');
       b.type = 'button';
       b.append(el('strong', null, p.nome), el('span', 'muted', p.especialidade || ''));
-      b.addEventListener('click', () => { S.prof = p; S.tipo = null; S.dia = S.hora = null; abrirMeses(); ir(3); });
+      b.addEventListener('click', () => { S.prof = p; S.tipo = null; S.dia = S.hora = null; resetHorarios(); abrirMeses(); ir(3); });
       box.append(b);
     });
   }
 
-  // ---------- 3. mês + dia ----------
+  // ---------- 3. data e horário (mesma tela) ----------
   function mesesDisponiveis() {
     const hoje = new Date();
     return Array.from({ length: C.MESES_A_FRENTE + 1 }, (_, i) => {
@@ -120,30 +130,53 @@
     for (let d = 1; d <= new Date(y, m, 0).getDate(); d++) {
       const iso = `${y}-${pad(m)}-${pad(d)}`;
       const livre = !!S.dias[iso]?.length;
-      const b = el('button', 'dia', String(d));
+      const b = el('button', 'dia' + (iso === S.dia ? ' sel' : ''), String(d));
       b.type = 'button';
       b.disabled = !livre;
-      if (livre) b.addEventListener('click', () => { S.dia = iso; S.hora = null; renderHorarios(); ir(4); });
+      b.dataset.iso = iso;
+      if (livre) b.addEventListener('click', () => escolherDia(iso));
       cal.append(b);
     }
+    $('#sem-dias')?.remove();
     if (!Object.keys(S.dias).length) cal.after(Object.assign(el('p', 'muted', 'Sem horários neste mês. Escolha outro mês.'), { id: 'sem-dias' }));
-    else $('#sem-dias')?.remove();
   }
-
-  // ---------- 4. horário ----------
+  function escolherDia(iso) {
+    S.dia = iso; S.hora = null;
+    $$('#calendario .dia').forEach((b) => b.classList.toggle('sel', b.dataset.iso === iso));
+    renderHorarios();
+  }
+  function resetHorarios() {
+    $('#dia-escolhido').textContent = 'Escolha um dia no calendário';
+    $('#lista-horarios').replaceChildren();
+    atualizarResumoParcial();
+  }
   function renderHorarios() {
-    $('#dia-escolhido').textContent = `${S.prof.nome} · ${dataBR(S.dia)}`;
+    $('#dia-escolhido').textContent = diaLongo(S.dia);
     const box = $('#lista-horarios');
     box.replaceChildren();
-    S.dias[S.dia].forEach((h) => {
-      const b = el('button', 'chip', h);
+    (S.dias[S.dia] || []).forEach((h) => {
+      const b = el('button', 'chip' + (h === S.hora ? ' on' : ''), h);
       b.type = 'button';
-      b.addEventListener('click', () => { S.hora = h; renderTipos(); ir(5); });
+      b.addEventListener('click', () => {
+        S.hora = h;
+        $$('#lista-horarios .chip').forEach((c) => c.classList.toggle('on', c === b));
+        atualizarResumoParcial();
+      });
       box.append(b);
     });
+    atualizarResumoParcial();
   }
+  function atualizarResumoParcial() {
+    preencher($('#resumo-parcial'), [
+      ['Profissional', S.prof ? S.prof.nome : '—'],
+      ['Data', S.dia && S.hora ? `${dataBR(S.dia).slice(0, 5)} às ${S.hora}` : 'a escolher'],
+      ['Consulta', 'a escolher'],
+    ]);
+    $('#btn-horario').disabled = !(S.dia && S.hora);
+  }
+  $('#btn-horario').addEventListener('click', () => { renderTipos(); ir(4); });
 
-  // ---------- 5. tipo de consulta ----------
+  // ---------- 4. tipo de consulta ----------
   function renderTipos() {
     const box = $('#lista-tipos');
     box.replaceChildren();
@@ -151,24 +184,20 @@
       const b = el('button', 'card');
       b.type = 'button';
       b.append(el('strong', null, t.nome), el('span', 'muted', `${t.duracao_min} min`));
-      b.addEventListener('click', () => { S.tipo = t; renderResumo(); ir(6); });
+      b.addEventListener('click', () => { S.tipo = t; renderResumo(); ir(5); });
       box.append(b);
     });
   }
 
-  // ---------- 6. confirmação ----------
-  function renderResumo() {
-    const dl = $('#resumo');
-    dl.replaceChildren();
-    [
-      ['Paciente', S.paciente.nome],
-      ['WhatsApp', S.paciente.whatsapp],
-      ['Profissional', S.prof.nome],
-      ['Consulta', `${S.tipo.nome} (${S.tipo.duracao_min} min)`],
-      ['Data', dataBR(S.dia)],
-      ['Horário', S.hora],
-    ].forEach(([k, v]) => { dl.append(el('dt', null, k), el('dd', null, v)); });
-  }
+  // ---------- 5. confirmação ----------
+  const linhasResumo = () => [
+    ['Paciente', S.paciente.nome],
+    ['WhatsApp', S.waTela || S.paciente.whatsapp],
+    ['Profissional', S.prof.nome],
+    ['Consulta', `${S.tipo.nome} · ${S.tipo.duracao_min} min · online`],
+    ['Data', `${dataBR(S.dia)} às ${S.hora}`],
+  ];
+  function renderResumo() { preencher($('#resumo'), linhasResumo()); }
 
   $('#btn-confirmar').addEventListener('click', async (ev) => {
     const btn = ev.currentTarget;
@@ -185,13 +214,24 @@
         observacoes: $('#observacoes').value.trim() || null,
         utm: Object.fromEntries(['source', 'medium', 'campaign'].map((k) => [k, new URLSearchParams(location.search).get('utm_' + k)])),
       });
-      $('#msg-sucesso').textContent = `${S.tipo.nome} com ${S.prof.nome} em ${dataBR(S.dia)} às ${S.hora}. Código: ${r.agendamento_id}`;
-      ir('ok');
+      // vai para a página de confirmação; guarda só o resumo sem dados pessoais
+      try {
+        sessionStorage.setItem('agendamento_ok', JSON.stringify({
+          profissional: S.prof.nome,
+          consulta: `${S.tipo.nome} · ${S.tipo.duracao_min} min · online`,
+          data: `${dataBR(S.dia)} às ${S.hora}`,
+          codigo: r.agendamento_id,
+        }));
+      } catch { /* sem armazenamento: a confirmação abre sem o resumo */ }
+      location.href = 'confirmacao.html';
     } catch (e) {
       if (e.status === 409) {
+        // alguém pegou o horário: volta à tela de data e horário com a agenda atualizada
         S.key = crypto.randomUUID();
+        S.hora = null;
         await carregarMes(S.mes);
-        if (S.dias[S.dia]?.length) { renderHorarios(); ir(4); } else ir(3);
+        if (S.dias[S.dia]?.length) renderHorarios(); else { S.dia = null; resetHorarios(); }
+        ir(3);
         erro('Esse horário acabou de ser ocupado. Escolha outro.');
       } else erro('Não foi possível concluir o agendamento. Tente novamente.');
     } finally { btn.disabled = false; }
@@ -199,10 +239,10 @@
 
   // ---------- navegação ----------
   $$('[data-voltar]').forEach((b) => b.addEventListener('click', () => ir(passo - 1)));
-  $('#btn-novo').addEventListener('click', () => { S = novo(); $('#form-paciente').reset(); ir(1); });
 
   // ---------- init ----------
   API.catalogo().then((c) => { catalogo = c.profissionais || []; renderProfissionais(); })
     .catch(() => erro('Não foi possível carregar os profissionais. Recarregue a página.'));
+  atualizarResumoParcial();
   ir(1);
 })();
