@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Entrar — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body>
+  <main class="lg">
+    <section class="l">
+      <a class="brand" href="../index.html" style="padding:0;font-size:26px"><span>Clínica<br>Corpo Terra<small>Sistema da clínica</small></span></a>
+      <div>
+        <h1>Seu <b>cuidado</b>,<br>num só lugar</h1>
+        <p style="color:#cfe9e5;margin-top:16px;font-size:19px;font-weight:300;max-width:34ch">Consultas, prontuário e exames com acesso protegido.</p>
+      </div>
+      <small style="color:#9fd0cb">Seus dados de saúde ficam protegidos e só você e o profissional acessam.</small>
+    </section>
+    <section class="r">
+      <h2 style="font-size:32px;font-weight:600">Entrar</h2>
+      <div class="sw" role="group" aria-label="Tipo de acesso">
+        <button type="button" id="b-pac" class="on" aria-pressed="true">Sou paciente</button>
+        <button type="button" id="b-prof" aria-pressed="false">Sou profissional</button>
+      </div>
+      <form id="f-login" novalidate>
+        <label class="fld" style="margin-top:16px">E-mail<input id="email" type="email" autocomplete="username" placeholder="maria@exemplo.com"></label>
+        <label class="fld">Senha<input id="senha" type="password" autocomplete="current-password" placeholder="••••••••"></label>
+        <p class="sm" id="erro" role="alert" style="color:#9a3324;min-height:22px"></p>
+        <button class="bt full" type="submit">Entrar</button>
+        <p class="row sm" style="margin-top:12px"><a href="#" id="esqueci" style="color:var(--brand);font-weight:600">Esqueci a senha</a><span class="sp mu">Primeiro acesso? Use o link do WhatsApp</span></p>
+      </form>
+      <div class="demo" style="max-width:420px">
+        <p style="margin:0 0 8px">Protótipo: nenhum dado é enviado ou guardado. Com <b>luis@exemplo.com</b> (e qualquer senha) você entra como profissional; com qualquer outro e-mail, como paciente.</p>
+        <p class="row" style="gap:16px;margin:0;flex-wrap:wrap"><a href="#" id="demo-prof" style="color:var(--brand);font-weight:600">Ver como profissional</a><a href="#" id="demo-pac" style="color:var(--brand);font-weight:600">Ver como paciente</a></p>
+      </div>
+    </section>
+  </main>
+  <script>
+    (function () {
+      let papel = new URLSearchParams(location.search).get('papel') === 'prof' ? 'prof' : 'pac';
+      const bp = document.getElementById('b-pac'), bf = document.getElementById('b-prof'), email = document.getElementById('email');
+      function marcar() {
+        bp.classList.toggle('on', papel === 'pac'); bf.classList.toggle('on', papel === 'prof');
+        bp.setAttribute('aria-pressed', papel === 'pac'); bf.setAttribute('aria-pressed', papel === 'prof');
+        email.placeholder = papel === 'prof' ? 'luis@exemplo.com' : 'maria@exemplo.com';
+      }
+      bp.onclick = () => { papel = 'pac'; marcar(); }; bf.onclick = () => { papel = 'prof'; marcar(); };
+      marcar();
+      document.getElementById('f-login').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const erro = document.getElementById('erro');
+        if (!/^\S+@\S+\.\S+$/.test(email.value.trim())) return (erro.textContent = 'Informe um e-mail válido.');
+        if (!document.getElementById('senha').value) return (erro.textContent = 'Informe a senha.');
+        // No sistema real, o perfil vem da conta (servidor), não de um botão. Aqui: este e-mail é o profissional.
+        entrar(/^luis@/i.test(email.value.trim()) ? 'prof' : papel);
+      });
+      function entrar(p) {
+        sessionStorage.setItem('papel', p);
+        location.href = p === 'prof' ? 'agenda.html' : 'paciente.html';
+      }
+      document.getElementById('demo-prof').onclick = (e) => { e.preventDefault(); entrar('prof'); };
+      document.getElementById('demo-pac').onclick = (e) => { e.preventDefault(); entrar('pac'); };
+      document.getElementById('esqueci').onclick = (e) => { e.preventDefault(); document.getElementById('erro').style.color = '#00716f'; document.getElementById('erro').textContent = 'No sistema real, enviaremos um link por e-mail ou WhatsApp.'; };
+    })();
+  </script>
+</body>
+</html>

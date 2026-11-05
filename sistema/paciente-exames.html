@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Meus exames — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="pac" data-nav="paciente-exames.html" data-titulo="Meus exames" data-sub="Só aparecem os exames liberados pelo profissional">
+  <main id="conteudo">
+    <div class="gap" id="lista" style="gap:10px"></div>
+    <p class="aviso">Os exames são informações de saúde. Não compartilhe a sua senha com ninguém.</p>
+    <dialog id="dlg"><h3 id="d-t"></h3><p class="mu" id="d-p"></p><div class="acoes" style="margin-top:18px"><button class="bt out" id="d-f">Fechar</button></div></dialog>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, fmtData, ico, toast } = S;
+      const meus = D.exames.filter((e) => e.paciente === D.pacienteLogado && e.liberado);
+      const box = $('#lista');
+      if (!meus.length) box.append(el('p', 'vazio', 'Nenhum exame liberado ainda.'));
+      meus.forEach((e) => {
+        const f = el('div', 'fi'), i = el('span', 'ico'); i.innerHTML = ico('i-file'); f.style.gridTemplateColumns = '44px 1fr auto';
+        const t = el('div'); t.append(el('b', null, e.nome), el('small', null, fmtData(e.data) + ' · ' + e.tipo));
+        const a = el('div', 'row'); if (e.novo) a.append(el('span', 'pl', 'Novo'));
+        const ver = el('button', 'bt out sm'); ver.type = 'button'; ver.innerHTML = ico('i-eye') + 'Ver';
+        ver.onclick = () => { $('#d-t').textContent = e.nome; $('#d-p').textContent = 'Aqui abriria o arquivo do exame (' + e.tipo + ', ' + e.tam + '). No protótipo não há arquivo real.'; $('#dlg').showModal(); };
+        const bx = el('button', 'bt sm'); bx.type = 'button'; bx.innerHTML = ico('i-down') + 'Baixar';
+        bx.onclick = () => toast('No sistema real, o download começa aqui.');
+        a.append(ver, bx); f.append(i, t, a); box.append(f);
+      });
+      $('#d-f').onclick = () => $('#dlg').close();
+    })();
+  </script>
+</body>
+</html>

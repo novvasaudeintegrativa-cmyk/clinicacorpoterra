@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Site e sistema da Clínica Corpo Terra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap">
+<style>
+/* Apresentação 16:9 (1920x1080). Setas, espaço e clique navegam; F = tela cheia; Ctrl+P = PDF (1 slide por página). */
+:root {
+  --ink: #00262c; --muted: #4c6b6e; --line: #cfe3e0;
+  --bg: #f6faf9; --card: #ffffff; --cream: #fdeee3;
+  --brand: #00716f; --deep: #00454d; --mint: #00dcc0; --soft: #e3f1ef;
+  --font: "Outfit", system-ui, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #0b1f22; font-family: var(--font); color: var(--ink); overflow: hidden; }
+#deck { position: fixed; inset: 0; }
+
+/* ---- slide base ---- */
+.slide { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; padding: 104px 128px 144px; display: none; flex-direction: column; gap: 40px; background: var(--bg); transform-origin: top left; overflow: hidden; }
+.slide.on { display: flex; }
+.slide > .rodape { position: absolute; left: 128px; right: 128px; bottom: 56px; display: flex; justify-content: space-between; font-size: 24px; color: var(--muted); }
+.slide.dark > .rodape { color: #9fd0cb; }
+.dark { background: linear-gradient(160deg, #00454d 0%, #006b6b 100%); color: #fff; }
+.cream { background: var(--cream); }
+
+.eyebrow { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--brand); }
+.dark .eyebrow { color: var(--mint); }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 120px; font-weight: 300; line-height: 1.05; letter-spacing: -2px; }
+h2 { font-size: 72px; font-weight: 300; line-height: 1.1; letter-spacing: -1px; }
+h2 b, h1 b { font-weight: 700; color: var(--brand); }
+.dark h1 b, .dark h2 b { color: var(--mint); }
+h3 { font-size: 40px; font-weight: 600; line-height: 1.2; }
+.lead { font-size: 40px; font-weight: 300; line-height: 1.35; color: var(--muted); }
+.dark .lead { color: #cfe9e5; }
+.txt { font-size: 32px; line-height: 1.4; color: var(--muted); font-weight: 300; }
+.tag { display: inline-block; font-size: 24px; font-weight: 600; padding: 8px 20px; border-radius: 999px; background: var(--soft); color: var(--brand); }
+.tag.warn { background: #fff1d6; color: #7a5200; }
+.dark .tag { background: rgba(0, 220, 192, .16); color: var(--mint); }
+
+/* ---- blocos ---- */
+.grid { display: grid; gap: 32px; }
+.g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
+.card { background: var(--card); border: 2px solid var(--line); border-radius: 24px; padding: 40px; display: flex; flex-direction: column; gap: 16px; }
+.card.deep { background: var(--deep); border-color: var(--deep); color: #fff; }
+.card.deep .txt { color: #cfe9e5; }
+.card .n { font-size: 28px; font-weight: 700; color: var(--brand); font-family: ui-monospace, Menlo, Consolas, monospace; }
+.card.deep .n { color: var(--mint); }
+.fill { flex: 1; }
+
+/* passos em fila */
+.passos { display: flex; gap: 24px; align-items: stretch; }
+.passo { flex: 1; background: var(--card); border: 2px solid var(--line); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 14px; position: relative; }
+.passo .n { width: 56px; height: 56px; border-radius: 50%; background: var(--mint); color: var(--ink); font-size: 28px; font-weight: 700; display: grid; place-items: center; }
+.passo h3 { font-size: 34px; }
+.passo .txt { font-size: 28px; }
+
+/* tabelas */
+table { width: 100%; border-collapse: collapse; font-size: 28px; }
+th, td { text-align: left; padding: 16px 24px; border-bottom: 2px solid var(--line); vertical-align: top; line-height: 1.3; }
+th { background: var(--deep); color: #fff; font-weight: 600; font-size: 26px; }
+th:first-child { border-radius: 16px 0 0 0; } th:last-child { border-radius: 0 16px 0 0; }
+td:first-child { font-weight: 600; }
+tr:nth-child(even) td { background: #eef6f5; }
+td.ok { color: var(--brand); font-weight: 600; }
+td.no { color: #8a3a2e; font-weight: 600; }
+td.tbd { color: #7a5200; font-weight: 600; }
+
+/* divisor de parte */
+.parte { justify-content: center; gap: 36px; }
+.parte .grande { font-size: 380px; font-weight: 700; line-height: .8; color: rgba(0, 220, 192, .12); position: absolute; right: 128px; bottom: 120px; letter-spacing: -10px; }
+
+/* slides de mockup: título curto + tela embutida (mockups/index.html?embed=1) */
+.mockslide { padding: 72px 128px; gap: 12px; background: #eef5f4; }
+.mhead { display: flex; justify-content: space-between; align-items: flex-end; flex: none; }
+.mhead h2 { font-size: 56px; }
+.mock { flex: 1; min-height: 0; width: 100%; border: 0; background: transparent; }
+
+/* interface */
+.ui { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 999px; background: rgba(0, 20, 24, .78); color: #fff; font: 600 14px var(--font); z-index: 10; opacity: .0; transition: opacity .25s; }
+body:hover .ui, .ui:focus-within { opacity: 1; }
+.ui button { font: inherit; border: 0; border-radius: 999px; padding: 8px 14px; background: transparent; color: #fff; cursor: pointer; }
+.ui button:hover { background: rgba(255, 255, 255, .15); }
+.bar { position: fixed; left: 0; top: 0; height: 4px; background: var(--mint); z-index: 11; transition: width .25s; }
+
+@page { size: 1920px 1080px; margin: 0; }
+@media print {
+  html, body { overflow: visible; height: auto; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #deck { position: static; }
+  .slide { display: flex !important; position: relative; transform: none !important; break-after: page; page-break-after: always; }
+  .ui, .bar { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+
+<main id="deck">
+
+<!-- 1. Capa -->
+<section class="slide dark" style="justify-content:space-between">
+  <p class="eyebrow">Clínica Corpo Terra</p>
+  <div style="display:flex;flex-direction:column;gap:32px">
+    <h1>Site e <b>sistema</b><br>da clínica</h1>
+    <p class="lead">O que vamos construir e o que precisamos para começar</p>
+  </div>
+  <p style="font-size:28px;color:#9fd0cb">Novembro de 2026</p>
+</section>
+
+<!-- 2. Visão: dois produtos separados -->
+<section class="slide">
+  <p class="eyebrow">Visão geral</p>
+  <h2>Dois produtos, <b>separados</b></h2>
+  <div class="grid g2" style="flex:1">
+    <div class="card">
+      <span class="tag">Sem login</span>
+      <h3>O site</h3>
+      <p class="txt">Aberto a qualquer pessoa. Apresenta o atendimento do Luis Manoel, responde dúvidas e leva ao agendamento online.</p>
+      <div class="fill"></div>
+      <p class="txt"><b style="color:#00262c">Quem usa:</b> quem ainda vai ser paciente.</p>
+    </div>
+    <div class="card deep">
+      <span class="tag">Com login e senha</span>
+      <h3>O sistema</h3>
+      <p class="txt">Onde se atende e se acompanha: agenda, prontuário e exames. Cada pessoa entra com a sua conta e vê só o que é seu.</p>
+      <div class="fill"></div>
+      <p class="txt"><b style="color:#fff">Quem usa:</b> profissionais e pacientes.</p>
+    </div>
+  </div>
+  <p class="lead">O agendamento feito no site chega ao sistema. Fora isso, cada um tem a sua função.</p>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
+</section>
+
+<!-- 3. Parte 1 -->
+<section class="slide dark parte">
+  <span class="grande">1</span>
+  <p class="eyebrow">Parte 1</p>
+  <h1>O <b>site</b></h1>
+  <p class="lead" style="max-width:1200px">Aberto, sem login. Apresenta o atendimento, convence e leva ao agendamento.</p>
+</section>
+
+<!-- 4. Jornada do paciente no site -->
+<section class="slide">
+  <p class="eyebrow">Parte 1 · O site</p>
+  <h2>A jornada do paciente <b>no site</b></h2>
+  <div class="passos" style="flex:1">
+    <div class="passo"><span class="n">1</span><h3>Conhece</h3><p class="txt">Lê sobre o atendimento, os sinais e como funciona.</p></div>
+    <div class="passo"><span class="n">2</span><h3>Se cadastra</h3><p class="txt">Informa nome, WhatsApp e e-mail e aceita o uso dos dados.</p></div>
+    <div class="passo"><span class="n">3</span><h3>Escolhe</h3><p class="txt">Profissional, mês, dia, horário livre e tipo de consulta.</p></div>
+    <div class="passo"><span class="n">4</span><h3>Confirma</h3><p class="txt">Vê o resumo e confirma. Se o horário foi ocupado, escolhe outro.</p></div>
+    <div class="passo"><span class="n">5</span><h3>Recebe</h3><p class="txt">Confirmação e lembrete pelo WhatsApp.</p></div>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 1 · O site</span></div>
+</section>
+
+<!-- 5. Estrutura da página -->
+<section class="slide">
+  <p class="eyebrow">Parte 1 · O site</p>
+  <h2>O que a <b>página</b> tem</h2>
+  <div class="grid g4" style="flex:1;grid-template-rows:1fr 1fr">
+    <div class="card"><span class="n">01</span><h3>Abertura</h3><p class="txt">Promessa, prova e botão de agendar.</p></div>
+    <div class="card"><span class="n">02</span><h3>Sinais</h3><p class="txt">O paciente se reconhece.</p></div>
+    <div class="card"><span class="n">03</span><h3>Como funciona</h3><p class="txt">O atendimento em três passos.</p></div>
+    <div class="card"><span class="n">04</span><h3>Quem atende</h3><p class="txt">Foto e história do Luis Manoel.</p></div>
+    <div class="card"><span class="n">05</span><h3>Depoimentos</h3><p class="txt">Só relatos reais e autorizados.</p></div>
+    <div class="card"><span class="n">06</span><h3>Objeções</h3><p class="txt">Respostas às dúvidas antes de decidir.</p></div>
+    <div class="card deep"><span class="n">07</span><h3>Agendamento</h3><p class="txt">O fluxo completo, dentro da página.</p></div>
+    <div class="card"><span class="n">08</span><h3>Perguntas frequentes</h3><p class="txt">Valores, remarcação, online.</p></div>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 1 · O site</span></div>
+</section>
+
+<!-- Mockups do site -->
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 1 · O site · Mockup</p><h2>Página de <b>vendas</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-vendas" title="Mockup da página de vendas"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 1 · O site · Mockup</p><h2><b>Agendamento</b> online</h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-agendar" title="Mockup do agendamento"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 1 · O site · Mockup</p><h2>Agendamento <b>confirmado</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-confirmacao" title="Mockup da confirmação"></iframe>
+</section>
+
+<!-- 6. O que o site precisa -->
+<section class="slide">
+  <p class="eyebrow">Parte 1 · O site</p>
+  <h2>O que o site <b>precisa de vocês</b></h2>
+  <table>
+    <tr><th style="width:42%">O site entrega</th><th>Precisamos da clínica</th></tr>
+    <tr><td>Página de vendas com textos e depoimentos</td><td>História, diferenciais, dúvidas dos pacientes, depoimentos autorizados, fotos</td></tr>
+    <tr><td>Cadastro com consentimento LGPD</td><td>Responsável pelos dados, termo de consentimento, política de privacidade</td></tr>
+    <tr><td>Escolha de dia e horário</td><td>Dias e horários de atendimento, folgas, regras de remarcação</td></tr>
+    <tr><td>Tipos de consulta</td><td>Lista de atendimentos, duração e valor</td></tr>
+    <tr><td>Confirmação por WhatsApp</td><td>Número de WhatsApp e texto das mensagens</td></tr>
+    <tr><td>Site publicado</td><td>Domínio, logo e cores</td></tr>
+  </table>
+  <p class="txt">Já existe um protótipo do site, com dados de exemplo, para validarmos o visual e o fluxo.</p>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 1 · O site</span></div>
+</section>
+
+<!-- 7. Parte 2 -->
+<section class="slide dark parte">
+  <span class="grande">2</span>
+  <p class="eyebrow">Parte 2</p>
+  <h1>O <b>sistema</b><br>com login</h1>
+  <p class="lead" style="max-width:1300px">Onde se atende e se acompanha: agenda, prontuário e exames.</p>
+</section>
+
+<!-- 8. Perfis -->
+<section class="slide">
+  <p class="eyebrow">Parte 2 · O sistema</p>
+  <h2>Quem entra, e <b>com quê</b></h2>
+  <div class="grid g3" style="flex:1">
+    <div class="card deep">
+      <span class="tag">Atende</span>
+      <h3>Profissional</h3>
+      <p class="txt">Entra com login e senha. Vê a agenda, os pacientes, o prontuário e os exames.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Acompanha</span>
+      <h3>Paciente</h3>
+      <p class="txt">Entra com login e senha. Vê as suas consultas, os seus exames e os seus dados. Nada de outras pessoas.</p>
+    </div>
+    <div class="card">
+      <span class="tag warn">A confirmar</span>
+      <h3>Equipe de apoio</h3>
+      <p class="txt">Organiza agendamentos e responde pacientes. Se existir, o acesso ao prontuário clínico é limitado.</p>
+    </div>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
+</section>
+
+<!-- 9. Acesso e segurança -->
+<section class="slide">
+  <p class="eyebrow">Parte 2 · O sistema</p>
+  <h2>Login, senha e <b>segurança</b></h2>
+  <div class="grid g3" style="flex:1;grid-template-rows:1fr 1fr">
+    <div class="card"><h3>Conta pessoal</h3><p class="txt">Cada pessoa tem o seu login e a sua senha. Ninguém usa a conta do outro.</p></div>
+    <div class="card"><h3>Cada um vê o seu</h3><p class="txt">O paciente só vê os próprios dados. A ficha clínica só abre para quem tem permissão.</p></div>
+    <div class="card"><h3>Registro de acessos</h3><p class="txt">Fica anotado quem abriu cada ficha ou exame, e quando.</p></div>
+    <div class="card"><h3>Recuperar a senha</h3><p class="txt">Por e-mail ou WhatsApp. <span class="tag warn">A definir</span></p></div>
+    <div class="card"><h3>Sessão que expira</h3><p class="txt">O sistema sai sozinho depois de um tempo sem uso.</p></div>
+    <div class="card"><h3>Duas etapas</h3><p class="txt">Código extra ao entrar, para proteger dados de saúde. <span class="tag warn">A definir</span></p></div>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
+</section>
+
+<!-- Mockup do login -->
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · O sistema · Mockup</p><h2><b>Login</b> do sistema</h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-login" title="Mockup do login"></iframe>
+</section>
+
+<!-- 10. Área do profissional -->
+<section class="slide">
+  <p class="eyebrow">Parte 2 · O sistema · Profissional</p>
+  <h2>O que o <b>profissional</b> usa</h2>
+  <div class="grid g3" style="flex:1;grid-template-rows:1fr 1fr">
+    <div class="card"><span class="n">Agenda</span><h3>Consultas do dia e do mês</h3><p class="txt">Confirmar, remarcar, cancelar e marcar como realizada.</p></div>
+    <div class="card"><span class="n">Pacientes</span><h3>Cadastro com nº de prontuário</h3><p class="txt">Status (ativo, inativo, novo lead), origem, interesses e histórico, ligados a todas as consultas.</p></div>
+    <div class="card deep"><span class="n">Prontuário</span><h3>Ficha do paciente</h3><p class="txt">Queixa, histórico, evolução e condutas. Imprime em PDF.</p></div>
+    <div class="card deep"><span class="n">Exames</span><h3>Anexar e consultar</h3><p class="txt">Guarda os arquivos e decide quais o paciente pode ver.</p></div>
+    <div class="card"><span class="n">Financeiro</span><h3>Receitas e despesas</h3><p class="txt">O controle financeiro da clínica.</p></div>
+    <div class="card"><span class="n">WhatsApp</span><h3>Confirmação e lembrete</h3><p class="txt">Mensagens automáticas ao paciente.</p></div>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
+</section>
+
+<!-- Mockups do profissional -->
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Agenda</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-agenda" title="Mockup da agenda"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Pacientes</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-pacientes" title="Mockup da lista de pacientes"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Cadastro</b> do paciente</h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-cadastro" title="Mockup do cadastro do paciente"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Relacionamento</b> e fidelização</h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-relacionamento" title="Mockup do relacionamento e fidelização"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Prontuário</b> do paciente</h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-prontuario" title="Mockup do prontuário"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Exames</b> dos pacientes</h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-exames" title="Mockup dos exames"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Financeiro</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-financeiro" title="Mockup do financeiro"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Horários</b> e consultas</h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-horarios" title="Mockup dos horários e tipos de consulta"></iframe>
+</section>
+
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Conversas</b> do WhatsApp</h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-conversas" title="Mockup das conversas"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Faltas</b> e remarcações</h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-faltas" title="Mockup das faltas e remarcações"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2>Mensagens <b>automáticas</b></h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-automacoes" title="Mockup das mensagens automáticas"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Equipe</b> e permissões</h2></div><span class="tag warn">A definir</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-equipe" title="Mockup da equipe e permissões"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Atendente · Mockup</p><h2>Perfil de <b>atendente</b></h2></div><span class="tag warn">A definir</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-atendente" title="Mockup do atendente"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Integrações</b></h2></div><span class="tag warn">A definir</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-integracoes" title="Mockup das integrações"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Profissional · Mockup</p><h2><b>Privacidade</b> e segurança</h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-lgpd" title="Mockup da privacidade e segurança"></iframe>
+</section>
+
+<!-- 11. Área do paciente -->
+<section class="slide">
+  <p class="eyebrow">Parte 2 · O sistema · Paciente</p>
+  <h2>O que o <b>paciente</b> vê</h2>
+  <div class="grid g2" style="flex:1;grid-template-rows:1fr 1fr">
+    <div class="card"><h3>Minhas consultas</h3><p class="txt">Próximas e anteriores, com dia, horário e link da consulta online.</p></div>
+    <div class="card deep"><h3>Meus exames</h3><p class="txt">Ver e baixar os arquivos que o profissional liberou.</p></div>
+    <div class="card"><h3>Meus dados</h3><p class="txt">Contato e informações do cadastro, com pedido de correção.</p></div>
+    <div class="card"><h3>Novo agendamento</h3><p class="txt">Volta ao site para marcar a próxima consulta.</p></div>
+  </div>
+  <p class="txt">O paciente nunca vê o prontuário do profissional, só o que for liberado para ele.</p>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
+</section>
+
+<!-- Mockups do paciente -->
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Paciente · Mockup</p><h2><b>Início</b> do paciente</h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-pac-inicio" title="Mockup do início do paciente"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Paciente · Mockup</p><h2><b>Meus exames</b></h2></div><span class="tag warn">Proposta</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-pac-exames" title="Mockup dos exames do paciente"></iframe>
+</section>
+
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Paciente · Mockup</p><h2><b>Minhas consultas</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-pac-consultas" title="Mockup das consultas do paciente"></iframe>
+</section>
+<section class="slide mockslide">
+  <div class="mhead"><div><p class="eyebrow">Parte 2 · Paciente · Mockup</p><h2><b>Meus dados</b></h2></div><span class="tag">Computador e celular</span></div>
+  <iframe class="mock" data-src="mockups/index.html?embed=1#s-pac-dados" title="Mockup dos dados do paciente"></iframe>
+</section>
+
+<!-- 12. Exames -->
+<section class="slide">
+  <p class="eyebrow">Parte 2 · O sistema · Exames</p>
+  <h2>Como os exames <b>chegam ao paciente</b></h2>
+  <div class="passos">
+    <div class="passo"><span class="n">1</span><h3>Exame chega</h3><p class="txt">O profissional anexa, ou o paciente envia.</p></div>
+    <div class="passo"><span class="n">2</span><h3>Guardado</h3><p class="txt">O arquivo fica privado, só abre com login.</p></div>
+    <div class="passo"><span class="n">3</span><h3>Liberado</h3><p class="txt">O profissional decide o que o paciente pode ver.</p></div>
+    <div class="passo"><span class="n">4</span><h3>Aviso</h3><p class="txt">O paciente é avisado pelo WhatsApp.</p></div>
+    <div class="passo"><span class="n">5</span><h3>Consulta</h3><p class="txt">Entra com a senha e vê ou baixa o exame.</p></div>
+  </div>
+  <div class="card" style="background:#fff7e6;border-color:#f0d9a3">
+    <h3>Para decidir com a clínica</h3>
+    <p class="txt">Quem envia o exame: só o profissional ou também o paciente? Quais formatos (PDF, imagem)? Por quanto tempo guardar? Quem pode apagar?</p>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
+</section>
+
+<!-- 13. Permissões -->
+<section class="slide">
+  <p class="eyebrow">Parte 2 · O sistema · Permissões</p>
+  <h2>Quem <b>vê o quê</b></h2>
+  <table>
+    <tr><th style="width:30%">Informação</th><th>Profissional</th><th>Paciente</th><th>Equipe de apoio</th></tr>
+    <tr><td>Agenda</td><td class="ok">Sim</td><td>Só as suas consultas</td><td class="ok">Sim</td></tr>
+    <tr><td>Dados cadastrais</td><td class="ok">Sim</td><td>Só os seus</td><td class="ok">Sim</td></tr>
+    <tr><td>Prontuário (queixa, evolução, condutas)</td><td class="ok">Sim</td><td class="no">Não</td><td class="tbd">A definir</td></tr>
+    <tr><td>Exames</td><td class="ok">Sim</td><td>Só os liberados para ele</td><td class="tbd">A definir</td></tr>
+    <tr><td>Financeiro</td><td class="ok">Sim</td><td class="no">Não</td><td class="tbd">A definir</td></tr>
+  </table>
+  <p class="txt">Proposta inicial, para validarmos com a clínica antes de construir.</p>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span>Parte 2 · O sistema</span></div>
+</section>
+
+<!-- 14. Conexão -->
+<section class="slide dark">
+  <p class="eyebrow">Como as partes se conectam</p>
+  <h2>Do <b>site</b> ao <b>sistema</b></h2>
+  <div class="passos" style="flex:1">
+    <div class="passo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"><span class="n">1</span><h3>Paciente agenda</h3><p class="txt" style="color:#cfe9e5">No site, sem login.</p></div>
+    <div class="passo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"><span class="n">2</span><h3>Sistema recebe</h3><p class="txt" style="color:#cfe9e5">Confere se o horário está livre e grava.</p></div>
+    <div class="passo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"><span class="n">3</span><h3>Paciente ganha conta</h3><p class="txt" style="color:#cfe9e5">Cadastro criado, com link para escolher a senha.</p></div>
+    <div class="passo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"><span class="n">4</span><h3>Profissional atende</h3><p class="txt" style="color:#cfe9e5">Vê na agenda e registra a evolução.</p></div>
+    <div class="passo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"><span class="n">5</span><h3>Paciente acompanha</h3><p class="txt" style="color:#cfe9e5">Entra e vê consultas e exames.</p></div>
+  </div>
+  <p class="lead">Como o paciente cria a senha (no primeiro agendamento ou depois) ainda será decidido.</p>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
+</section>
+
+<!-- 15. Execução -->
+<section class="slide">
+  <p class="eyebrow">Execução</p>
+  <h2>Quem faz o quê, <b>em 8 fases</b></h2>
+  <table style="font-size:26px">
+    <tr><th style="width:30%">Fase</th><th style="width:30%">Quem conduz</th><th>O que depende da clínica</th></tr>
+    <tr><td>1. Levantamento</td><td>Gestor</td><td>Responder o levantamento e enviar materiais</td></tr>
+    <tr><td>2. Textos e estratégia</td><td>Marketing e copywriter</td><td>Aprovar textos e o que se diz sobre saúde</td></tr>
+    <tr><td>3. Design</td><td>Designer</td><td>Aprovar o visual e enviar fotos</td></tr>
+    <tr><td>4. Site</td><td>Desenvolvedor do site</td><td>Domínio, logo e conteúdos finais</td></tr>
+    <tr><td>5. Sistema com login</td><td>Desenvolvedor do sistema</td><td>Perfis, campos da ficha e regras dos exames</td></tr>
+    <tr><td>6. Integração e testes</td><td>Desenvolvedores e gestor</td><td>Testar com a equipe</td></tr>
+    <tr><td>7. Lançamento</td><td>Marketing</td><td>Acesso às contas de anúncio</td></tr>
+    <tr><td>8. Treinamento</td><td>Gestor e desenvolvedor</td><td>Equipe presente</td></tr>
+  </table>
+  <p class="txt">Um profissional jurídico revisa termos, privacidade e regras de publicidade em saúde.</p>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
+</section>
+
+<!-- 16. Decisões e próximos passos -->
+<section class="slide cream">
+  <p class="eyebrow">Para fechar</p>
+  <h2>O que <b>decidir agora</b></h2>
+  <div class="grid g2" style="flex:1;gap:48px">
+    <table style="font-size:26px">
+      <tr><th>Decisão</th></tr>
+      <tr><td>Pagamento da consulta: no agendamento ou à parte</td></tr>
+      <tr><td>Equipe de apoio: existe e vê o quê</td></tr>
+      <tr><td>Exames: quem envia, formatos e guarda</td></tr>
+      <tr><td>Senha do paciente: quando e como cria</td></tr>
+      <tr><td>Segurança extra: duas etapas ao entrar</td></tr>
+      <tr><td>Data desejada para entrar no ar</td></tr>
+    </table>
+    <div class="card deep" style="justify-content:center">
+      <h3>Próximos passos</h3>
+      <p class="txt" style="font-size:34px">1. Responder o levantamento de informações.</p>
+      <p class="txt" style="font-size:34px">2. Decidir os pontos ao lado.</p>
+      <p class="txt" style="font-size:34px">3. Enviar fotos, logo, textos e acessos.</p>
+    </div>
+  </div>
+  <div class="rodape"><span>Site e sistema da Clínica Corpo Terra</span><span></span></div>
+</section>
+
+</main>
+
+<nav class="ui" aria-label="Controles">
+  <button id="prev" type="button" aria-label="Slide anterior">←</button>
+  <span id="count">1 / 1</span>
+  <button id="next" type="button" aria-label="Próximo slide">→</button>
+  <button id="full" type="button">Tela cheia (F)</button>
+  <button id="pdf" type="button">PDF</button>
+</nav>
+
+<script>
+(function () {
+  const slides = [...document.querySelectorAll(".slide")];
+  const count = document.getElementById("count"), bar = document.getElementById("bar");
+  let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+
+  function fit() {
+    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    const x = (innerWidth - 1920 * s) / 2, y = (innerHeight - 1080 * s) / 2;
+    slides.forEach((el) => { el.style.transform = "translate(" + x + "px," + y + "px) scale(" + s + ")"; });
+  }
+  // os mockups só carregam quando o slide (ou o próximo) aparece, para o tamanho da tela ser medido já visível
+  function carregar(el) { el && el.querySelectorAll("iframe[data-src]").forEach((f) => { f.src = f.dataset.src; f.removeAttribute("data-src"); }); }
+  addEventListener("beforeprint", () => slides.forEach(carregar));
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((el, k) => el.classList.toggle("on", k === i));
+    carregar(slides[i]); carregar(slides[i + 1]);
+    count.textContent = (i + 1) + " / " + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + "%";
+    history.replaceState(null, "", "#" + (i + 1));
+  }
+  document.getElementById("prev").onclick = () => show(i - 1);
+  document.getElementById("next").onclick = () => show(i + 1);
+  document.getElementById("pdf").onclick = () => window.print();
+  document.getElementById("full").onclick = toggleFull;
+  function toggleFull() { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+
+  addEventListener("keydown", (e) => {
+    if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    else if (e.key === "Home") show(0);
+    else if (e.key === "End") show(slides.length - 1);
+    else if (e.key === "f" || e.key === "F") toggleFull();
+  });
+  document.getElementById("deck").addEventListener("click", (e) => { show(e.clientX < innerWidth * 0.25 ? i - 1 : i + 1); });
+  addEventListener("resize", fit);
+  fit(); show(i);
+})();
+</script>
+</body>
+</html>

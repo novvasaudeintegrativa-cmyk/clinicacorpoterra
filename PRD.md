@@ -57,6 +57,102 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
 - **Receptor do agendamento:** função pública (sem login, parecida com `coletar-evento`) que recebe
   o que o site público manda e grava em `agendamentos`, vinculando ao tenant certo.
 
+### 4.1 Escopo ampliado — CRM completo da clínica
+
+> Fonte: `Docs/CRM - CLÍNICA CORPO TERRA.md` (levantamento do cliente, 04/11/2026). Mostra que o
+> lado da clínica é um **CRM completo** (funil, WhatsApp, fidelização, indicadores), não só
+> agenda + financeiro. Os módulos abaixo somam-se aos de §4.
+
+1. **Cadastro e gestão de pacientes**
+   - Dados pessoais e histórico de atendimento.
+   - Status do paciente: **ativo, inativo, novo lead**.
+   - Registro de interesses e necessidades.
+   - (Liga com o prontuário de §5: paciente passa a ser entidade própria.)
+2. **Funil comercial**
+   - Captação e organização de leads.
+   - Etapas do atendimento até a conversão (lead → consulta agendada → paciente).
+   - Registro de **motivos de perda**.
+3. **Integração com WhatsApp**
+   - Centralização das conversas.
+   - Mensagens automáticas e follow-ups.
+   - Distribuição de leads entre atendentes.
+4. **Agenda e acompanhamento** (estende o módulo Agenda de §4)
+   - Agendamentos e **confirmações automáticas**.
+   - **Lembretes** de consultas e retornos.
+   - Controle de **faltas e remarcações**.
+5. **Relacionamento e fidelização**
+   - Reativação de pacientes inativos.
+   - Mensagens de aniversário.
+   - Acompanhamento pós-consulta.
+   - Campanhas segmentadas.
+6. **Gestão comercial e indicadores**
+   - Taxa de conversão de leads.
+   - Faturamento e ticket médio.
+   - Desempenho dos vendedores/atendentes.
+   - Origem dos leads e resultado das campanhas.
+7. **Integrações e segurança**
+   - Integração com **TGA** e formulários.
+   - Integração com **Meta Ads**.
+   - **Controle de acesso por funcionário** (perfis/permissões).
+   - Proteção de dados conforme a **LGPD**.
+
+**Impactos nas decisões anteriores**
+- Lembrete/confirmação por WhatsApp, antes "candidato natural" (§5), agora **entra no escopo**.
+- Há "atendentes", "vendedores" e "acesso por funcionário": o cliente prevê mais gente além do
+  Luis Manoel. Isso **enfraquece a premissa de "conta única do tenant"** usada para proteger o
+  prontuário — será preciso permissão por perfil, com prontuário restrito ao profissional.
+- Meta Ads e origem de leads reaproveitam o que o NewCRM já tem (Tráfego/campanhas), mas o
+  `segmento = clinica` não pode esconder esses módulos.
+- Reativação, aniversário e campanhas segmentadas exigem base de pacientes com data de nascimento,
+  último atendimento e consentimento (LGPD) de contato.
+
+### 4.2 Telas: o que já está projetado e o que falta (04/11/2026)
+
+Legenda: **Protótipo** = tela navegável em `sistema/` ou no site (dados fictícios); **Mockup** = tela
+em `mockups/index.html`, usada em `apresentacao-sistema.html`.
+
+**Site público**
+| Tela | Protótipo | Mockup |
+|---|---|---|
+| Página de vendas (`index.html`) | sim | sim |
+| Agendamento (`agendar.html`) | sim | sim |
+| Confirmação (`confirmacao.html`) | sim | sim |
+
+**Sistema, perfil profissional**
+| Tela | Protótipo | Mockup |
+|---|---|---|
+| Login | sim | sim |
+| Agenda | sim | sim |
+| Pacientes (lista com status, origem, leads, indicadores rápidos) | sim, ampliada em 04/11 | sim, ampliada |
+| Cadastro do paciente (contato, interesses, histórico, LGPD, ações de WhatsApp) | sim, nova | sim, nova |
+| Relacionamento e fidelização (reativar, aniversário, pós-consulta, campanha segmentada) | sim, nova | sim, nova |
+| Prontuário | sim | sim |
+| Exames | sim | sim |
+| Financeiro | sim | sim |
+| Horários e tipos de consulta | sim | sim |
+
+**Sistema, perfil paciente**
+| Tela | Protótipo | Mockup |
+|---|---|---|
+| Início | sim | sim |
+| Consultas | sim | **falta** |
+| Meus exames | sim | sim |
+| Meus dados | sim | **falta** |
+
+**Telas que ainda não existem** (vindas do levantamento do cliente, §4.1)
+1. **Funil comercial**: quadro de leads por etapa, com registro do motivo de perda (módulo 2).
+2. **Conversas do WhatsApp**: caixa de entrada centralizada e distribuição de leads entre atendentes (módulo 3).
+3. **Mensagens automáticas**: modelos de mensagem, regras de follow-up, lembrete e confirmação (módulos 3 e 4).
+4. **Faltas e remarcações**: lista de pendências da agenda e histórico por paciente (módulo 4).
+5. **Indicadores**: conversão de leads, faturamento, ticket médio, desempenho por atendente, origem dos leads e resultado de campanhas (módulo 6).
+6. **Equipe e permissões**: cadastro de funcionários e perfil de atendente, com acesso por pessoa (módulo 7).
+7. **Integrações**: Meta Ads, TGA e formulários (módulo 7; TGA ainda indefinido).
+8. **LGPD e segurança**: termo de consentimento, registro de acessos, recuperar senha e sessão (módulo 7).
+9. **Perfil de atendente**: menu e telas próprias, sem acesso ao prontuário.
+
+Ordem sugerida para projetar o que falta: mockups do paciente (2 telas), depois funil, conversas e
+mensagens automáticas (MVP de relacionamento), e por fim indicadores, equipe e integrações.
+
 ## 5. Fora de escopo (por enquanto)
 
 - Cadastro/login de paciente — fica no site público, não no NewCRM.
@@ -87,6 +183,13 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
    consultório)?
 5. **Quem constrói o site público** — mesma equipe, terceirizado, ou outra ferramenta (ex.: Cal.com,
    algo pronto) adaptada?
+6. **O que é "TGA"?** — citado no levantamento (§4.1-7) como integração junto com formulários.
+   Confirmar com o cliente o que é e que dados trocam.
+7. **Quem são os "atendentes/vendedores"?** — o levantamento prevê distribuição de leads e
+   desempenho por vendedor, mas o atendimento é de um profissional só. Quantas pessoas da equipe
+   terão login e com que permissões?
+8. **Prioridade entre módulos** — o escopo cresceu muito (§4.1). Definir um MVP (sugestão: pacientes
+   + agenda + lembretes WhatsApp) e deixar funil, fidelização e indicadores para fases seguintes.
 
 ## 7. Próximo passo sugerido
 

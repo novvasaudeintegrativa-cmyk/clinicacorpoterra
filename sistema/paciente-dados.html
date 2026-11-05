@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Meus dados — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="pac" data-nav="paciente-dados.html" data-titulo="Meus dados" data-sub="Mantenha o seu contato atualizado">
+  <main id="conteudo">
+    <div class="cd" style="max-width:560px">
+      <form id="f">
+        <label class="fld">Nome completo<input id="nome" required></label>
+        <label class="fld">WhatsApp<input id="wa" type="tel"></label>
+        <label class="fld">E-mail<input id="email" type="email"></label>
+        <label class="fld">Nº do prontuário<input id="cod" disabled></label>
+        <button class="bt" type="submit">Salvar</button>
+      </form>
+    </div>
+    <p class="aviso" style="max-width:560px">Para corrigir outros dados ou pedir a exclusão dos seus dados (LGPD), fale com a clínica.</p>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, $, toast } = S, p = S.paciente(D.pacienteLogado);
+      $('#nome').value = p.nome; $('#wa').value = p.whatsapp; $('#email').value = p.email; $('#cod').value = p.codigo;
+      $('#f').onsubmit = (e) => { e.preventDefault(); p.nome = $('#nome').value.trim() || p.nome; p.whatsapp = $('#wa').value; p.email = $('#email').value; toast('Dados salvos (protótipo: só nesta tela).'); };
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Início — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="pac" data-nav="paciente.html" data-titulo="Olá, Maria" data-sub="Veja suas consultas e exames">
+  <template id="acoes-tpl"><a class="bt sm" href="../agendar.html">Agendar nova consulta</a></template>
+  <main id="conteudo">
+    <div class="cd" style="background:var(--deep);border:0;color:#fff;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <div><span class="pl" style="background:rgba(0,220,192,.16);color:var(--mint)">Próxima consulta</span>
+        <h2 id="prox" style="font-size:30px;font-weight:500;margin:10px 0 2px;color:#fff"></h2><div style="color:#bfe3de" id="prox-t"></div></div>
+      <div class="row sp" style="flex-wrap:wrap"><a class="bt mint" href="#" id="entrar"><svg class="ic"><use href="#i-video"/></svg>Entrar na consulta</a><a class="bt out" href="../agendar.html" style="color:#7af0dc;border-color:#7af0dc">Remarcar</a></div>
+    </div>
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
+      <div class="cd"><h3>Exames novos</h3><div class="gap" id="ex" style="gap:10px"></div><a href="paciente-exames.html" class="sm" style="display:inline-block;margin-top:12px;color:var(--brand);font-weight:600">Ver todos os exames</a></div>
+      <div class="cd"><h3>Consultas anteriores</h3><div class="gap" id="ant" style="gap:12px"></div></div>
+    </div>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, fmtData, ico, toast } = S;
+      const p = S.paciente(D.pacienteLogado);
+      document.querySelector('.topo h1').textContent = 'Olá, ' + p.nome.split(' ')[0];
+      const prox = D.consultasPaciente.find((c) => c.futura);
+      $('#prox').textContent = prox ? fmtData(prox.data) + ' · ' + prox.hora : 'Nenhuma consulta marcada';
+      $('#prox-t').textContent = prox ? prox.tipo + ' · Luis Manoel · online' : '';
+      $('#entrar').onclick = (e) => { e.preventDefault(); toast('O link da consulta chega pelo WhatsApp (protótipo).'); };
+      const ex = $('#ex'), novos = D.exames.filter((e) => e.paciente === p.id && e.liberado).slice(0, 2);
+      if (!novos.length) ex.append(el('p', 'vazio', 'Nenhum exame liberado ainda.'));
+      novos.forEach((e) => { const f = el('div', 'fi'), i = el('span', 'ico'); i.innerHTML = ico('i-file'); const t = el('div'); t.append(el('b', null, e.nome), el('small', null, fmtData(e.data))); f.append(i, t, e.novo ? el('span', 'pl', 'Novo') : el('span')); ex.append(f); });
+      D.consultasPaciente.filter((c) => !c.futura).slice(0, 3).forEach((c) => { const r = el('div', 'row'), a = el('span', 'av lt', c.data.slice(8)); const t = el('div'); t.append(el('b', null, c.tipo), el('div', 'mu sm', fmtData(c.data) + ' · Luis Manoel')); r.append(a, t); $('#ant').append(r); });
+    })();
+  </script>
+</body>
+</html>

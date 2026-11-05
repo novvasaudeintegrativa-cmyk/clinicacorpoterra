@@ -1,0 +1,78 @@
+/* Dados FICTÍCIOS do protótipo (ficam só na memória da página). No sistema real, tudo isto vem do NewCRM,
+   com login de verdade: acesso por perfil e por paciente é regra do SERVIDOR, nunca da tela. */
+window.DADOS = {
+  profissional: { nome: 'Luis Manoel', email: 'luis@exemplo.com' },
+  pacienteLogado: 'p1',
+  pacientes: [
+    { id: 'p1', status:'Ativo', origem:'Instagram', interesses:['Sono','Intestino'], lgpd:true, faltas:0, remarc:1, proxima:'2026-11-12 10:00', codigo: 'PR-000123', nome: 'Maria Exemplo da Silva', nasc: '1984-05-12', cidade: 'Cuiabá, MT', whatsapp: '(65) 90000-0001', email: 'maria@exemplo.com', desde: '2026-03-10', situacao: 'Em acompanhamento',
+      queixa: 'Cansaço persistente, sono irregular e desconforto intestinal há cerca de 8 meses.',
+      evolucao: [
+        { data: '2026-10-20', texto: 'Relata melhora no sono após ajuste de horários. Mantido o plano e reforçada a hidratação.' },
+        { data: '2026-09-22', texto: 'Iniciado plano individual. Orientações de alimentação e rotina explicadas e entendidas.' },
+        { data: '2026-03-10', texto: 'Primeira consulta. Avaliação completa de histórico, rotina e sintomas.' }],
+      condutas: [
+        { nome: 'Chá de camomila', tipo: 'cha', pos: '1 xícara antes de dormir' },
+        { nome: 'Magnésio (conforme orientação)', tipo: 'suplemento', pos: 'Dose e horário definidos na consulta' },
+        { nome: 'Água ao longo do dia', tipo: 'habito', pos: 'Meta combinada com a paciente' }] },
+    { id: 'p2', status:'Ativo', origem:'Indicação', interesses:['Energia'], lgpd:true, faltas:0, remarc:0, proxima:'2026-11-10 10:00', codigo: 'PR-000124', nome: 'Ana Teste Souza', nasc: '1991-11-03', cidade: 'Várzea Grande, MT', whatsapp: '(65) 90000-0002', email: 'ana@exemplo.com', desde: '2026-10-05', situacao: 'Primeira consulta',
+      queixa: 'Quer entender a falta de energia durante a tarde.',
+      evolucao: [{ data: '2026-10-05', texto: 'Primeira consulta. Combinado retorno em 30 dias.' }],
+      condutas: [{ nome: 'Hemograma completo', tipo: 'exame', pos: 'Trazer resultado no retorno' }] },
+    { id: 'p3', status:'Ativo', origem:'Indicação', interesses:['Hábitos'], lgpd:true, faltas:1, remarc:0, proxima:'2026-11-09 14:00', codigo: 'PR-000125', nome: 'Carla Modelo Lima', nasc: '1978-02-27', cidade: 'Rondonópolis, MT', whatsapp: '(66) 90000-0003', email: 'carla@exemplo.com', desde: '2025-08-14', situacao: 'Em acompanhamento',
+      queixa: 'Acompanhamento de rotina e ajuste de hábitos.',
+      evolucao: [{ data: '2026-10-28', texto: 'Consulta de acompanhamento. Sem queixas novas.' }, { data: '2025-08-14', texto: 'Primeira consulta.' }],
+      condutas: [] },
+    { id: 'p4', status:'Ativo', origem:'Instagram', interesses:['Intestino','Sono'], lgpd:true, faltas:0, remarc:2, proxima:'2026-11-10 15:00', codigo: 'PR-000126', nome: 'Paula Demo Ribeiro', nasc: '1989-11-20', cidade: 'Cuiabá, MT', whatsapp: '(65) 90000-0004', email: 'paula@exemplo.com', desde: '2026-02-02', situacao: 'Em acompanhamento',
+      queixa: 'Intestino desregulado e sono leve.', evolucao: [{ data: '2026-10-14', texto: 'Retorno. Boa adesão às orientações.' }], condutas: [] },
+    { id: 'p5', status:'Novo lead', origem:'Site (agendamento)', interesses:['Cabelo','Energia'], lgpd:true, faltas:0, remarc:0, proxima:'2026-11-11 11:00', codigo: 'PR-000127', nome: 'Renata Fictícia Alves', nasc: '1995-11-12', cidade: 'Sinop, MT', whatsapp: '(66) 90000-0005', email: 'renata@exemplo.com', desde: '2026-11-02', situacao: 'Primeira consulta',
+      queixa: 'Cansaço e queda de cabelo.', evolucao: [], condutas: [] },
+    { id: 'p6', status:'Inativo', origem:'Google', interesses:['Sono'], lgpd:true, faltas:2, remarc:1, proxima:'', codigo: 'PR-000128', nome: 'Júlia Exemplo Costa', nasc: '1982-09-09', cidade: 'Cuiabá, MT', whatsapp: '(65) 90000-0006', email: 'julia@exemplo.com', desde: '2026-01-12', situacao: 'Parou de vir',
+      queixa: 'Acompanhamento de sono.', evolucao: [{ data: '2026-09-02', texto: 'Última consulta.' }], condutas: [] },
+  ],
+  // Lead que ainda não agendou (vem do WhatsApp ou de campanha)
+  leads: [
+    { nome: 'Bruna Lead Teste', origem: 'WhatsApp', interesse: 'Cansaço', etapa: 'Conversando', data: '2026-11-03' },
+    { nome: 'Fernanda Demo', origem: 'Instagram', interesse: 'Sono', etapa: 'Novo', data: '2026-11-04' },
+  ],
+  // agenda da semana: dia 0=Seg … 4=Sex; linha = índice em HORAS
+  horas: ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'],
+  dias: ['Seg 9', 'Ter 10', 'Qua 11', 'Qui 12', 'Sex 13'],
+  agenda: [
+    { id: 'a1', dia: 0, hora: 0, paciente: 'p1', tipo: 'Retorno', status: 'c' },
+    { id: 'a2', dia: 0, hora: 3, paciente: 'p3', tipo: 'Acompanhamento', status: 'c' },
+    { id: 'a3', dia: 1, hora: 1, paciente: 'p2', tipo: 'Primeira consulta', status: 'a' },
+    { id: 'a4', dia: 1, hora: 4, paciente: 'p4', tipo: 'Retorno', status: 'c' },
+    { id: 'a5', dia: 2, hora: 2, paciente: 'p5', tipo: 'Primeira consulta', status: 'c' },
+    { id: 'a6', dia: 3, hora: 0, paciente: 'p1', tipo: 'Retorno', status: 'c' },
+    { id: 'a7', dia: 3, hora: 5, paciente: 'p6', tipo: 'Retorno', status: 'a' },
+    { id: 'a8', dia: 4, hora: 1, paciente: 'p3', tipo: 'Retorno', status: 'c' },
+  ],
+  exames: [
+    { id: 'e1', paciente: 'p1', nome: 'Hemograma completo', data: '2026-10-15', tipo: 'PDF', tam: '240 KB', liberado: true, novo: true },
+    { id: 'e2', paciente: 'p1', nome: 'Vitamina D', data: '2026-09-28', tipo: 'PDF', tam: '180 KB', liberado: true, novo: false },
+    { id: 'e3', paciente: 'p1', nome: 'Ferritina', data: '2026-03-10', tipo: 'Imagem', tam: '1,2 MB', liberado: true, novo: false },
+    { id: 'e4', paciente: 'p2', nome: 'Ferritina', data: '2026-11-04', tipo: 'Imagem', tam: '1,1 MB', liberado: false, novo: false },
+    { id: 'e5', paciente: 'p3', nome: 'Vitamina D', data: '2026-10-28', tipo: 'PDF', tam: '150 KB', liberado: true, novo: false },
+    { id: 'e6', paciente: 'p4', nome: 'Glicemia', data: '2026-11-02', tipo: 'PDF', tam: '150 KB', liberado: false, novo: false },
+  ],
+  lancamentos: [
+    { data: '2026-11-09', desc: 'Consulta · Carla Modelo', tipo: 'r', valor: 280 },
+    { data: '2026-11-06', desc: 'Plataforma de videochamada', tipo: 'd', valor: 90 },
+    { data: '2026-11-05', desc: 'Consulta · Maria Exemplo', tipo: 'r', valor: 280 },
+    { data: '2026-11-04', desc: 'Consulta · Paula Demo', tipo: 'r', valor: 280 },
+    { data: '2026-11-03', desc: 'Contador', tipo: 'd', valor: 350 },
+  ],
+  meses: [['Jun', 55], ['Jul', 62], ['Ago', 58], ['Set', 74], ['Out', 82], ['Nov', 90]],
+  horarios: [
+    { dia: 'Segunda', on: true, manha: '09:00–12:00', tarde: '14:00–18:00' }, { dia: 'Terça', on: true, manha: '09:00–12:00', tarde: '14:00–18:00' },
+    { dia: 'Quarta', on: true, manha: '09:00–12:00', tarde: '14:00–18:00' }, { dia: 'Quinta', on: true, manha: '09:00–12:00', tarde: '14:00–18:00' },
+    { dia: 'Sexta', on: true, manha: '09:00–12:00', tarde: '' }, { dia: 'Sábado', on: false, manha: '', tarde: '' }, { dia: 'Domingo', on: false, manha: '', tarde: '' },
+  ],
+  tipos: [{ nome: 'Primeira consulta', min: 60, valor: '' }, { nome: 'Retorno', min: 45, valor: '' }, { nome: 'Iridologia (a confirmar)', min: 30, valor: '' }],
+  consultasPaciente: [
+    { data: '2026-11-12', hora: '10:00', tipo: 'Retorno', futura: true },
+    { data: '2026-10-20', hora: '09:00', tipo: 'Retorno', futura: false },
+    { data: '2026-09-22', hora: '09:00', tipo: 'Retorno', futura: false },
+    { data: '2026-03-10', hora: '09:00', tipo: 'Primeira consulta', futura: false },
+  ],
+};

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Cadastro do paciente — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="prof" data-nav="pacientes.html" data-titulo="Cadastro do paciente" data-sub="Contato, origem, interesses e histórico de atendimento">
+  <template id="acoes-tpl">
+    <a class="bt out sm" href="pacientes.html">Voltar aos pacientes</a>
+    <a class="bt sm" id="ir-pront" href="prontuario.html"><svg class="ic"><use href="#i-file"/></svg>Abrir prontuário</a>
+  </template>
+  <main id="conteudo">
+    <div class="row cd" style="gap:16px;flex-wrap:wrap">
+      <span class="av" id="p-av" style="width:60px;height:60px;font-size:20px"></span>
+      <div><h2 id="p-nome" style="font-size:24px;margin:0"></h2><p class="mu" id="p-sub"></p></div>
+      <span class="pl sp" id="p-status"></span>
+    </div>
+
+    <div class="grid2">
+      <div class="gap">
+        <div class="cd"><h3>Dados de contato</h3><dl class="resumo" id="p-dad"></dl></div>
+        <div class="cd"><h3>Interesses e necessidades</h3>
+          <div class="chips" id="p-int"></div>
+          <p class="mu sm" id="p-queixa" style="margin-top:12px"></p>
+        </div>
+        <div class="cd"><h3>Histórico de atendimento</h3><ol class="tl" id="p-hist"></ol></div>
+      </div>
+
+      <div class="gap">
+        <div class="cd"><h3>Relacionamento</h3>
+          <dl class="resumo" id="p-rel"></dl>
+          <label class="fld" style="margin-top:14px">Status do paciente
+            <select id="p-sel"><option>Ativo</option><option>Novo lead</option><option>Inativo</option></select>
+          </label>
+        </div>
+        <div class="cd"><h3>Próxima consulta</h3><p id="p-prox" style="font-weight:600"></p>
+          <div class="acoes" style="margin-top:12px">
+            <button class="bt sm" id="b-conf" type="button">Confirmar</button>
+            <button class="bt out sm" id="b-remarc" type="button">Remarcar</button>
+          </div>
+        </div>
+        <div class="cd"><h3>Mensagem pelo WhatsApp</h3>
+          <div class="acoes">
+            <button class="bt out sm" id="b-lemb" type="button">Enviar lembrete</button>
+            <button class="bt out sm" id="b-pos" type="button">Pós-consulta</button>
+            <button class="bt mint sm" id="b-reat" type="button" hidden>Reativar paciente</button>
+          </div>
+        </div>
+        <div class="cd"><h3>Uso dos dados (LGPD)</h3><p class="sm" id="p-lgpd"></p></div>
+      </div>
+    </div>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, paciente, fmtData, idade, toast } = S;
+      const p = paciente(new URLSearchParams(location.search).get('id')) || D.pacientes[0];
+      const cls = { 'Ativo': '', 'Novo lead': 'w', 'Inativo': 'g' };
+      document.title = 'Cadastro · ' + p.nome;
+      $('#ir-pront').href = 'prontuario.html?id=' + p.id;
+      $('#p-av').textContent = S.iniciais(p.nome);
+      $('#p-nome').textContent = p.nome;
+      $('#p-sub').textContent = idade(p.nasc) + ' anos · ' + p.cidade + ' · ' + p.codigo;
+      $('#p-queixa').textContent = p.queixa ? 'Relato: ' + p.queixa : '';
+
+      const dl = (id, linhas) => { const d = $(id); d.replaceChildren(); linhas.forEach(([k, v]) => d.append(el('dt', null, k), el('dd', null, v))); };
+      dl('#p-dad', [['Nascimento', fmtData(p.nasc)], ['WhatsApp', p.whatsapp || '—'], ['E-mail', p.email || '—'], ['Cidade', p.cidade], ['Paciente desde', fmtData(p.desde)]]);
+
+      const ch = $('#p-int');
+      if (!p.interesses.length) ch.append(el('span', 'mu sm', 'Nenhum interesse registrado.'));
+      p.interesses.forEach((i) => ch.append(el('span', 'pl', i)));
+
+      // histórico: consultas já realizadas (da evolução) + próxima
+      const h = $('#p-hist');
+      if (!p.evolucao.length) h.append(el('li', 'vazio', 'Ainda sem consultas realizadas.'));
+      p.evolucao.forEach((e) => { const li = el('li'); li.append(el('time', null, fmtData(e.data)), el('p', null, 'Consulta realizada')); h.append(li); });
+
+      function status() {
+        const s = $('#p-status'); s.textContent = p.status; s.className = 'pl sp ' + cls[p.status];
+        $('#p-sel').value = p.status; $('#b-reat').hidden = p.status !== 'Inativo';
+        dl('#p-rel', [['Origem', p.origem], ['Faltas', String(p.faltas)], ['Remarcações', String(p.remarc)], ['Última consulta', p.evolucao.length ? fmtData(p.evolucao[0].data) : '—']]);
+      }
+      $('#p-sel').onchange = (e) => { p.status = e.target.value; status(); toast('Status alterado (só nesta tela).'); };
+      status();
+
+      $('#p-prox').textContent = p.proxima ? fmtData(p.proxima.slice(0, 10)) + ' às ' + p.proxima.slice(11) : 'Nenhuma consulta marcada';
+      $('#p-lgpd').textContent = p.lgpd ? 'Autorizou o contato e o uso dos dados para atendimento e lembretes.' : 'Consentimento ainda não registrado. Peça ao paciente antes de enviar mensagens.';
+      $('#b-conf').onclick = () => toast('Confirmação enviada pelo WhatsApp (protótipo).');
+      $('#b-remarc').onclick = () => { p.remarc++; status(); toast('Remarcação registrada (protótipo).'); };
+      $('#b-lemb').onclick = () => toast('Lembrete enviado pelo WhatsApp (protótipo).');
+      $('#b-pos').onclick = () => toast('Mensagem pós-consulta enviada (protótipo).');
+      $('#b-reat').onclick = () => toast('Mensagem de reativação enviada (protótipo).');
+    })();
+  </script>
+</body>
+</html>

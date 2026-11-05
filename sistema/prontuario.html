@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Prontuário — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="prof" data-nav="pacientes.html" data-titulo="Prontuário" data-sub="Ficha do paciente · acesso restrito ao profissional">
+  <template id="acoes-tpl">
+    <a class="bt out sm" href="pacientes.html">Voltar aos pacientes</a>
+    <button class="bt out sm" id="imprimir" type="button"><svg class="ic"><use href="#i-printer"/></svg>Imprimir / PDF</button>
+  </template>
+  <main id="conteudo">
+    <div class="row cd" style="gap:16px">
+      <span class="av" id="p-av" style="width:60px;height:60px;font-size:20px"></span>
+      <div><h2 id="p-nome" style="font-size:24px;margin:0"></h2><p class="mu" id="p-sub"></p></div>
+      <span class="pl sp" id="p-cod"></span>
+    </div>
+    <div class="tabs" role="tablist" id="abas">
+      <button class="on" data-a="evo" role="tab">Evolução</button><button data-a="con" role="tab">Condutas</button><button data-a="exa" role="tab">Exames</button><button data-a="dad" role="tab">Dados</button>
+    </div>
+
+    <div data-aba="evo" class="grid2">
+      <div class="gap">
+        <div class="cd"><h3>Queixa principal</h3><p class="mu" id="p-queixa"></p></div>
+        <div class="cd nao-imprimir"><h3>Nova evolução</h3>
+          <form id="f-evo"><label class="fld">Registro da consulta<textarea id="evo-t" rows="3" maxlength="2000" placeholder="O que foi observado e orientado nesta consulta"></textarea></label><button class="bt sm" type="submit">Adicionar evolução</button></form>
+        </div>
+        <div class="cd"><h3>Histórico de evolução</h3><ol class="tl" id="p-evo"></ol></div>
+      </div>
+      <div class="cd"><h3>Condutas</h3><div class="gap" id="p-con-res" style="gap:8px"></div></div>
+    </div>
+
+    <div data-aba="con" hidden class="grid2">
+      <div class="cd"><h3>Condutas</h3><div class="gap" id="p-con" style="gap:8px"></div></div>
+      <div class="cd nao-imprimir"><h3>Adicionar conduta</h3>
+        <form id="f-con">
+          <label class="fld">Nome<input id="c-nome" required placeholder="Ex.: Chá de camomila"></label>
+          <label class="fld">Tipo<select id="c-tipo"><option value="cha">Chá</option><option value="suplemento">Suplemento</option><option value="habito">Hábito</option><option value="exame">Exame</option></select></label>
+          <label class="fld">Posologia / orientação<input id="c-pos" placeholder="Ex.: 1 xícara antes de dormir"></label>
+          <button class="bt sm" type="submit">Incluir</button>
+        </form>
+      </div>
+    </div>
+
+    <div data-aba="exa" hidden><div class="gap" id="p-exa"></div></div>
+
+    <div data-aba="dad" hidden><div class="cd"><dl class="resumo" id="p-dad"></dl></div></div>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, $$, paciente, fmtData, idade, toast, ico } = S;
+      const p = paciente(new URLSearchParams(location.search).get('id')) || D.pacientes[0];
+      const TIPOS = { cha: ['i-leaf', 'Chá'], suplemento: ['i-flask', 'Suplemento'], habito: ['i-clock', 'Hábito'], exame: ['i-file', 'Exame'] };
+
+      $('#p-av').textContent = S.iniciais(p.nome);
+      $('#p-nome').textContent = p.nome;
+      $('#p-sub').textContent = idade(p.nasc) + ' anos · ' + p.cidade;
+      $('#p-cod').textContent = p.codigo;
+      $('#p-queixa').textContent = p.queixa || '—';
+      document.title = 'Prontuário · ' + p.nome;
+
+      function conduta(c, i, rm) {
+        const d = el('div', 'cdt'); d.style.gridTemplateColumns = rm ? '44px 1fr auto' : '44px 1fr';
+        const ic = el('span', 'ico'); ic.innerHTML = ico(TIPOS[c.tipo][0]);
+        const t = el('div'); t.append(el('b', null, c.nome), el('small', null, TIPOS[c.tipo][1] + (c.pos ? ' · ' + c.pos : '')));
+        d.append(ic, t);
+        if (rm) { const b = el('button', null, '×'); b.type = 'button'; b.setAttribute('aria-label', 'Remover ' + c.nome); b.onclick = () => { p.condutas.splice(i, 1); render(); }; d.append(b); }
+        return d;
+      }
+      function render() {
+        const evo = $('#p-evo'); evo.replaceChildren();
+        if (!p.evolucao.length) evo.append(el('li', 'vazio', 'Nenhuma evolução registrada.'));
+        p.evolucao.forEach((e) => { const li = el('li'), t = el('time', null, fmtData(e.data)); li.append(t, el('p', null, e.texto)); evo.append(li); });
+        ['#p-con-res', '#p-con'].forEach((s, k) => { const b = $(s); b.replaceChildren(); if (!p.condutas.length) b.append(el('p', 'vazio', 'Nenhuma conduta registrada.')); p.condutas.forEach((c, i) => b.append(conduta(c, i, k === 1))); });
+        const ex = $('#p-exa'); ex.replaceChildren();
+        const meus = D.exames.filter((e) => e.paciente === p.id);
+        if (!meus.length) ex.append(el('p', 'vazio', 'Nenhum exame deste paciente.'));
+        meus.forEach((e) => { const f = el('div', 'fi'), ic = el('span', 'ico'); ic.innerHTML = ico('i-file'); const t = el('div'); t.append(el('b', null, e.nome), el('small', null, fmtData(e.data) + ' · ' + e.tipo)); f.append(ic, t, el('span', 'pl ' + (e.liberado ? '' : 'g'), e.liberado ? 'Liberado ao paciente' : 'Não liberado')); ex.append(f); });
+        const dl = $('#p-dad'); dl.replaceChildren();
+        [['Nº do prontuário', p.codigo], ['Nascimento', fmtData(p.nasc)], ['WhatsApp', p.whatsapp || '—'], ['E-mail', p.email || '—'], ['Paciente desde', fmtData(p.desde)], ['Consultas', String(p.evolucao.length)]].forEach(([k, v]) => dl.append(el('dt', null, k), el('dd', null, v)));
+      }
+      $$('#abas button').forEach((b) => b.onclick = () => { $$('#abas button').forEach((x) => x.classList.toggle('on', x === b)); $$('[data-aba]').forEach((s) => (s.hidden = s.dataset.aba !== b.dataset.a)); });
+      $('#f-evo').onsubmit = (e) => { e.preventDefault(); const t = $('#evo-t').value.trim(); if (!t) return; p.evolucao.unshift({ data: new Date().toISOString().slice(0, 10), texto: t }); $('#evo-t').value = ''; render(); toast('Evolução adicionada (só nesta tela).'); };
+      $('#f-con').onsubmit = (e) => { e.preventDefault(); const n = $('#c-nome').value.trim(); if (!n) return; p.condutas.push({ nome: n, tipo: $('#c-tipo').value, pos: $('#c-pos').value.trim() }); e.target.reset(); render(); };
+      $('#imprimir').onclick = () => window.print();
+      render();
+    })();
+  </script>
+</body>
+</html>

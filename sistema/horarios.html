@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Horários — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="prof" data-nav="horarios.html" data-titulo="Horários e consultas" data-sub="É o que o site mostra ao paciente para agendar">
+  <template id="acoes-tpl"><button class="bt sm" id="salvar" type="button">Salvar alterações</button></template>
+  <main id="conteudo">
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
+      <div class="cd"><h3>Horários de atendimento</h3><div class="gap" id="hor" style="gap:10px"></div></div>
+      <div class="gap" style="gap:18px">
+        <div class="cd"><h3>Tipos de consulta</h3><div class="gap" id="tip" style="gap:10px"></div>
+          <button class="bt out sm" id="add-tipo" type="button" style="margin-top:12px"><svg class="ic"><use href="#i-plus"/></svg>Novo tipo</button>
+          <p class="mu sm" style="margin-top:10px">Valores em branco aparecem como "R$ —" até a clínica informar os preços.</p></div>
+        <div class="cd"><h3>Regras</h3>
+          <label class="fld">Intervalo entre consultas (min)<input type="number" value="10" min="0"></label>
+          <label class="fld">Antecedência mínima (horas)<input type="number" value="24" min="0"></label>
+          <label class="fld">Agenda aberta até (meses à frente)<input type="number" value="3" min="1"></label>
+          <label class="fld">Link da consulta online<input value="Google Meet"></label>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, toast } = S;
+      const campo = (v, ph, w, onch) => { const i = el('input'); i.value = v || ''; i.placeholder = ph; i.style.cssText = 'height:40px;border-radius:8px;border:1px solid var(--line);padding:0 10px;width:' + w; i.oninput = () => onch(i.value); return i; };
+      function horarios() {
+        const box = $('#hor'); box.replaceChildren();
+        D.horarios.forEach((h) => {
+          const r = el('div', 'row'); r.style.flexWrap = 'wrap';
+          const c = el('input'); c.type = 'checkbox'; c.className = 'tg'; c.checked = h.on; c.setAttribute('aria-label', h.dia);
+          c.onchange = () => { h.on = c.checked; horarios(); };
+          r.append(c, el('b', null, h.dia)); r.lastChild.style.width = '80px';
+          if (h.on) r.append(campo(h.manha, 'Manhã 09:00–12:00', '150px', (v) => (h.manha = v)), campo(h.tarde, 'Tarde 14:00–18:00', '150px', (v) => (h.tarde = v)));
+          else r.append(el('span', 'mu', 'Sem atendimento'));
+          box.append(r);
+        });
+      }
+      function tipos() {
+        const box = $('#tip'); box.replaceChildren();
+        D.tipos.forEach((t, i) => {
+          const r = el('div', 'row'); r.style.flexWrap = 'wrap';
+          const rm = el('button', null, '×'); rm.type = 'button'; rm.setAttribute('aria-label', 'Remover ' + t.nome); rm.style.cssText = 'background:none;border:0;font-size:20px;color:var(--muted);cursor:pointer'; rm.onclick = () => { D.tipos.splice(i, 1); tipos(); };
+          r.append(campo(t.nome, 'Nome', '170px', (v) => (t.nome = v)), campo(t.min, 'min', '70px', (v) => (t.min = v)), campo(t.valor, 'R$', '90px', (v) => (t.valor = v)), rm);
+          box.append(r);
+        });
+      }
+      $('#add-tipo').onclick = () => { D.tipos.push({ nome: '', min: 45, valor: '' }); tipos(); };
+      $('#salvar').onclick = () => toast('Salvo (protótipo: só nesta tela).');
+      horarios(); tipos();
+    })();
+  </script>
+</body>
+</html>

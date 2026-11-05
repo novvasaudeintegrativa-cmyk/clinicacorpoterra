@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Exames — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="prof" data-nav="exames.html" data-titulo="Exames" data-sub="Você guarda os arquivos e decide quais o paciente pode ver">
+  <main id="conteudo">
+    <div class="drop">
+      <svg class="ic"><use href="#i-up"/></svg>
+      <div><b style="font-size:17px">Adicionar exame</b><div class="sm mu">PDF ou imagem. Escolha o paciente e se ele já pode ver.</div></div>
+      <div class="row sp" style="flex-wrap:wrap">
+        <select id="u-pac" aria-label="Paciente" style="height:42px;border-radius:10px;border:1px solid var(--line);padding:0 12px"></select>
+        <label class="bt sm" style="cursor:pointer">Escolher arquivo<input id="u-arq" type="file" accept=".pdf,image/*" hidden></label>
+      </div>
+    </div>
+    <p class="aviso">Protótipo: o arquivo escolhido só aparece na lista desta tela e <b>não é enviado nem guardado</b>. No sistema real ele fica num armazenamento privado, aberto apenas com login.</p>
+    <div class="row" style="flex-wrap:wrap"><label class="fld" style="margin:0;flex-direction:row;align-items:center;gap:10px">Paciente<select id="f-pac" style="height:42px;border-radius:10px;border:1px solid var(--line);padding:0 12px"></select></label></div>
+    <div class="gap" id="lista" style="gap:10px"></div>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, paciente, fmtData, toast, ico } = S;
+      const sel = (id, todos) => { const s = $(id); if (todos) s.append(new Option('Todos os pacientes', '')); D.pacientes.forEach((p) => s.append(new Option(p.nome, p.id))); return s; };
+      sel('#u-pac'); sel('#f-pac', true);
+      function lista() {
+        const box = $('#lista'); box.replaceChildren();
+        const f = $('#f-pac').value, ex = D.exames.filter((e) => !f || e.paciente === f);
+        if (!ex.length) box.append(el('p', 'vazio', 'Nenhum exame.'));
+        ex.forEach((e) => {
+          const r = el('div', 'fi'), ic = el('span', 'ico'); ic.innerHTML = ico('i-file');
+          const t = el('div'); t.append(el('b', null, e.nome + ' · ' + paciente(e.paciente).nome), el('small', null, fmtData(e.data) + ' · ' + e.tipo + ' · ' + e.tam));
+          const d = el('label', 'row sm'); d.style.cursor = 'pointer';
+          const c = el('input'); c.type = 'checkbox'; c.className = 'tg'; c.checked = e.liberado; c.setAttribute('aria-label', 'Liberado ao paciente');
+          c.onchange = () => { e.liberado = c.checked; toast(c.checked ? 'Exame liberado. O paciente será avisado pelo WhatsApp.' : 'Exame ocultado do paciente.'); lista(); };
+          d.append(el('span', 'mu', e.liberado ? 'Liberado ao paciente' : 'Não liberado'), c);
+          r.append(ic, t, d); box.append(r);
+        });
+      }
+      $('#f-pac').onchange = lista;
+      $('#u-arq').onchange = (ev) => {
+        const f = ev.target.files[0]; if (!f) return;
+        D.exames.unshift({ id: 'e' + (D.exames.length + 1), paciente: $('#u-pac').value, nome: f.name.replace(/\.[^.]+$/, ''), data: new Date().toISOString().slice(0, 10), tipo: f.type.includes('pdf') ? 'PDF' : 'Imagem', tam: Math.max(1, Math.round(f.size / 1024)) + ' KB', liberado: false, novo: true });
+        ev.target.value = ''; lista(); toast('Exame adicionado à lista (só nesta tela).');
+      };
+      lista();
+    })();
+  </script>
+</body>
+</html>

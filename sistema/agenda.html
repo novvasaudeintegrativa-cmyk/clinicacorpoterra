@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agenda — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+</head>
+<body data-papel="prof" data-nav="agenda.html" data-titulo="Agenda" data-sub="Semana de 9 a 13 de novembro">
+  <template id="acoes-tpl"><a class="bt out sm" href="horarios.html">Horários</a></template>
+  <main id="conteudo">
+    <div class="stats" id="stats"></div>
+    <div class="chips" id="filtro" role="group" aria-label="Filtrar por status">
+      <button class="chp on" data-f="">Todas</button><button class="chp" data-f="c">Confirmadas</button><button class="chp" data-f="a">A confirmar</button><button class="chp" data-f="r">Realizadas</button><button class="chp" data-f="x">Canceladas</button>
+    </div>
+    <div class="wk" id="wk" aria-label="Agenda da semana"></div>
+    <p class="mu sm">Toque numa consulta para confirmar, marcar como realizada, cancelar ou abrir o prontuário. Os agendamentos feitos no site aparecem aqui sozinhos.</p>
+
+    <dialog id="dlg">
+      <h3 id="d-titulo"></h3>
+      <dl class="resumo" id="d-resumo"></dl>
+      <div class="acoes" style="margin-top:20px">
+        <button class="bt sm" data-s="c">Confirmar</button>
+        <button class="bt out sm" data-s="r">Marcar realizada</button>
+        <button class="bt out sm" data-s="x">Cancelar consulta</button>
+        <a class="bt out sm" id="d-pront" href="#">Abrir prontuário</a>
+        <button class="bt out sm" id="d-fechar" style="margin-left:auto">Fechar</button>
+      </div>
+    </dialog>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, $$, paciente, toast } = S;
+      const ST = { c: 'Confirmada', a: 'A confirmar', r: 'Realizada', x: 'Cancelada' };
+      let filtro = '', atual = null;
+
+      function stats() {
+        const n = (s) => D.agenda.filter((a) => a.status === s).length;
+        const hoje = D.agenda.filter((a) => a.dia === 0 && a.status !== 'x').length;
+        const box = $('#stats'); box.replaceChildren();
+        [['Consultas hoje', hoje, 'hl'], ['Confirmadas na semana', n('c'), ''], ['A confirmar', n('a'), ''], ['Faltas no mês', 0, '']].forEach(([t, v, c]) => {
+          const d = el('div', 'stat ' + c); d.append(el('b', null, String(v)), el('span', null, t)); box.append(d);
+        });
+      }
+      function grade() {
+        const wk = $('#wk'); wk.replaceChildren(); wk.append(el('div', 'h', ''));
+        D.dias.forEach((d) => wk.append(el('div', 'h', d)));
+        D.horas.forEach((h, r) => {
+          wk.append(el('div', 'hr', h));
+          for (let c = 0; c < 5; c++) {
+            const cell = el('div'), e = D.agenda.find((x) => x.dia === c && x.hora === r && (!filtro || x.status === filtro));
+            if (e) {
+              const b = el('button', 'ev' + (e.status === 'c' ? '' : ' ' + e.status)); b.type = 'button';
+              b.append(el('b', null, paciente(e.paciente).nome.split(' ').slice(0, 2).join(' ')), el('small', null, e.tipo + (e.status === 'a' ? ' · a confirmar' : '')));
+              b.onclick = () => abrir(e); cell.append(b);
+            }
+            wk.append(cell);
+          }
+        });
+      }
+      function abrir(e) {
+        atual = e; const p = paciente(e.paciente);
+        $('#d-titulo').textContent = p.nome;
+        const dl = $('#d-resumo'); dl.replaceChildren();
+        [['Consulta', e.tipo + ' · online'], ['Quando', D.dias[e.dia] + ' às ' + D.horas[e.hora]], ['Situação', ST[e.status]], ['Prontuário', p.codigo]].forEach(([k, v]) => dl.append(el('dt', null, k), el('dd', null, v)));
+        $('#d-pront').href = 'prontuario.html?id=' + p.id;
+        $('#dlg').showModal();
+      }
+      $$('#dlg [data-s]').forEach((b) => b.onclick = () => { atual.status = b.dataset.s; $('#dlg').close(); stats(); grade(); toast('Consulta: ' + ST[atual.status].toLowerCase() + '.'); });
+      $('#d-fechar').onclick = () => $('#dlg').close();
+      $$('#filtro .chp').forEach((b) => b.onclick = () => { filtro = b.dataset.f; $$('#filtro .chp').forEach((x) => x.classList.toggle('on', x === b)); grade(); });
+      stats(); grade();
+    })();
+  </script>
+</body>
+</html>
