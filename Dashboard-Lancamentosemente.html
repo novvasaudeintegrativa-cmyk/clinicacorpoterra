@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard Lançamento Semente — Método Raízes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+<style>
+
+/* Mesmo sistema visual do painel da Clínica Corpo Terra (Outfit, teal/menta). */
+:root {
+  --ink: #00262c; --muted: #4c6b6e; --line: #d6e6e3; --bg: #f1f8f7; --card: #fff;
+  --brand: #00716f; --brand-h: #005f5d; --deep: #00454d; --mint: #00dcc0; --soft: #dff6f2; --cream: #fdeee3;
+  --warn: #fff1d6; --warn-ink: #7a5200; --bad: #fde7e3; --bad-ink: #9a3324; --gray: #e8eeed;
+  --amber: #e0a43a; --font: "Outfit", system-ui, Arial, sans-serif; --side: 248px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e4f2f0; --muted: #93b4b1; --line: #1f4a4f; --bg: #04262b; --card: #08363c;
+    --brand: #19b5ae; --brand-h: #2cc9c1; --soft: #0d4a4f; --cream: #3a3026;
+    --warn: #4a3b17; --warn-ink: #f2cf86; --bad: #4a2420; --bad-ink: #f5b3a8; --gray: #1c4448;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, p, dl, dd, ul, ol { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+svg.ic { width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.mu { color: var(--muted); } .sm { font-size: 14px; } .row { display: flex; align-items: center; gap: 12px; } .sp { margin-left: auto; }
+
+.app { display: flex; min-height: 100vh; }
+.side { position: fixed; inset: 0 auto 0 0; width: var(--side); background: var(--deep); color: #cfe9e5; padding: 24px 14px; display: flex; flex-direction: column; gap: 4px; z-index: 20; }
+.brand { color: #fff; font-weight: 700; font-size: 20px; line-height: 1.1; padding: 2px 10px 20px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand .mk { width: 40px; height: 40px; border-radius: 12px; background: var(--mint); color: var(--deep); display: grid; place-items: center; flex: none; }
+.brand .mk svg { width: 24px; height: 24px; }
+.brand small { display: block; font: 300 10px var(--font); letter-spacing: .12em; text-transform: uppercase; color: #9fd0cb; margin-top: 3px; }
+.nv { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 10px; text-decoration: none; color: #cfe9e5; }
+.nv:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+.nv.on { background: rgba(0, 220, 192, .16); color: #fff; font-weight: 600; }
+.nv svg { width: 22px; height: 22px; }
+.who { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 12px 10px 0; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 14px; color: #fff; }
+.who small { display: block; color: #9fd0cb; }
+.av { width: 40px; height: 40px; border-radius: 50%; background: var(--mint); color: var(--deep); display: grid; place-items: center; font-weight: 700; font-size: 14px; flex: none; }
+.area { margin-left: var(--side); flex: 1; min-width: 0; padding: 28px 36px 64px; display: flex; flex-direction: column; gap: 22px; }
+.topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.topo h1 { font-size: 32px; font-weight: 600; letter-spacing: -.5px; line-height: 1.15; }
+.topo p { color: var(--muted); margin-top: 2px; }
+.acoes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+section[id] { scroll-margin-top: 20px; }
+.bloco { display: flex; flex-direction: column; gap: 14px; }
+.bloco > header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.eyebrow { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); font-weight: 600; }
+.bloco h2 { font-size: 22px; font-weight: 600; letter-spacing: -.2px; }
+
+.chip { padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 14px; font-weight: 500; cursor: pointer; }
+.chip[aria-pressed="true"], .chip:hover { background: var(--brand); border-color: var(--brand); color: #fff; }
+.pl { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: var(--soft); color: var(--brand); white-space: nowrap; }
+.pl.w { background: var(--warn); color: var(--warn-ink); } .pl.r { background: var(--bad); color: var(--bad-ink); } .pl.g { background: var(--gray); color: var(--muted); }
+.cd { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.cd h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.cd > .mu.sm { margin-bottom: 14px; }
+.grid2 { display: grid; gap: 18px; grid-template-columns: 1.4fr 1fr; align-items: start; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.stats.s4 { grid-template-columns: repeat(4, 1fr); }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px; }
+.stat b { display: block; font-size: 30px; font-weight: 600; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; color: var(--muted); }
+.stat em { display: block; font-style: normal; font-size: 12.5px; margin-top: 6px; font-weight: 600; color: var(--brand); }
+.stat em.neg { color: var(--bad-ink); }
+.stat.hl { background: var(--brand); border-color: var(--brand); color: #fff; } .stat.hl span, .stat.hl em { color: #cdeee9; }
+.meta { font-size: 13px; color: var(--muted); }
+
+.tbw { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
+.t th { text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; background: var(--bg); font-weight: 600; white-space: nowrap; }
+.t td { padding: 12px 16px; border-top: 1px solid var(--line); }
+.t td.n { font-weight: 600; }
+.t td.v, .t th.v { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* funil */
+.fn { display: flex; flex-direction: column; gap: 10px; }
+.fn .st { display: grid; grid-template-columns: 170px 1fr; gap: 14px; align-items: center; }
+.fn .lb b { display: block; font-weight: 600; font-size: 15px; line-height: 1.2; }
+.fn .lb small { color: var(--muted); font-size: 12.5px; }
+.fn .tr { background: var(--soft); border-radius: 10px; height: 38px; position: relative; overflow: hidden; }
+.fn .fl { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--brand), #19b5ae); min-width: 74px; display: flex; align-items: center; padding: 0 12px; color: #fff; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; transition: width .5s; }
+.fn .fl.hi { background: linear-gradient(90deg, var(--deep), var(--brand)); }
+.fn .pc { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 600; color: var(--brand); }
+
+/* receita */
+.split { display: flex; height: 44px; border-radius: 12px; overflow: hidden; margin: 6px 0 16px; background: var(--gray); }
+.split i { display: block; height: 100%; transition: width .5s; }
+.c1 { background: var(--brand); } .c2 { background: var(--amber); } .c3 { background: var(--deep); }
+.lg { display: flex; flex-direction: column; gap: 12px; }
+.lg .it { display: grid; grid-template-columns: 14px 1fr auto; gap: 10px; align-items: center; }
+.lg .it .dot { width: 14px; height: 14px; border-radius: 4px; }
+.lg .it small { display: block; color: var(--muted); }
+.lg .it b { font-variant-numeric: tabular-nums; text-align: right; display: block; }
+
+/* tendência */
+.bars { display: flex; align-items: flex-end; gap: 4px; height: 190px; padding-top: 8px; }
+.bars div { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%; font-size: 11px; color: var(--muted); }
+.bars .pair { display: flex; align-items: flex-end; gap: 2px; width: 100%; flex: 1; justify-content: center; }
+.bars i { flex: 1; max-width: 22px; border-radius: 6px 6px 0 0; display: block; min-height: 3px; }
+.bars i.rv { background: var(--brand); } .bars i.sp { background: #b8dcd8; }
+.key { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin-top: 12px; }
+.key span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.key .k1::before { background: var(--brand); } .key .k2::before { background: #b8dcd8; }
+.aviso { padding: 12px 16px; border-radius: 12px; background: var(--cream); font-size: 13.5px; }
+.bar-mini { display: inline-block; width: 70px; height: 6px; border-radius: 3px; background: var(--gray); vertical-align: middle; margin-left: 8px; overflow: hidden; }
+.bar-mini i { display: block; height: 100%; background: var(--brand); }
+
+@media (max-width: 1100px) { .stats.s4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) {
+  .side { inset: auto 0 0 0; width: auto; flex-direction: row; justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); gap: 0; background: var(--card); border-top: 1px solid var(--line); color: var(--muted); }
+  .brand, .who { display: none; }
+  .nv { flex-direction: column; gap: 2px; font-size: 11px; padding: 6px 4px; color: var(--muted); border-radius: 10px; flex: 1; text-align: center; }
+  .nv.on { background: transparent; color: var(--brand); } .nv:hover { background: transparent; color: var(--brand); }
+  .area { margin-left: 0; padding: 20px 16px 96px; }
+  .topo h1 { font-size: 26px; }
+  .stats, .stats.s4 { grid-template-columns: 1fr 1fr; } .grid2 { grid-template-columns: 1fr; }
+  .fn .st { grid-template-columns: 1fr; gap: 4px; }
+  .stat b { font-size: 24px; }
+}
+@media print { .side, .acoes { display: none !important; } .area { margin: 0; padding: 0; } body { background: #fff; } .cd, .stat { break-inside: avoid; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  
+.area{max-width:1240px}
+.topo h1.nome{font-size:48px;font-weight:300;line-height:1.1;letter-spacing:-1px}.topo h1.nome b{font-weight:700;color:var(--brand)}.topo p{font-size:17px}
+@media(max-width:900px){.topo h1.nome{font-size:30px}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .topo h1.nome b{color:var(--mint)}}
+.hero{background:linear-gradient(160deg,#00454d,#006b6b);color:#fff;border-radius:18px;padding:24px 28px;display:grid;gap:10px}
+.hero small{font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);font-size:12px}
+.hero h2{font-size:26px;font-weight:300;line-height:1.25;letter-spacing:-.3px}
+.hero h2 b{font-weight:700;color:var(--mint)}
+.hero p{color:#cfe9e5;font-size:14px}
+.cd-top{display:flex;gap:14px;flex-wrap:wrap;align-items:end}
+.cd-top label{font-size:13px;color:#cfe9e5;display:flex;flex-direction:column;gap:4px}
+.cd-top input{height:42px;border-radius:10px;border:0;padding:0 12px;font:inherit;color:var(--ink);background:#fff}
+.big{font-size:44px;font-weight:700;line-height:1;color:var(--mint)}
+.pb{height:10px;border-radius:5px;background:var(--gray);overflow:hidden}
+.pb i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--mint));width:0;transition:width .4s}
+.stat em.ok{color:var(--brand)}
+.tl2{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.mile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;position:relative}
+.mile small{display:block;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.mile b{display:block;font-size:17px;margin:4px 0 2px}
+.mile span.d{font-size:13px;color:var(--muted)}
+.mile.now{border-color:var(--mint);box-shadow:0 0 0 2px rgba(0,220,192,.35)}
+.mile.past{opacity:.6}
+.tabs2{display:flex;gap:8px;flex-wrap:wrap}
+.task{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer}
+.task:hover{background:var(--soft)}
+.task input{appearance:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--brand);flex:none;margin-top:2px;cursor:pointer;display:grid;place-items:center}
+.task input:checked{background:var(--brand)}
+.task input:checked::after{content:"";width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.task input:checked+span{color:var(--muted);text-decoration:line-through}
+.tasks{display:flex;flex-direction:column;gap:8px}
+.ph-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ph-head .pb{flex:1;min-width:120px;max-width:260px}
+.form{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:500}
+.form input{height:44px;border-radius:10px;border:0;border-bottom:2px solid var(--line);background:#eef5f4;padding:0 12px;font:inherit;color:var(--ink)}
+.form input:focus{outline:0;border-bottom-color:var(--brand);background:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .form input{background:#0d4a4f;color:var(--ink)}}
+.mm{font-size:13px;color:var(--muted)}
+.btn-r{margin-left:auto}
+@media(max-width:1100px){.tl2{grid-template-columns:repeat(3,1fr)}.form{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.tl2{grid-template-columns:1fr 1fr}.hero h2{font-size:21px}.big{font-size:34px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-14 15-14 0 9-5 15-13 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-money" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.7 2.5-1.7s2.5.7 2.5 1.7-1 1.5-2.5 1.8-2.5.7-2.5 1.8 1 1.7 2.5 1.7 2.5-.7 2.5-1.7"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3zM12 10v5M12 18v.5"/></symbol>
+</svg>
+<div class="app">
+  <aside class="side" aria-label="Navegação">
+    <a class="brand" href="#"><span class="mk"><svg class="ic"><use href="#i-leaf"/></svg></span><span>Método Raízes<small>Lançamento Semente</small></span></a>
+    <a class="nv on" href="#visao"><svg class="ic"><use href="#i-chart"/></svg>Visão geral</a>
+    <a class="nv" href="#cron"><svg class="ic"><use href="#i-cal"/></svg>Cronograma</a>
+    <a class="nv" href="#tarefas"><svg class="ic"><use href="#i-check"/></svg>Tarefas</a>
+    <a class="nv" href="#metricas"><svg class="ic"><use href="#i-money"/></svg>Métricas</a>
+    <a class="nv" href="#pend"><svg class="ic"><use href="#i-warn"/></svg>Pendências</a>
+    <div class="who"><span class="av" id="pc">0%</span><span>Progresso<small id="pt">0 de 0 tarefas</small></span></div>
+  </aside>
+  <main class="area">
+    <div class="topo"><div><h1 class="nome"><b>Método Raízes</b> - Desparasitação Descomplicada</h1><p>Dashboard do 1º Lançamento Semente</p></div>
+      <div class="acoes"><button class="chip" type="button" id="reset">Limpar dados</button></div></div>
+
+    <section id="visao" class="bloco">
+      <div class="hero">
+        <small>Roma do 1º Lançamento Semente</small>
+        <h2><b>Organizando o cuidado com o seu intestino</b>, com segurança e passo a passo, e transformando 30 dias em um hábito para a vida, usando o Método Raízes.</h2>
+        <p>Oferta: curso de R$ 97 + Kit DI Raízes como order bump/upsell.</p>
+        <div class="cd-top"><label>Data do webinário (quinta-feira)<input type="date" id="dt" value="2026-12-03"></label>
+          <div><div class="big" id="dias">--</div><div class="mm" style="color:#cfe9e5" id="dias-t">dias para o webinário</div></div></div>
+      </div>
+      <div class="stats s4" id="kpis"></div>
+      <div class="cd"><h3>Progresso geral das tarefas</h3><p class="mu sm" id="prog-t"></p><div class="pb"><i id="prog-b"></i></div></div>
+    </section>
+
+    <section id="cron" class="bloco">
+      <header><span class="eyebrow">Calendário</span><h2>Cronograma a partir da data do webinário</h2></header>
+      <div class="tl2" id="tl"></div>
+      <p class="mm">Regras da metodologia: captação de 14 dias, começando duas quintas antes do webinário; convite com muita antecedência derruba o comparecimento. Carrinho de 7 dias é sugestão.</p>
+    </section>
+
+    <section id="tarefas" class="bloco">
+      <header><span class="eyebrow">Passo a passo</span><h2>Tarefas por fase</h2></header>
+      <div class="tabs2" id="tabs" role="tablist"></div>
+      <div class="cd"><div class="ph-head"><h3 id="ph-nome"></h3><span class="pl" id="ph-data"></span><div class="pb"><i id="ph-b"></i></div><span class="mm" id="ph-n"></span></div><p class="mu sm" id="ph-d" style="margin:6px 0 12px"></p><div class="tasks" id="tasks"></div></div>
+    </section>
+
+    <section id="metricas" class="bloco">
+      <header><span class="eyebrow">Resultados</span><h2>Métricas do lançamento</h2></header>
+      <div class="cd"><h3>Preencha com os números reais</h3><p class="mu sm">Os cálculos aparecem sozinhos. Tudo fica salvo neste navegador.</p>
+        <div class="form">
+          <label>Investimento em anúncios (R$)<input type="number" min="0" step="0.01" id="m-inv"></label>
+          <label>Inscritos no webinário<input type="number" min="0" id="m-ins"></label>
+          <label>Presentes ao vivo<input type="number" min="0" id="m-pre"></label>
+          <label>Vendas do curso<input type="number" min="0" id="m-ven"></label>
+          <label>Preço do curso (R$)<input type="number" min="0" step="0.01" id="m-pc" value="97"></label>
+          <label>Kits vendidos (bump + upsell)<input type="number" min="0" id="m-kit"></label>
+          <label>Preço do kit (R$)<input type="number" min="0" step="0.01" id="m-pk" placeholder="a definir"></label>
+          <label>Reembolsos<input type="number" min="0" id="m-ref"></label>
+        </div></div>
+      <div class="stats s4" id="mk"></div>
+      <div class="cd"><h3>Caminho até o 6em7 (R$ 100 mil em 7 dias)</h3><p class="mu sm" id="m6-t"></p><div class="pb"><i id="m6-b"></i></div></div>
+    </section>
+
+    <section id="pend" class="bloco">
+      <header><span class="eyebrow">Antes de publicar</span><h2>Pendências e responsáveis</h2></header>
+      <div class="tbw"><table class="t"><thead><tr><th>Pendência</th><th>Quem resolve</th><th>Feito</th></tr></thead><tbody id="pbody"></tbody></table></div>
+    </section>
+  </main>
+</div>
+<script>
+(function () {
+  var KEY = 'semente-dash-v1', S = {};
+  try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  S.t = S.t || {}; S.m = S.m || {}; S.p = S.p || {};
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  var $ = function (s) { return document.querySelector(s); };
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  var brl = function (v) { return (isFinite(v) ? v : 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); };
+  var pct = function (v) { return isFinite(v) ? (v * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%' : '—'; };
+
+  // fases: off = deslocamento em dias a partir do webinário (D)
+  var PH = [
+    { id: 'prep', nome: 'Preparação', desc: 'Dias 1 a 3 da imersão: nicho, avatar, Roma, oferta, script, página e criativos.', ini: -29, fim: -15, tasks: [
+      'Definir nicho e subnicho (saúde intestinal natural)', 'Confirmar os 3 indicadores do nicho com o Luís', 'Entrevistar 5 a 10 pacientes ou seguidoras (avatar)', 'Revisar o resumo do avatar em 4 linhas',
+      '!Escolher a Roma (definida: Organizando o cuidado com o seu intestino...)', 'Completar a árvore de objeções (4 passos) e revisar com o Luís',
+      'Verificar domínio .com.br do nome do produto', 'Descrever o quê, como e quando de cada entregável', 'Definir prazo e regra do grupo de acompanhamento',
+      'Escolher de 1 a 3 bônus (objeção, problema futuro, ação rápida)', 'Definir comparáveis de preço, formas de pagamento e prazo da oferta', 'Escolher o prazo da garantia (7, 14 ou 30 dias)',
+      'Coletar 2 a 3 relatos reais com autorização escrita', 'Luís gravar o áudio com a história (4 partes)', 'Escolher o arquétipo e listar erros e jeitos certos, com fontes',
+      'Validar tecnicamente as afirmações do conteúdo', 'Escrever o script completo e ensaiar em voz alta', 'Publicar a página de inscrição', 'Configurar pixel, UTMs e lista de WhatsApp/e-mail',
+      'Gravar o criativo 1 (convite clássico) e 2 a 4 variações'] },
+    { id: 'cli', nome: 'Fase 1 · Captação (C.L.I.)', desc: '14 dias começando duas quintas antes do webinário. Convite (criativo) + página de inscrição.', ini: -14, fim: -1, tasks: [
+      'Criativos no ar e campanha ativa no 1º dia', 'Checar o custo por inscrito todo dia', 'Pausar criativos fracos e duplicar os melhores (semana 1)', 'Trocar criativos antes de saturar (semana 2)',
+      'Postar o convite no orgânico (stories, feed, reels)', 'Convidar a base de WhatsApp e e-mail', 'Revisar o aviso legal e a conformidade dos anúncios', 'Registrar inscritos por dia na aba Métricas'] },
+    { id: 'aq', nome: 'Fase 2 · Aquecimento (A.I.)', desc: 'Objetivo: fazer a pessoa aparecer ao vivo.', ini: -14, fim: 0, tasks: [
+      'Confirmação ao se inscrever (e-mail + WhatsApp)', 'D-7: lembrete e pergunta de curiosidade', 'D-3: pedaço do conteúdo e o que vai aprender', 'D-1: pedir confirmação de presença', 'Dia: lembrete 3 horas antes', 'Dia: aviso 15 minutos antes'] },
+    { id: 'web', nome: 'Fase 3 · Webinário', desc: 'Script na ordem: Roma, Prova, História, Conteúdo, Oferta. Começar no horário.', ini: 0, fim: 0, tasks: [
+      'Teste técnico (áudio, vídeo, link, chat) no dia anterior', 'Equipe definida: apresentador, chat, técnico, WhatsApp', 'Começar no horário, sem esperar atrasados', 'Roma, prova, história, conteúdo e oferta na ordem',
+      'Pitch: entregáveis, bônus, preço, garantia e CTA + 3 caminhos', 'Abrir o carrinho ao final'] },
+    { id: 'car', nome: 'Fase 4 · Carrinho aberto', desc: 'Sugestão de 7 dias. Escassez só se for real.', ini: 0, fim: 7, tasks: [
+      'Dia 0: e-mail e WhatsApp com replay e link', 'Dia 1: replay para quem não compareceu', 'Dias 2 a 4: responder dúvidas e objeções do chat', 'Dia 5: prova (relatos reais, se houver)', 'Dia 6: aviso de encerramento com data e hora reais', 'Dia 7: fechar o carrinho'] },
+    { id: 'pos', nome: 'Pós-venda', desc: 'Entrega, kit, provas e o próximo Semente.', ini: 7, fim: 21, tasks: [
+      'Entregar bem: acesso, anamnese (com consentimento LGPD) e grupo', 'Oferecer o Kit DI Raízes (bump e upsell) como conveniência', 'Pedir relato e autorização escrita aos primeiros alunos', 'Revisar métricas e o que melhorar', 'Planejar o 2º Semente (Ressurgir, venda por aplicação)'] }
+  ];
+  var PEND = ['Roma final (já escolhida; confirmar com o Luís)', 'História do Luís em 4 partes (áudio)', 'Relatos reais e autorizados', 'Comprovação dos 20 anos e do nº de atendimentos', 'Nome definitivo do produto e domínio', 'Comparáveis de preço e formas de pagamento', 'Garantia (7, 14 ou 30 dias)', 'Validação técnica das afirmações, com fontes', 'Data inegociável do webinário'];
+  var WHO = ['Luís + equipe', 'Luís (áudio)', 'Luís', 'Luís', 'Equipe', 'Equipe', 'Equipe', 'Luís', 'Luís + equipe'];
+
+  function parseD() { var v = $('#dt').value; if (!v) return null; var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function add(d, n) { var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+  var fd = function (d) { return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', ''); };
+  function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+
+  // checklist: ids estáveis
+  var all = [];
+  PH.forEach(function (p) { p.list = p.tasks.map(function (t, i) { var pre = t.charAt(0) === '!'; var o = { id: p.id + '-' + i, txt: pre ? t.slice(1) : t, def: pre }; all.push(o); return o; }); });
+  all.forEach(function (o) { if (S.t[o.id] === undefined && o.def) S.t[o.id] = true; });
+  function done(o) { return !!S.t[o.id]; }
+
+  var cur = S.cur || 'prep';
+  function renderTabs() {
+    var tb = $('#tabs'); tb.replaceChildren();
+    PH.forEach(function (p) {
+      var n = p.list.filter(done).length, b = el('button', 'chip', p.nome.replace(/^Fase \d · /, '') + ' (' + n + '/' + p.list.length + ')');
+      b.type = 'button'; b.setAttribute('aria-pressed', p.id === cur ? 'true' : 'false');
+      b.onclick = function () { cur = p.id; S.cur = cur; save(); render(); }; tb.append(b);
+    });
+  }
+  function renderTasks() {
+    var p = PH.filter(function (x) { return x.id === cur; })[0], D = parseD();
+    $('#ph-nome').textContent = p.nome; $('#ph-d').textContent = p.desc;
+    $('#ph-data').textContent = D ? (p.ini === p.fim ? fd(add(D, p.ini)) : fd(add(D, p.ini)) + ' a ' + fd(add(D, p.fim))) : 'defina a data';
+    var n = p.list.filter(done).length; $('#ph-n').textContent = n + ' de ' + p.list.length; $('#ph-b').style.width = (n / p.list.length * 100) + '%';
+    var box = $('#tasks'); box.replaceChildren();
+    p.list.forEach(function (o) {
+      var lb = el('label', 'task'), cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = done(o);
+      cb.onchange = function () { S.t[o.id] = cb.checked; save(); render(); };
+      lb.append(cb, el('span', null, o.txt)); box.append(lb);
+    });
+  }
+  function renderTimeline() {
+    var D = parseD(), tl = $('#tl'); tl.replaceChildren(); if (!D) return;
+    var T = today(), items = [
+      ['Preparação', 'até ' + fd(add(D, -15)), -29, -15], ['Início da captação', fd(add(D, -14)), -14, -14], ['Aquecimento', fd(add(D, -14)) + ' a ' + fd(D), -14, 0],
+      ['Webinário ao vivo', fd(D), 0, 0], ['Carrinho aberto', fd(D) + ' a ' + fd(add(D, 7)), 0, 7], ['Pós-venda', 'a partir de ' + fd(add(D, 7)), 7, 21]];
+    items.forEach(function (it, i) {
+      var a = add(D, it[2]), b = add(D, it[3]), cls = 'mile';
+      if (T > b) cls += ' past'; else if (T >= a) cls += ' now';
+      var m = el('div', cls), diff = Math.round((a - T) / 864e5);
+      m.append(el('small', null, 'Etapa ' + (i + 1)), el('b', null, it[0]), el('span', 'd', it[1]), el('span', 'd', T >= a && T <= b ? ' · em andamento' : diff > 0 ? ' · em ' + diff + ' dias' : ''));
+      m.lastChild.style.display = 'block'; tl.append(m);
+    });
+    var wd = D.getDay(); if (wd !== 4) { var w = el('p', 'mm', 'Atenção: a data escolhida não é uma quinta-feira. A metodologia recomenda quinta.'); w.style.gridColumn = '1/-1'; w.style.color = 'var(--warn-ink)'; tl.append(w); }
+  }
+  function renderKpis() {
+    var D = parseD(), T = today(), dias = D ? Math.round((D - T) / 864e5) : null;
+    $('#dias').textContent = dias === null ? '--' : dias < 0 ? Math.abs(dias) : dias;
+    $('#dias-t').textContent = dias === null ? 'defina a data' : dias < 0 ? 'dias desde o webinário' : dias === 0 ? 'é hoje!' : 'dias para o webinário';
+    var n = all.filter(done).length, tot = all.length, pc = Math.round(n / tot * 100);
+    $('#pc').textContent = pc + '%'; $('#pt').textContent = n + ' de ' + tot + ' tarefas'; $('#prog-b').style.width = pc + '%'; $('#prog-t').textContent = n + ' de ' + tot + ' tarefas concluídas (' + pc + '%)';
+    var pend = PEND.filter(function (_, i) { return S.p[i]; }).length;
+    var prep = PH[0].list.filter(done).length;
+    var box = $('#kpis'); box.replaceChildren();
+    [['Progresso geral', pc + '%', 'hl'], ['Preparação', prep + ' de ' + PH[0].list.length, ''], ['Pendências resolvidas', pend + ' de ' + PEND.length, ''], ['Data do webinário', D ? D.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' }) : '—', '']].forEach(function (k) {
+      var s = el('div', 'stat ' + k[2]); s.append(el('b', null, k[1]), el('span', null, k[0])); box.append(s);
+    });
+  }
+  function num(id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; }
+  function renderMetrics() {
+    var inv = num('#m-inv'), ins = num('#m-ins'), pre = num('#m-pre'), ven = num('#m-ven'), pc = num('#m-pc'), kit = num('#m-kit'), pk = num('#m-pk'), ref = num('#m-ref');
+    var rec = ven * pc + kit * pk - ref * pc, box = $('#mk'); box.replaceChildren();
+    var cpl = ins ? inv / ins : NaN, cpa = ven ? inv / ven : NaN, roas = inv ? rec / inv : NaN;
+    [['Custo por inscrito (CPL)', ins ? brl(cpl) : '—', ''], ['Comparecimento', ins ? pct(pre / ins) : '—', ''], ['Conversão (vendas ÷ presentes)', pre ? pct(ven / pre) : '—', ''], ['Vendas ÷ inscritos', ins ? pct(ven / ins) : '—', ''],
+     ['Receita líquida', brl(rec), 'hl'], ['CPA (custo por venda)', ven ? brl(cpa) : '—', ''], ['ROAS', inv ? roas.toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + 'x' : '—', ''], ['Reembolsos', ven ? pct(ref / ven) : '—', '']].forEach(function (k) {
+      var s = el('div', 'stat ' + k[2]); s.append(el('b', null, k[1]), el('span', null, k[0])); box.append(s);
+    });
+    var meta = 100000, falta = Math.max(0, meta - rec), vendasMeta = pc ? Math.ceil(meta / pc) : 0;
+    $('#m6-b').style.width = Math.min(100, rec / meta * 100) + '%';
+    $('#m6-t').textContent = brl(rec) + ' de ' + brl(meta) + ' (' + pct(rec / meta) + '). ' + (pc ? 'Só com o curso a ' + brl(pc) + ' seriam cerca de ' + vendasMeta.toLocaleString('pt-BR') + ' vendas. ' : '') + 'O objetivo do 1º Semente é validar a oferta: a primeira venda.';
+    S.m = { inv: $('#m-inv').value, ins: $('#m-ins').value, pre: $('#m-pre').value, ven: $('#m-ven').value, pc: $('#m-pc').value, kit: $('#m-kit').value, pk: $('#m-pk').value, ref: $('#m-ref').value }; save();
+  }
+  function renderPend() {
+    var b = $('#pbody'); b.replaceChildren();
+    PEND.forEach(function (p, i) {
+      var tr = el('tr'), td = el('td'), cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!S.p[i]; cb.style.cssText = 'width:20px;height:20px;accent-color:#00716f';
+      cb.onchange = function () { S.p[i] = cb.checked; save(); renderKpis(); }; td.append(cb);
+      tr.append(el('td', 'n', p), el('td', null, WHO[i]), td); b.append(tr);
+    });
+  }
+  function render() { renderKpis(); renderTimeline(); renderTabs(); renderTasks(); }
+
+  // restaurar
+  if (S.dt) $('#dt').value = S.dt;
+  var map = { inv: '#m-inv', ins: '#m-ins', pre: '#m-pre', ven: '#m-ven', pc: '#m-pc', kit: '#m-kit', pk: '#m-pk', ref: '#m-ref' };
+  Object.keys(map).forEach(function (k) { if (S.m[k] !== undefined && S.m[k] !== '') $(map[k]).value = S.m[k]; $(map[k]).addEventListener('input', renderMetrics); });
+  $('#dt').addEventListener('change', function () { S.dt = $('#dt').value; save(); render(); });
+  $('#reset').addEventListener('click', function () { if (confirm('Apagar todo o progresso e as métricas salvos neste navegador?')) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
+  render(); renderMetrics(); renderPend();
+  var links = [].slice.call(document.querySelectorAll('.nv')), io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id); }); }); }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
+})();
+</script>
+</body>
+</html>
