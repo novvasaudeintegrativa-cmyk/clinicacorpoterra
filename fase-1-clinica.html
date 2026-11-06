@@ -21,6 +21,9 @@ body { margin: 0; background: #e9efee; color: var(--ink); font: 400 11pt/1.5 "Ou
 .capa h1 { margin: 0 0 6px; font-weight: 300; font-size: 22pt; line-height: 1.15; letter-spacing: -.02em; }
 .capa h1 b { font-weight: 700; color: var(--mint); }
 .capa p { margin: 0; font-weight: 300; color: #d6ece8; font-size: 10.5pt; }
+.capa .acessos { list-style: none; margin: 12px 0 0; padding: 10px 0 0; border-top: 1px solid rgba(255, 255, 255, .22); font-size: 9.5pt; color: #d6ece8; }
+.capa .acessos li { margin: 2px 0; }
+.capa .acessos b { color: var(--mint); font-weight: 600; }
 
 h2 { margin: 22px 0 6px; font-size: 14pt; font-weight: 700; color: var(--deep); letter-spacing: -.01em; break-after: avoid; border-bottom: 2px solid var(--mint); padding-bottom: 4px; }
 h2 span { color: var(--brand); }
@@ -76,6 +79,14 @@ tfoot td { background: var(--soft); font-weight: 700; }
     <small>Clínica Corpo Terra</small>
     <h1><b>Fase 1</b><br>Software de Gestão da Clínica</h1>
     <p>06/11/2026 · Site de agendamento e sistema com login</p>
+    <ul class="acessos">
+      <li><b>Acesso com login e senha · quem acessa o quê</b></li>
+      <li><b>Profissionais:</b> agenda, todos os pacientes da clínica, prontuário e exames</li>
+      <li><b>Gestor:</b> financeiro, além de agenda e cadastros</li>
+      <li><b>Administrador do sistema:</b> acessos e permissões, sem dados clínicos</li>
+      <li><b>Atendente (se houver):</b> agenda, pacientes e conversas, sem prontuário</li>
+      <li><b>Paciente:</b> as suas consultas, exames e dados</li>
+    </ul>
   </header>
 
   <h2><span>1.</span> O que é a Clínica</h2>
@@ -98,6 +109,7 @@ tfoot td { background: var(--soft); font-weight: 700; }
     <li>O agendamento chega ao sistema, que cria o cadastro e a conta do paciente.</li>
     <li>Os profissionais atendem, registram o prontuário e liberam os exames. O gestor cuida do financeiro.</li>
     <li>O paciente acompanha as suas consultas e exames na sua própria área.</li>
+    <li><b>Pacientes compartilhados:</b> como a clínica é integrativa, todos os pacientes são compartilhados com todos os profissionais, para dar continuidade quando o paciente é encaminhado a outro profissional.</li>
   </ul>
   <p class="apoio">O sistema já nasce preparado para a Loja: o cadastro de cliente e o financeiro são pensados para atender as duas áreas.</p>
 
@@ -133,8 +145,8 @@ tfoot td { background: var(--soft); font-weight: 700; }
       <tr><td class="n">1</td><td class="m">Base do sistema</td><td>Banco de dados, login e senha, perfis (profissionais, gestor, administrador do sistema, paciente e atendente), permissões aplicadas no servidor, recuperação de senha, sessão que expira e registro de quem abriu cada ficha.</td></tr>
       <tr><td class="n">2</td><td class="m">Receptor do agendamento</td><td>Recebe o que o site envia, confere se o horário está livre, grava e cria a conta do paciente, com link para escolher a senha.</td></tr>
       <tr><td class="n">3</td><td class="m">Agenda, horários e tipos de consulta</td><td>Consultas do dia e do mês. Confirmar, remarcar, cancelar e marcar como realizada. Dias e horários de atendimento. Tipos de consulta com duração.</td></tr>
-      <tr><td class="n">4</td><td class="m">Pacientes e cadastro</td><td>Um cadastro por paciente, com nº de prontuário, status (ativo, inativo, primeira consulta), interesses, histórico de atendimento e consentimento LGPD.</td></tr>
-      <tr><td class="n">5</td><td class="m">Prontuário</td><td>Queixa, evolução de cada consulta e condutas, com impressão em PDF. Acesso só dos profissionais.</td></tr>
+      <tr><td class="n">4</td><td class="m">Pacientes e cadastro</td><td>Um cadastro por paciente, da clínica e visível a todos os profissionais, com nº de prontuário, status (ativo, inativo, primeira consulta), interesses, histórico de atendimento e consentimento LGPD.</td></tr>
+      <tr><td class="n">5</td><td class="m">Prontuário</td><td>Queixa, evolução de cada consulta e condutas, com impressão em PDF. Acesso de todos os profissionais a todos os pacientes, com o autor e a data de cada evolução.</td></tr>
       <tr><td class="n">6</td><td class="m">Exames</td><td>Anexar arquivos privados, decidir quais o paciente pode ver e avisá-lo pelo WhatsApp.</td></tr>
       <tr><td class="n">7</td><td class="m">Financeiro</td><td>Receitas e despesas da clínica, com visão do mês e lançamentos. Acesso só do gestor.</td></tr>
       <tr><td class="n">8</td><td class="m">Área do paciente</td><td>Início, minhas consultas (com o link do Zoom), meus exames liberados e meus dados, com pedido de correção.</td></tr>

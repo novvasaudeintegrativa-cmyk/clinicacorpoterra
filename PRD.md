@@ -100,7 +100,7 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
 - Lembrete/confirmação por WhatsApp, antes "candidato natural" (§5), agora **entra no escopo**.
 - Há "atendentes", "vendedores" e "acesso por funcionário": o cliente prevê mais gente além do
   Luis Manoel. Isso **enfraquece a premissa de "conta única do tenant"** usada para proteger o
-  prontuário — será preciso permissão por perfil, com prontuário restrito ao profissional.
+  prontuário — será preciso permissão por perfil, com prontuário restrito aos profissionais (todos eles, ver §4.3).
 - Meta Ads e origem de leads reaproveitam o que o NewCRM já tem (Tráfego/campanhas), mas o
   `segmento = clinica` não pode esconder esses módulos.
 - Reativação, aniversário e campanhas segmentadas exigem base de pacientes com data de nascimento,
@@ -153,6 +153,28 @@ em `mockups/index.html`, usada em `apresentacao-sistema.html`.
 Ordem sugerida para projetar o que falta: mockups do paciente (2 telas), depois funil, conversas e
 mensagens automáticas (MVP de relacionamento), e por fim indicadores, equipe e integrações.
 
+### 4.3 Pacientes compartilhados entre todos os profissionais (stakeholder, 06/11/2026)
+
+**Regra definida em reunião com o stakeholder:** como a clínica é integrativa, **todos os pacientes são
+compartilhados com todos os profissionais**. Em algum momento do tratamento, o profissional pede que o
+paciente siga para outro tratamento com outro profissional, para dar continuidade. Por isso o paciente
+não pertence a um profissional; pertence à clínica.
+
+Impactos no desenho:
+- **Cadastro do paciente:** um só por pessoa, da clínica, visível a todos os profissionais. Não existe
+  "carteira de pacientes" por profissional.
+- **Prontuário:** todos os profissionais abrem o prontuário de qualquer paciente, para a continuidade do
+  tratamento. Continua fechado para gestor, administrador do sistema e atendente. Cada evolução registra
+  o profissional autor e a data.
+- **Registro de acessos (LGPD):** como todos veem tudo, fica anotado quem abriu cada ficha e cada exame.
+  Dado de saúde segue sendo sensível, então rever D-05 do backlog do NewCRM.
+- **Agenda:** cada profissional tem a sua; o mesmo paciente pode ser atendido por mais de um.
+- **Área do paciente:** mostra as consultas e os exames com todos os profissionais.
+- **Encaminhamento (a validar):** registrar que o profissional X encaminhou o paciente ao Y é uma
+  funcionalidade natural dessa regra, mas ainda não está no escopo.
+- **Fase 2 (Loja):** a regra de comissão precisa dizer a quem pertence o atendimento quando há
+  encaminhamento.
+
 ## 5. Fora de escopo (por enquanto)
 
 - Cadastro/login de paciente — fica no site público, não no NewCRM.
@@ -160,9 +182,9 @@ mensagens automáticas (MVP de relacionamento), e por fim indicadores, equipe e 
 - Notificação automática (lembrete de consulta por WhatsApp) — não discutido ainda, mas é candidato
   natural a reaproveitar a infra de envio de WhatsApp que o NewCRM já tem.
 - **Prontuário (ficha clínica do paciente)** — levantado em 02/11/2026. É dado de saúde (categoria
-  sensível pela LGPD), mas como esse cliente tem **um profissional só (Luis Manoel)**, o acesso
-  "só o terapeuta vê" sai de graça da regra padrão do NewCRM (a própria conta de login do tenant já
-  é exclusiva dele — não precisa de login por profissional nem RLS especial). Falta desenhar: página
+  sensível pela LGPD), e a premissa de **um profissional só (Luis Manoel)** caiu: a clínica terá vários
+  profissionais e todos veem todos os pacientes (§4.3). O acesso "só profissionais" passa a exigir
+  permissão por perfil, não basta a conta única do tenant. Falta desenhar: página
   própria por paciente (`/prontuario/:paciente_id`), paciente como entidade própria (hoje só existe
   `agendamentos` + lead por WhatsApp), e impressão/PDF via CSS de impressão do navegador (sem gerar
   PDF no servidor). Rever D-05 do backlog do NewCRM (papel de operador de dados / LGPD com clientes
@@ -186,7 +208,7 @@ mensagens automáticas (MVP de relacionamento), e por fim indicadores, equipe e 
 6. **O que é "TGA"?** — citado no levantamento (§4.1-7) como integração junto com formulários.
    Confirmar com o cliente o que é e que dados trocam.
 7. **Quem são os "atendentes/vendedores"?** — o levantamento prevê distribuição de leads e
-   desempenho por vendedor, mas o atendimento é de um profissional só. Quantas pessoas da equipe
+   desempenho por vendedor, e a clínica terá vários profissionais (§4.3). Quantas pessoas da equipe
    terão login e com que permissões?
 8. **Prioridade entre módulos** — o escopo cresceu muito (§4.1). Definir um MVP (sugestão: pacientes
    + agenda + lembretes WhatsApp) e deixar funil, fidelização e indicadores para fases seguintes.
