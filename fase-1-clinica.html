@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fase 1 — Software de Gestão da Clínica Corpo Terra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap">
+<style>
+:root { --ink: #00262c; --muted: #4c6b6e; --line: #c9dcd9; --brand: #00716f; --deep: #00454d; --mint: #00dcc0; --soft: #f1f8f7; --cream: #fdeee3; --warn: #8a5a00; }
+* { box-sizing: border-box; }
+@page { size: A4; margin: 16mm 14mm 18mm; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: #e9efee; color: var(--ink); font: 400 11pt/1.5 "Outfit", system-ui, sans-serif; }
+.pagina { max-width: 210mm; margin: 16px auto; background: #fff; padding: 16mm 14mm; box-shadow: 0 2px 12px rgba(0, 38, 44, .12); }
+.barra { max-width: 210mm; margin: 16px auto 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); padding: 0 4px; }
+.barra button { font: 600 14px/1 "Outfit", sans-serif; padding: 12px 22px; border: 0; border-radius: 9999px; background: var(--brand); color: #fff; cursor: pointer; }
+
+.capa { background: var(--deep); color: #fff; border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.capa small { display: block; font: 700 9pt/1 "Outfit", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--mint); margin-bottom: 8px; }
+.capa h1 { margin: 0 0 6px; font-weight: 300; font-size: 22pt; line-height: 1.15; letter-spacing: -.02em; }
+.capa h1 b { font-weight: 700; color: var(--mint); }
+.capa p { margin: 0; font-weight: 300; color: #d6ece8; font-size: 10.5pt; }
+
+h2 { margin: 22px 0 6px; font-size: 14pt; font-weight: 700; color: var(--deep); letter-spacing: -.01em; break-after: avoid; border-bottom: 2px solid var(--mint); padding-bottom: 4px; }
+h2 span { color: var(--brand); }
+h3 { margin: 14px 0 4px; font-size: 10.5pt; font-weight: 600; color: var(--brand); text-transform: uppercase; letter-spacing: .05em; break-after: avoid; }
+p { margin: 6px 0; }
+.apoio { color: var(--muted); font-weight: 300; }
+ul { margin: 6px 0; padding-left: 20px; } li { margin: 3px 0; }
+ol { margin: 6px 0; padding-left: 22px; } ol li { margin: 4px 0; }
+
+.destaque { background: var(--cream); border-radius: 8px; padding: 10px 16px; margin: 8px 0; break-inside: avoid; }
+.total { background: var(--deep); color: #fff; border-radius: 10px; padding: 14px 20px; margin: 12px 0; display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: center; break-inside: avoid; }
+.total b { display: block; font-size: 17pt; line-height: 1.1; color: var(--mint); }
+.total span { font-size: 9.5pt; color: #cfe9e5; }
+.total label { font-size: 9.5pt; color: #cfe9e5; display: flex; flex-direction: column; gap: 3px; }
+
+input.v { font: 600 12pt "Outfit", sans-serif; width: 130px; padding: 6px 10px; border: 1.5px solid var(--mint); border-radius: 8px; background: #fff; color: var(--ink); }
+.total input.v { width: 150px; }
+
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.area { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; break-inside: avoid; }
+.area h4 { margin: 0 0 4px; font-size: 12pt; color: var(--deep); }
+.area .fase { display: inline-block; font: 600 8.5pt/1 "Outfit", sans-serif; padding: 3px 9px; border-radius: 99px; background: var(--soft); color: var(--brand); border: 1px solid var(--line); margin-bottom: 6px; }
+.area.atual { background: var(--soft); border-color: var(--mint); }
+.area p { margin: 4px 0; font-size: 10pt; }
+@media (max-width: 640px) { .duas { grid-template-columns: 1fr; } }
+table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 9.5pt; }
+tr { break-inside: avoid; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; color: var(--deep); }
+td.n { white-space: nowrap; text-align: center; color: var(--brand); font-weight: 700; }
+td.m { font-weight: 600; }
+tfoot td { background: var(--soft); font-weight: 700; }
+.pend { color: var(--warn); font-weight: 600; }
+.rodape-final { margin-top: 22px; padding: 14px 18px; border-radius: 8px; background: var(--soft); break-inside: avoid; }
+
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .barra { display: none; }
+  .pagina { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+  input.v { border: 0; padding: 0; width: auto; background: transparent; }
+  .total input.v { color: var(--mint); font-size: 17pt; }
+}
+</style>
+</head>
+<body>
+<div class="barra">
+  <span>Para gerar o PDF, clique no botão e escolha "Salvar como PDF" (papel A4).</span>
+  <button type="button" onclick="window.print()">Salvar como PDF</button>
+</div>
+
+<main class="pagina">
+  <header class="capa">
+    <small>Clínica Corpo Terra</small>
+    <h1><b>Fase 1</b><br>Software de Gestão da Clínica</h1>
+    <p>06/11/2026 · Site de agendamento e sistema com login</p>
+  </header>
+
+  <h2><span>1.</span> O que é a Clínica</h2>
+  <p>O sistema da Clínica Corpo Terra terá <b>duas áreas</b>: a <b>Clínica</b>, que é a Fase 1 e o assunto deste documento, e a <b>Loja</b>, que vem na Fase 2.</p>
+  <div class="duas">
+    <div class="area atual">
+      <span class="fase">Fase 1 · este documento</span>
+      <h4>Clínica</h4>
+      <p>Tudo o que é <b>atendimento</b>: site de agendamento, agenda, pacientes, prontuário, exames, financeiro e mensagens pelo WhatsApp.</p>
+    </div>
+    <div class="area">
+      <span class="fase">Fase 2 · depois</span>
+      <h4>Loja</h4>
+      <p>A <b>venda de produtos</b>, com estoque, fornecedores, pagamentos com cartão e comissões.</p>
+    </div>
+  </div>
+  <p><b>Como a Clínica funciona:</b></p>
+  <ul>
+    <li>O paciente conhece o atendimento e agenda pelo site.</li>
+    <li>O agendamento chega ao sistema, que cria o cadastro e a conta do paciente.</li>
+    <li>Os profissionais atendem, registram o prontuário e liberam os exames. O gestor cuida do financeiro.</li>
+    <li>O paciente acompanha as suas consultas e exames na sua própria área.</li>
+  </ul>
+  <p class="apoio">O sistema já nasce preparado para a Loja: o cadastro de cliente e o financeiro são pensados para atender as duas áreas.</p>
+
+  <h2><span>2.</span> Resumo</h2>
+  <p>A Fase 1 entrega o <b>site de agendamento</b> e o <b>sistema com login</b> da Clínica Corpo Terra: 7 frentes do site e 12 módulos do sistema.</p>
+  <ul>
+    <li><b>Para os pacientes:</b> um site para conhecer o atendimento e agendar consulta online, e uma área para ver consultas, exames e dados.</li>
+    <li><b>Para a clínica:</b> agenda, cadastro de pacientes, prontuário, exames, financeiro e mensagens pelo WhatsApp, cada perfil vendo só o que lhe cabe.</li>
+  </ul>
+  <p class="apoio">Tudo o que está neste documento já foi projetado e apresentado em telas navegáveis, com dados de exemplo.</p>
+
+  <h2><span>3.</span> Escopo da Fase 1</h2>
+  <p class="apoio">O escopo está separado em Site e Sistema.</p>
+
+  <h3>2.1 Site (7 frentes)</h3>
+  <table>
+    <thead><tr><th>#</th><th>Frente</th><th>O que entrega</th></tr></thead>
+    <tbody>
+      <tr><td class="n">S1</td><td class="m">Textos da página</td><td>Textos de cada bloco (topo, sinais, como funciona, quem atende, objeções, perguntas e chamado final), com linguagem acolhedora e sem promessa de cura. Três opções de título e de botão para testar. Revisão jurídica dos textos de saúde.</td></tr>
+      <tr><td class="n">S2</td><td class="m">Depoimentos</td><td>Seção de depoimentos reais, com modelo de autorização por escrito (LGPD), fluxo de coleta pelo Instagram e WhatsApp e formatos em texto, imagem da conversa e vídeo curto. Prova também perto do botão final e na confirmação do agendamento.</td></tr>
+      <tr><td class="n">S3</td><td class="m">Vídeo e imagens</td><td>Espaço do vídeo de apresentação do Luis, com legenda, e fotos reais, em formato leve (WebP) e com texto alternativo.</td></tr>
+      <tr><td class="n">S4</td><td class="m">SEO</td><td>Título e descrição, um só H1, imagem de compartilhamento (WhatsApp e Instagram), endereço canônico, dados estruturados (serviço de saúde e perguntas frequentes), sitemap.xml, robots.txt e velocidade no celular. Pesquisa de palavras-chave e de 4 a 6 artigos curtos de conteúdo.</td></tr>
+      <tr><td class="n">S5</td><td class="m">Agendamento online</td><td>Formulário curto, etapas visíveis, resumo antes de confirmar, botão "Agendar" fixo no celular, WhatsApp para dúvidas, mensagens de erro claras e confirmação com próximos passos (link do Zoom e como se preparar). Botão Entrar no menu e aviso "Já é paciente?".</td></tr>
+      <tr><td class="n">S6</td><td class="m">Confiança e privacidade</td><td>Quem atende (formação e história do Luis), política de privacidade, termo de consentimento na etapa 1, aviso legal no rodapé e aviso de cookies.</td></tr>
+      <tr><td class="n">S7</td><td class="m">Relatório mensal</td><td>Relatório mensal curto com visitas, cliques, agendamentos e onde as pessoas desistem.</td></tr>
+      </tbody>
+  </table>
+
+  <h3>2.2 Sistema com login (12 módulos)</h3>
+  <table id="tab">
+    <thead><tr><th>#</th><th>Módulo</th><th>O que entrega</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td class="m">Base do sistema</td><td>Banco de dados, login e senha, perfis (profissionais, gestor, administrador do sistema, paciente e atendente), permissões aplicadas no servidor, recuperação de senha, sessão que expira e registro de quem abriu cada ficha.</td></tr>
+      <tr><td class="n">2</td><td class="m">Receptor do agendamento</td><td>Recebe o que o site envia, confere se o horário está livre, grava e cria a conta do paciente, com link para escolher a senha.</td></tr>
+      <tr><td class="n">3</td><td class="m">Agenda, horários e tipos de consulta</td><td>Consultas do dia e do mês. Confirmar, remarcar, cancelar e marcar como realizada. Dias e horários de atendimento. Tipos de consulta com duração.</td></tr>
+      <tr><td class="n">4</td><td class="m">Pacientes e cadastro</td><td>Um cadastro por paciente, com nº de prontuário, status (ativo, inativo, primeira consulta), interesses, histórico de atendimento e consentimento LGPD.</td></tr>
+      <tr><td class="n">5</td><td class="m">Prontuário</td><td>Queixa, evolução de cada consulta e condutas, com impressão em PDF. Acesso só dos profissionais.</td></tr>
+      <tr><td class="n">6</td><td class="m">Exames</td><td>Anexar arquivos privados, decidir quais o paciente pode ver e avisá-lo pelo WhatsApp.</td></tr>
+      <tr><td class="n">7</td><td class="m">Financeiro</td><td>Receitas e despesas da clínica, com visão do mês e lançamentos. Acesso só do gestor.</td></tr>
+      <tr><td class="n">8</td><td class="m">Área do paciente</td><td>Início, minhas consultas (com o link do Zoom), meus exames liberados e meus dados, com pedido de correção.</td></tr>
+      <tr><td class="n">9</td><td class="m">Conversas e mensagens do WhatsApp</td><td>Caixa de conversas da clínica, com responsável por conversa. Modelos de mensagem. Confirmação e lembretes automáticos.</td></tr>
+      <tr><td class="n">10</td><td class="m">Faltas, remarcações e relacionamento</td><td>Pendências da agenda. Reativação de pacientes inativos, mensagem de aniversário e acompanhamento pós-consulta, só para quem autorizou o contato.</td></tr>
+      <tr><td class="n">11</td><td class="m">Equipe, atendente e privacidade</td><td>Cadastro de funcionários e permissões. Perfil de atendente sem acesso à ficha clínica. Termo de uso dos dados e registro de acessos.</td></tr>
+      <tr><td class="n">12</td><td class="m">Testes, ajustes e publicação</td><td>Testes com a equipe da clínica, correções e publicação do site e do sistema.</td></tr>
+      </tbody>
+  </table>
+
+  <h2><span>4.</span> Prazo e entregas</h2>
+  <p>A Fase 1 sai em três entregas. Os prazos contam da aprovação do escopo e do recebimento do material pedido na seção 5.</p>
+
+  <h3>Entrega 1 · Atender e agendar: 2 a 3 semanas</h3>
+  <ul>
+    <li><b>Site no ar:</b> textos, SEO, agendamento online, confiança e privacidade e relatório mensal. O espaço de depoimentos e de vídeo já fica pronto, e o conteúdo entra quando a clínica enviar.</li>
+    <li><b>Sistema:</b> base com login e perfis, receptor do agendamento, agenda, horários e tipos de consulta, pacientes e cadastro e área do paciente.</li>
+    <li><b>Resultado:</b> o paciente agenda pelo site e a equipe acompanha a agenda e os cadastros. Nesta entrega a confirmação do agendamento é feita pela equipe ou por e-mail; passa a ser automática pelo WhatsApp na entrega final.</li>
+  </ul>
+
+  <h3>Entrega 2 · Atender com segurança: mais 2 semanas</h3>
+  <ul>
+    <li>Prontuário, exames, financeiro (só o gestor), equipe e atendente, e privacidade com registro de acessos.</li>
+    <li>São dados de saúde, por isso as permissões e o termo de uso dos dados são testados antes de liberar.</li>
+  </ul>
+
+  <h3>Entrega final · Relacionamento e fechamento</h3>
+  <ul>
+    <li>Conversas e mensagens do WhatsApp, com confirmação e lembretes automáticos.</li>
+    <li>Faltas, remarcações e relacionamento (reativação, aniversário e pós-consulta).</li>
+    <li>Testes com a equipe, ajustes e publicação final do sistema.</li>
+    <li>Vem logo depois da Entrega 2. O prazo depende da aprovação da conta oficial do WhatsApp, que pedimos já na primeira semana.</li>
+  </ul>
+  <p class="apoio">Os prazos podem mudar se as aprovações da clínica ou o envio do material atrasarem.</p>
+
+  <h2><span>5.</span> O que precisamos da clínica</h2>
+  <ul>
+    <li>Fotos reais do Luis.</li>
+    <li>Vídeo institucional da clínica.</li>
+    <li>Depoimentos reais, com autorização por escrito de quem os enviou.</li>
+    <li>Valor da consulta e formas de pagamento para as perguntas do site.</li>
+    <li>Formação, registro ou associação profissional e a história do Luis.</li>
+    <li>Dias e horários de atendimento, tipos de consulta, durações, valores e regras de remarcação.</li>
+    <li>Domínio do site.</li>
+    <li>Número de WhatsApp da clínica para a conta oficial e o texto das mensagens.</li>
+    <li>Responsável pelos dados (LGPD) e o termo de consentimento.</li>
+  </ul>
+
+</main>
+
+</body>
+</html>

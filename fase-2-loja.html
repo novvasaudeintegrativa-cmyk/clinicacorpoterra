@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fase 2 — Loja — Clínica Corpo Terra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap">
+<style>
+:root { --ink: #00262c; --muted: #4c6b6e; --line: #c9dcd9; --brand: #00716f; --deep: #00454d; --mint: #00dcc0; --soft: #f1f8f7; --cream: #fdeee3; }
+* { box-sizing: border-box; }
+@page { size: A4; margin: 16mm 14mm 18mm; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: #e9efee; color: var(--ink); font: 400 11pt/1.5 "Outfit", system-ui, sans-serif; }
+.pagina { max-width: 210mm; margin: 16px auto; background: #fff; padding: 16mm 14mm; box-shadow: 0 2px 12px rgba(0, 38, 44, .12); }
+.barra { max-width: 210mm; margin: 16px auto 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); padding: 0 4px; }
+.barra button { font: 600 14px/1 "Outfit", sans-serif; padding: 12px 22px; border: 0; border-radius: 9999px; background: var(--brand); color: #fff; cursor: pointer; }
+
+.capa { background: var(--deep); color: #fff; border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.capa small { display: block; font: 700 9pt/1 "Outfit", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--mint); margin-bottom: 8px; }
+.capa h1 { margin: 0 0 6px; font-weight: 300; font-size: 22pt; line-height: 1.15; letter-spacing: -.02em; }
+.capa h1 b { font-weight: 700; color: var(--mint); }
+.capa p { margin: 0; font-weight: 300; color: #d6ece8; font-size: 10.5pt; }
+
+h2 { margin: 22px 0 6px; font-size: 14pt; font-weight: 700; color: var(--deep); letter-spacing: -.01em; break-after: avoid; border-bottom: 2px solid var(--mint); padding-bottom: 4px; }
+h2 span { color: var(--brand); }
+h3 { margin: 14px 0 4px; font-size: 10.5pt; font-weight: 600; color: var(--brand); text-transform: uppercase; letter-spacing: .05em; break-after: avoid; }
+p { margin: 6px 0; }
+.apoio { color: var(--muted); font-weight: 300; }
+ul { margin: 6px 0; padding-left: 20px; } li { margin: 3px 0; }
+
+.destaque { background: var(--cream); border-radius: 8px; padding: 10px 16px; margin: 8px 0; break-inside: avoid; }
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.area { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; break-inside: avoid; }
+.area h4 { margin: 0 0 4px; font-size: 12pt; color: var(--deep); }
+.area .fase { display: inline-block; font: 600 8.5pt/1 "Outfit", sans-serif; padding: 3px 9px; border-radius: 99px; background: var(--soft); color: var(--brand); border: 1px solid var(--line); margin-bottom: 6px; }
+.area.loja { background: var(--soft); border-color: var(--mint); }
+.area p { margin: 4px 0; font-size: 10pt; }
+
+table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 9.5pt; }
+tr { break-inside: avoid; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; color: var(--deep); }
+td.n { white-space: nowrap; text-align: center; color: var(--brand); font-weight: 700; }
+td.m { font-weight: 600; }
+
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .barra { display: none; }
+  .pagina { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+}
+@media (max-width: 640px) { .duas { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="barra">
+  <span>Para gerar o PDF, clique no botão e escolha "Salvar como PDF" (papel A4).</span>
+  <button type="button" onclick="window.print()">Salvar como PDF</button>
+</div>
+
+<main class="pagina">
+  <header class="capa">
+    <small>Clínica Corpo Terra</small>
+    <h1><b>Fase 2</b><br>Software de Gestão da Clínica · Loja</h1>
+    <p>06/11/2026 · Produtos, estoque, vendas e financeiro</p>
+  </header>
+
+  <h2><span>1.</span> O que é a Loja</h2>
+  <p>A Clínica Corpo Terra passa a ter <b>duas áreas</b> dentro do mesmo sistema: a <b>Clínica</b>, que é a Fase 1, e a <b>Loja</b>, que é a Fase 2 e o assunto deste documento.</p>
+  <div class="duas">
+    <div class="area">
+      <span class="fase">Fase 1</span>
+      <h4>Clínica</h4>
+      <p>Tudo o que é <b>atendimento</b>: site de agendamento, agenda, pacientes, prontuário, exames, financeiro básico e mensagens pelo WhatsApp.</p>
+    </div>
+    <div class="area loja">
+      <span class="fase">Fase 2 · este documento</span>
+      <h4>Loja</h4>
+      <p>A <b>venda de produtos</b> e tudo o que ela exige: fornecedores, estoque, notas fiscais, pagamentos com cartão, contas a pagar e a receber e comissões.</p>
+    </div>
+  </div>
+  <p><b>Como as duas se conectam:</b></p>
+  <ul>
+    <li><b>Um cadastro de cliente só.</b> A mesma pessoa pode ser paciente na Clínica e comprar na Loja, sem cadastro duplicado. O prontuário continua restrito aos profissionais.</li>
+    <li><b>Uma venda pode ter serviço e produto.</b> Consulta, retorno, terapia, injetável e produtos entram no mesmo fechamento, com o pagamento e a comissão calculados juntos.</li>
+    <li><b>O injetável usa produto do estoque.</b> Ao realizar o atendimento, o produto usado sai do estoque.</li>
+    <li><b>Acesso com login.</b> A Loja também é acessada com login e senha, como a Clínica. Quem acessa o controle da Loja será definido com a clínica.</li>
+    <li><b>Financeiro e relatórios por área.</b> Cada lançamento diz se veio da Clínica ou da Loja, e os relatórios mostram cada área e o total.</li>
+  </ul>
+  <p class="apoio">A Fase 2 se apoia na Fase 1 (Clínica): clientes, profissionais, agenda e financeiro. Por isso vem depois dela.</p>
+
+  <h2><span>2.</span> Escopo da Fase 2</h2>
+  <p class="apoio">O escopo está separado entre o que amplia a Clínica e o que é da Loja.</p>
+
+  <h3>2.1 Clínica (ampliações)</h3>
+  <table>
+    <thead><tr><th>#</th><th>Módulo</th><th>O que entrega</th></tr></thead>
+    <tbody>
+      <tr><td class="n">C1</td><td class="m">Tipos de atendimento</td><td>Cadastro de consulta, retorno, terapias e injetáveis, cada um com duração e preço. O injetável pode indicar os produtos que consome.</td></tr>
+      <tr><td class="n">C2</td><td class="m">Controle de faltas</td><td>Histórico de faltas por paciente e por profissional, com relatório do período.</td></tr>
+      <tr><td class="n">C3</td><td class="m">Profissionais</td><td>Cadastro de vários profissionais, com os tipos de atendimento de cada um e a regra de comissão.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 Loja e financeiro</h3>
+  <table>
+    <thead><tr><th>#</th><th>Módulo</th><th>O que entrega</th></tr></thead>
+    <tbody>
+      <tr><td class="n">L1</td><td class="m">Base da Loja e acessos</td><td>A Loja cadastrada ao lado da Clínica, com acesso por login e senha. Quem acessa o controle da Loja e o que cada um vê serão definidos com a clínica.</td></tr>
+      <tr><td class="n">L2</td><td class="m">Fornecedores</td><td>Cadastro de fornecedores, com contato e histórico de compras.</td></tr>
+      <tr><td class="n">L3</td><td class="m">Produtos e estoque</td><td>Cadastro de produtos (categoria, preço de custo e de venda, estoque mínimo), controle de estoque, ajustes de inventário, alerta de estoque baixo e baixa automática dos produtos usados nos injetáveis.</td></tr>
+      <tr><td class="n">L4</td><td class="m">Notas fiscais de entrada e saída</td><td>Registro das notas de compra (entrada no estoque) e das notas de venda (saída), ligadas a fornecedor ou cliente. O sistema registra e controla as notas, sem emitir a nota fiscal.</td></tr>
+      <tr><td class="n">L5</td><td class="m">Vendas e pagamentos</td><td>Venda com serviços e produtos no mesmo fechamento. Formas e tipos de pagamento (à vista e parcelado), bandeiras e taxa da maquininha cadastradas por bandeira, com o valor líquido calculado.</td></tr>
+      <tr><td class="n">L6</td><td class="m">Pagar e receber</td><td>Contas a pagar e a receber com vencimento e baixa, e centro de custo para classificar receitas e despesas. Cada lançamento marca se é da Clínica ou da Loja.</td></tr>
+      <tr><td class="n">L7</td><td class="m">Comissões</td><td>Regras de comissão por profissional (percentual por tipo de atendimento e por produto), cálculo no fechamento da venda e relatório do período.</td></tr>
+      <tr><td class="n">L8</td><td class="m">Relatórios</td><td>Produtos e serviços (vendas, estoque e margem), comissões e financeiro por área e total.</td></tr>
+      <tr><td class="n">L9</td><td class="m">Testes, ajustes e publicação</td><td>Testes com a equipe da clínica, correções e publicação da Fase 2.</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span>3.</span> Prazo e entregas</h2>
+  <p>A Fase 2 sai em três entregas, nesta ordem. Os prazos de cada uma são combinados com a clínica na aprovação e contam do recebimento do material pedido na seção 4.</p>
+
+  <h3>Entrega 1 · Cadastros e estoque</h3>
+  <ul>
+    <li>Base da Loja e acessos, fornecedores, profissionais e tipos de atendimento.</li>
+    <li>Produtos e estoque, com as notas fiscais de entrada.</li>
+    <li><b>Resultado:</b> a clínica cadastra produtos e fornecedores e controla o estoque.</li>
+  </ul>
+
+  <h3>Entrega 2 · Vendas e financeiro</h3>
+  <ul>
+    <li>Vendas e pagamentos, notas fiscais de saída, pagar e receber e centro de custo.</li>
+    <li><b>Resultado:</b> a clínica vende serviços e produtos no mesmo fechamento e acompanha o que entra e o que sai.</li>
+  </ul>
+
+  <h3>Entrega final · Comissões e relatórios</h3>
+  <ul>
+    <li>Controle de faltas, comissões, relatórios e testes finais com a equipe.</li>
+    <li>Publicação da Fase 2.</li>
+  </ul>
+  <p class="apoio">Os prazos podem mudar se as aprovações da clínica ou o envio do material atrasarem.</p>
+
+  <h2><span>4.</span> O que precisamos da clínica</h2>
+  <ul>
+    <li>Lista de produtos e de serviços, com nome, categoria, preço de custo e de venda.</li>
+    <li>Estoque atual de cada produto, para começar o controle.</li>
+    <li>Lista de fornecedores e seus contatos.</li>
+    <li>Maquininhas e bandeiras usadas, com as taxas de débito, crédito e parcelamento.</li>
+    <li>Formas de pagamento aceitas.</li>
+    <li>Regras de comissão de cada profissional.</li>
+    <li>Centros de custo que a clínica quer acompanhar.</li>
+    <li>Definição de quem terá acesso ao controle da Loja e o que cada um pode ver.</li>
+    <li>Como as notas fiscais são emitidas hoje (por exemplo, pelo contador).</li>
+  </ul>
+</main>
+</body>
+</html>
