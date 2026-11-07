@@ -169,6 +169,13 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
 .form input:focus{outline:0;border-bottom-color:var(--brand);background:#fff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .form input{background:#0d4a4f;color:var(--ink)}}
 .mm{font-size:13px;color:var(--muted)}
+.titem{display:flex;flex-direction:column;gap:6px}
+.tn-b{align-self:flex-start;margin-left:46px;background:none;border:0;padding:0;font:inherit;font-size:13px;font-weight:600;color:var(--brand);cursor:pointer}
+.tn-b:hover{text-decoration:underline}
+.tn-b.tem::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber);margin-right:6px}
+.tn-t{margin:0 0 4px 46px;width:calc(100% - 46px);min-height:56px;resize:vertical;border-radius:10px;border:0;border-bottom:2px solid var(--line);background:#eef5f4;padding:8px 12px;font:inherit;font-size:14px;color:var(--ink);line-height:1.45}
+.tn-t:focus{outline:0;border-bottom-color:var(--brand);background:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tn-t{background:#0d4a4f;color:var(--ink)}}
 .nota{margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
 .nota-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .nota-h h4{margin:0;font-size:15px;font-weight:600}
@@ -201,7 +208,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
   </aside>
   <main class="area">
     <div class="topo"><div><h1 class="nome"><b>Método Raízes</b> - Desparasitação Descomplicada</h1><p>Dashboard do 1º Lançamento Semente</p></div>
-      <div class="acoes"><button class="chip" type="button" id="reset">Limpar dados</button></div></div>
+      <div class="acoes"><button class="chip" type="button" id="exp-pdf">Exportar PDF</button><button class="chip" type="button" id="exp-bk">Salvar backup</button><label class="chip" for="imp-bk" style="cursor:pointer">Restaurar backup</label><input type="file" id="imp-bk" accept="application/json,.json" hidden><button class="chip" type="button" id="reset">Limpar dados</button></div></div>
 
     <section id="visao" class="bloco">
       <div class="hero">
@@ -254,7 +261,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
 (function () {
   var KEY = 'semente-dash-v1', S = {};
   try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
-  S.t = S.t || {}; S.m = S.m || {}; S.p = S.p || {}; S.n = S.n || {};
+  S.t = S.t || {}; S.m = S.m || {}; S.p = S.p || {}; S.n = S.n || {}; S.tn = S.tn || {};
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
   var $ = function (s) { return document.querySelector(s); };
   function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
@@ -298,7 +305,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
   all.forEach(function (o) { if (S.t[o.id] === undefined && o.def) S.t[o.id] = true; });
   function done(o) { return !!S.t[o.id]; }
 
-  var cur = S.cur || 'prep';
+  var cur = S.cur || 'prep', openN = {};
   function renderTabs() {
     var tb = $('#tabs'); tb.replaceChildren();
     PH.forEach(function (p) {
@@ -315,9 +322,18 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
     var nt = $('#nota'); nt.value = S.n[cur] || ''; $('#nota-st').textContent = S.n[cur] ? 'Anotação salva' : '';
     var box = $('#tasks'); box.replaceChildren();
     p.list.forEach(function (o) {
-      var lb = el('label', 'task'), cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = done(o);
+      var it = el('div', 'titem'), lb = el('label', 'task'), cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = done(o);
       cb.onchange = function () { S.t[o.id] = cb.checked; save(); render(); };
-      lb.append(cb, el('span', null, o.txt)); box.append(lb);
+      lb.append(cb, el('span', null, o.txt));
+      var has = !!S.tn[o.id], bt = el('button', 'tn-b'), ta = document.createElement('textarea');
+      bt.type = 'button';
+      ta.className = 'tn-t'; ta.rows = 2; ta.maxLength = 2000; ta.placeholder = 'Anotação deste item'; ta.setAttribute('aria-label', 'Anotação: ' + o.txt); ta.value = S.tn[o.id] || '';
+      function vis() { return openN[o.id] !== undefined ? openN[o.id] : !!S.tn[o.id]; }
+      function show() { ta.hidden = !vis(); bt.className = 'tn-b' + (S.tn[o.id] ? ' tem' : ''); bt.textContent = S.tn[o.id] ? 'Anotação' : (vis() ? 'Fechar' : '+ Anotar'); bt.setAttribute('aria-expanded', vis() ? 'true' : 'false'); }
+      bt.onclick = function () { openN[o.id] = !vis(); show(); if (vis()) ta.focus(); };
+      ta.addEventListener('input', function () { var v = ta.value; if (v.trim()) S.tn[o.id] = v; else delete S.tn[o.id]; save(); show(); });
+      show();
+      it.append(lb, bt, ta); box.append(it);
     });
   }
   function renderTimeline() {
@@ -382,7 +398,55 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
     clearTimeout(tNota); tNota = setTimeout(renderTabs, 400);
   });
   $('#dt').addEventListener('change', function () { S.dt = $('#dt').value; save(); render(); });
-  $('#reset').addEventListener('click', function () { if (confirm('Apagar todo o progresso, as métricas e as anotações salvos neste navegador?')) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
+  $('#reset').addEventListener('click', function () { if (confirm('Apagar todo o progresso, as métricas e as anotações salvos neste navegador? Salve um backup antes, se quiser guardar.')) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
+
+  // ---------- exportar PDF e backup ----------
+  function esc(t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function br(t) { return esc(t).replace(/\n/g, '<br>'); }
+  function fdl(d) { return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
+  function buildReport() {
+    var D = parseD(), tot = all.length, ok = all.filter(done).length, h = [];
+    h.push('<header class="capa"><small>Método Raízes · Lançamento Semente</small><h1>Dashboard do <b>1º Lançamento</b> Semente</h1><p>' + (D ? 'Webinário em ' + fdl(D) : 'Data do webinário a definir') + ' · Progresso ' + (tot ? Math.round(ok / tot * 100) : 0) + '% (' + ok + ' de ' + tot + ' tarefas) · Gerado em ' + fdl(new Date()) + '</p></header>');
+    PH.forEach(function (p) {
+      var n = p.list.filter(done).length, dt = D ? (p.ini === p.fim ? fd(add(D, p.ini)) : fd(add(D, p.ini)) + ' a ' + fd(add(D, p.fim))) : '';
+      h.push('<h2><span>' + esc(p.nome) + '</span><span class="meta">' + (dt ? esc(dt) + ' · ' : '') + n + ' de ' + p.list.length + ' tarefas</span></h2><p class="apoio">' + esc(p.desc) + '</p>');
+      if (S.n[p.id]) h.push('<div class="nf"><b>Anotações da fase</b>' + br(S.n[p.id]) + '</div>');
+      h.push('<ul class="tl">');
+      p.list.forEach(function (o) {
+        h.push('<li class="' + (done(o) ? 'ok' : '') + '"><span class="bx">' + (done(o) ? '✔' : '') + '</span><div>' + esc(o.txt) + (S.tn[o.id] ? '<div class="tn">' + br(S.tn[o.id]) + '</div>' : '') + '</div></li>');
+      });
+      h.push('</ul>');
+    });
+    var inp = [].slice.call(document.querySelectorAll('#metricas .form label')).map(function (l) { return '<tr><td>' + esc(l.firstChild.textContent) + '</td><td class="v">' + esc(l.querySelector('input').value || '—') + '</td></tr>'; }).join('');
+    var cal = [].slice.call(document.querySelectorAll('#mk .stat')).map(function (c) { return '<tr><td>' + esc(c.querySelector('span').textContent) + '</td><td class="v">' + esc(c.querySelector('b').textContent) + '</td></tr>'; }).join('');
+    h.push('<h2><span>Métricas do lançamento</span></h2><table><thead><tr><th>Número informado</th><th>Valor</th></tr></thead><tbody>' + inp + '</tbody></table><table><thead><tr><th>Resultado calculado</th><th>Valor</th></tr></thead><tbody>' + cal + '</tbody></table>');
+    h.push('<h2><span>Pendências</span><span class="meta">' + PEND.filter(function (_, i) { return S.p[i]; }).length + ' de ' + PEND.length + ' resolvidas</span></h2><table><thead><tr><th>Pendência</th><th>Responsável</th><th>Resolvida</th></tr></thead><tbody>' + PEND.map(function (x, i) { return '<tr><td>' + esc(x) + '</td><td>' + esc(WHO[i]) + '</td><td>' + (S.p[i] ? 'Sim' : 'Não') + '</td></tr>'; }).join('') + '</tbody></table>');
+    return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard Lançamento Semente — relatório</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap"><style>:root{--ink:#00262c;--muted:#4c6b6e;--line:#c9dcd9;--brand:#00716f;--deep:#00454d;--mint:#00dcc0;--soft:#f1f8f7;--cream:#fdeee3}*{box-sizing:border-box}@page{size:A4;margin:16mm 14mm 18mm}html{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;background:#e9efee;color:var(--ink);font:400 11pt/1.5 Outfit,system-ui,sans-serif}.pagina{max-width:210mm;margin:16px auto;background:#fff;padding:16mm 14mm;box-shadow:0 2px 12px rgba(0,38,44,.12)}.barra{max-width:210mm;margin:16px auto 0;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);padding:0 4px}.barra button{font:600 14px/1 Outfit,sans-serif;padding:12px 22px;border:0;border-radius:9999px;background:var(--brand);color:#fff;cursor:pointer}.capa{background:var(--deep);color:#fff;border-radius:10px;padding:22px 24px;margin-bottom:18px}.capa small{display:block;font:700 9pt/1 Outfit,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);margin-bottom:8px}.capa h1{margin:0 0 6px;font-weight:300;font-size:21pt;line-height:1.15}.capa h1 b{font-weight:700;color:var(--mint)}.capa p{margin:0;font-weight:300;color:#d6ece8;font-size:10pt}h2{margin:22px 0 6px;font-size:13.5pt;font-weight:700;color:var(--deep);border-bottom:2px solid var(--mint);padding-bottom:4px;break-after:avoid;display:flex;justify-content:space-between;align-items:baseline;gap:12px}h2 .meta{font-size:9.5pt;font-weight:400;color:var(--muted)}p{margin:6px 0}.apoio{color:var(--muted);font-weight:300}.nf{background:var(--cream);border-radius:8px;padding:8px 12px;margin:8px 0;font-size:10pt;break-inside:avoid}.nf b{display:block;font-size:9pt;text-transform:uppercase;letter-spacing:.05em;color:var(--brand);margin-bottom:2px}ul.tl{list-style:none;margin:6px 0;padding:0}ul.tl li{display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px dotted var(--line);break-inside:avoid;font-size:10.5pt}.bx{flex:none;width:15px;height:15px;border:1.5px solid var(--brand);border-radius:4px;margin-top:3px;font-size:10px;line-height:12px;text-align:center;color:#fff}li.ok .bx{background:var(--brand)}li.ok>div{color:var(--muted)}.tn{margin-top:4px;padding:6px 10px;background:var(--soft);border-left:3px solid var(--mint);border-radius:4px;font-size:9.5pt;color:var(--ink)}table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9.5pt}tr{break-inside:avoid}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--soft);font-weight:600;color:var(--deep)}td.v{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}@media print{body{background:#fff;font-size:10.5pt}.barra{display:none}.pagina{box-shadow:none;margin:0;padding:0;max-width:none}}</style></head><body><div class="barra"><span>Para gerar o PDF, clique no botão e escolha "Salvar como PDF" (papel A4).</span><button type="button" onclick="window.print()">Salvar como PDF</button></div><main class="pagina">' + h.join('') + '</main></body></html>';
+  }
+  function openReport() {
+    var url = URL.createObjectURL(new Blob([buildReport()], { type: 'text/html' })), a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.append(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+  }
+  $('#exp-pdf').addEventListener('click', openReport);
+  $('#exp-bk').addEventListener('click', function () {
+    var iso = new Date().toISOString().slice(0, 10), a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify({ v: 1, dados: S }, null, 2)], { type: 'application/json' }));
+    a.download = 'semente-backup-' + iso + '.json'; document.body.append(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $('#imp-bk').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      var d; try { d = JSON.parse(r.result).dados; } catch (x) { d = null; }
+      if (!d || typeof d !== 'object') { alert('Arquivo de backup inválido.'); return; }
+      if (!confirm('Substituir os dados deste navegador pelos do arquivo de backup?')) return;
+      try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (x) {}
+      location.reload();
+    };
+    r.readAsText(f); e.target.value = '';
+  });
   render(); renderMetrics(); renderPend();
   var links = [].slice.call(document.querySelectorAll('.nv')), io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id); }); }); }, { rootMargin: '-30% 0px -60% 0px' });
   document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
