@@ -169,6 +169,12 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
 .form input:focus{outline:0;border-bottom-color:var(--brand);background:#fff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .form input{background:#0d4a4f;color:var(--ink)}}
 .mm{font-size:13px;color:var(--muted)}
+.nota{margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
+.nota-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.nota-h h4{margin:0;font-size:15px;font-weight:600}
+.nota textarea{width:100%;min-height:84px;resize:vertical;border-radius:10px;border:0;border-bottom:2px solid var(--line);background:#eef5f4;padding:10px 12px;font:inherit;color:var(--ink);line-height:1.45}
+.nota textarea:focus{outline:0;border-bottom-color:var(--brand);background:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nota textarea{background:#0d4a4f;color:var(--ink)}}
 .btn-r{margin-left:auto}
 @media(max-width:1100px){.tl2{grid-template-columns:repeat(3,1fr)}.form{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){.tl2{grid-template-columns:1fr 1fr}.hero h2{font-size:21px}.big{font-size:34px}}
@@ -218,7 +224,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
     <section id="tarefas" class="bloco">
       <header><span class="eyebrow">Passo a passo</span><h2>Tarefas por fase</h2></header>
       <div class="tabs2" id="tabs" role="tablist"></div>
-      <div class="cd"><div class="ph-head"><h3 id="ph-nome"></h3><span class="pl" id="ph-data"></span><div class="pb"><i id="ph-b"></i></div><span class="mm" id="ph-n"></span></div><p class="mu sm" id="ph-d" style="margin:6px 0 12px"></p><div class="tasks" id="tasks"></div></div>
+      <div class="cd"><div class="ph-head"><h3 id="ph-nome"></h3><span class="pl" id="ph-data"></span><div class="pb"><i id="ph-b"></i></div><span class="mm" id="ph-n"></span></div><p class="mu sm" id="ph-d" style="margin:6px 0 12px"></p><div class="nota"><div class="nota-h"><h4>Anotações desta fase</h4><span class="mm" id="nota-st"></span></div><textarea id="nota" rows="3" maxlength="4000" placeholder="Escreva aqui o que precisa lembrar desta fase: decisões, links, combinados, pendências." aria-label="Anotações desta fase"></textarea></div><div class="tasks" id="tasks"></div></div>
     </section>
 
     <section id="metricas" class="bloco">
@@ -248,7 +254,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
 (function () {
   var KEY = 'semente-dash-v1', S = {};
   try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
-  S.t = S.t || {}; S.m = S.m || {}; S.p = S.p || {};
+  S.t = S.t || {}; S.m = S.m || {}; S.p = S.p || {}; S.n = S.n || {};
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
   var $ = function (s) { return document.querySelector(s); };
   function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
@@ -296,7 +302,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
   function renderTabs() {
     var tb = $('#tabs'); tb.replaceChildren();
     PH.forEach(function (p) {
-      var n = p.list.filter(done).length, b = el('button', 'chip', p.nome.replace(/^Fase \d · /, '') + ' (' + n + '/' + p.list.length + ')');
+      var n = p.list.filter(done).length, b = el('button', 'chip', p.nome.replace(/^Fase \d · /, '') + ' (' + n + '/' + p.list.length + ')' + (S.n[p.id] ? ' · nota' : ''));
       b.type = 'button'; b.setAttribute('aria-pressed', p.id === cur ? 'true' : 'false');
       b.onclick = function () { cur = p.id; S.cur = cur; save(); render(); }; tb.append(b);
     });
@@ -306,6 +312,7 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
     $('#ph-nome').textContent = p.nome; $('#ph-d').textContent = p.desc;
     $('#ph-data').textContent = D ? (p.ini === p.fim ? fd(add(D, p.ini)) : fd(add(D, p.ini)) + ' a ' + fd(add(D, p.fim))) : 'defina a data';
     var n = p.list.filter(done).length; $('#ph-n').textContent = n + ' de ' + p.list.length; $('#ph-b').style.width = (n / p.list.length * 100) + '%';
+    var nt = $('#nota'); nt.value = S.n[cur] || ''; $('#nota-st').textContent = S.n[cur] ? 'Anotação salva' : '';
     var box = $('#tasks'); box.replaceChildren();
     p.list.forEach(function (o) {
       var lb = el('label', 'task'), cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = done(o);
@@ -368,8 +375,14 @@ table.t { width: 100%; border-collapse: collapse; min-width: 640px; }
   if (S.dt) $('#dt').value = S.dt;
   var map = { inv: '#m-inv', ins: '#m-ins', pre: '#m-pre', ven: '#m-ven', pc: '#m-pc', kit: '#m-kit', pk: '#m-pk', ref: '#m-ref' };
   Object.keys(map).forEach(function (k) { if (S.m[k] !== undefined && S.m[k] !== '') $(map[k]).value = S.m[k]; $(map[k]).addEventListener('input', renderMetrics); });
+  var tNota;
+  $('#nota').addEventListener('input', function () {
+    var v = $('#nota').value, id = cur; if (v.trim()) S.n[id] = v; else delete S.n[id];
+    save(); $('#nota-st').textContent = v.trim() ? 'Anotação salva' : '';
+    clearTimeout(tNota); tNota = setTimeout(renderTabs, 400);
+  });
   $('#dt').addEventListener('change', function () { S.dt = $('#dt').value; save(); render(); });
-  $('#reset').addEventListener('click', function () { if (confirm('Apagar todo o progresso e as métricas salvos neste navegador?')) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
+  $('#reset').addEventListener('click', function () { if (confirm('Apagar todo o progresso, as métricas e as anotações salvos neste navegador?')) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
   render(); renderMetrics(); renderPend();
   var links = [].slice.call(document.querySelectorAll('.nv')), io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id); }); }); }, { rootMargin: '-30% 0px -60% 0px' });
   document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
