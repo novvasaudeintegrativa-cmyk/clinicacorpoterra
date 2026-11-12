@@ -186,7 +186,7 @@ table.t { width: 100%; border-collapse: collapse; font-size: 14px; background: #
 
 /* login */
 .lg2 { flex: 1; display: grid; grid-template-columns: 1fr 1fr; background: #fff; }
-.lg2 .l { position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(0, 54, 62, .9) 0%, rgba(0, 62, 70, .78) 22%, rgba(0, 69, 77, .38) 38%, rgba(0, 69, 77, 0) 50%), #00454d url("../img/login-familia.jpg") center bottom / cover no-repeat; color: #fff; padding: 64px; display: flex; flex-direction: column; justify-content: flex-start; gap: 40px; }
+.lg2 .l { position: relative; overflow: hidden; background: linear-gradient(0deg, rgba(0, 50, 58, .92) 0%, rgba(0, 50, 58, 0) 17%), linear-gradient(180deg, rgba(0, 54, 62, .9) 0%, rgba(0, 62, 70, .78) 22%, rgba(0, 69, 77, .38) 38%, rgba(0, 69, 77, 0) 50%), #00454d url("../img/login-familia.jpg") no-repeat; background-size: auto, auto, 108% auto; background-position: 0 0, 0 0, left bottom 55%; color: #fff; padding: 64px; display: flex; flex-direction: column; justify-content: flex-start; gap: 40px; }
 .lg2 .l > small { margin-top: auto; position: relative; text-shadow: 0 1px 8px rgba(0, 38, 44, .6); }
 .fc { position: absolute; background: rgba(255, 255, 255, .94); color: #00262c; border-radius: 16px; padding: 12px 18px; box-shadow: 0 10px 30px rgba(0, 38, 44, .28); display: flex; flex-direction: column; gap: 2px; font-size: 15px; } .fc small { color: #4c6b6e; font-size: 13px; }
 .lg2 .l h2 { font-size: 46px; font-weight: 300; line-height: 1.1; letter-spacing: -1px; } .lg2 .l h2 b { color: var(--mint); font-weight: 700; }
