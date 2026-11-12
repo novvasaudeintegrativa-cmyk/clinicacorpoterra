@@ -209,3 +209,7 @@ table.t { width: 100%; border-collapse: collapse; font-size: 14px; background: #
 .cd.gap { display:flex; flex-direction:column; }
 
 .sn .ent { color:#cfe9e5; font-weight:600; font-size:15px; padding:10px 14px; }
+
+@keyframes flutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.fc { animation: flutua 4.5s ease-in-out infinite; } .fc:nth-of-type(2) { animation-duration: 5.5s; animation-delay: -1.5s; } .fc:nth-of-type(3) { animation-duration: 5s; animation-delay: -3s; }
+@media (prefers-reduced-motion: reduce) { .fc { animation: none; } }
