@@ -59,7 +59,7 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
 
 ### 4.1 Escopo ampliado — CRM completo da clínica
 
-> Fonte: `Docs/CRM - CLÍNICA CORPO TERRA.md` (levantamento do cliente, 04/11/2026). Mostra que o
+> Fonte: `interno/CRM - CLÍNICA CORPO TERRA.md` (levantamento do cliente, 04/11/2026). Mostra que o
 > lado da clínica é um **CRM completo** (funil, WhatsApp, fidelização, indicadores), não só
 > agenda + financeiro. Os módulos abaixo somam-se aos de §4.
 
@@ -109,7 +109,7 @@ O NewCRM só precisa de um **receptor** da marcação + telas de gestão pro lad
 ### 4.2 Telas: o que já está projetado e o que falta (04/11/2026)
 
 Legenda: **Protótipo** = tela navegável em `sistema/` ou no site (dados fictícios); **Mockup** = tela
-em `mockups/index.html`, usada em `apresentacao-sistema.html`.
+em `mockups/index.html`, usada em `documentos/apresentacao-sistema.html`.
 
 **Site público**
 | Tela | Protótipo | Mockup |
