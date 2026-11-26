@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Atendimento — Clínica Corpo Terra</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="sistema.css">
+  <style>
+    .cv { display: grid; grid-template-columns: 360px 1fr; gap: 18px; align-items: start; }
+    .cv-lista { display: flex; flex-direction: column; gap: 8px; max-height: 620px; overflow-y: auto; overflow-x: hidden; }
+    .cv-item { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer; text-align: left; font: inherit; color: inherit; width: 100%; }
+    .cv-item:hover, .cv-item.on { border-color: var(--brand); background: var(--soft); }
+    .cv-item b { display: block; font-size: 15px; font-weight: 600; }
+    .cv-item small { display: block; color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px; }
+    .cv-item > div:nth-child(2) { min-width: 0; }
+    .cv-topo { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+    .cv-msgs { display: flex; flex-direction: column; gap: 10px; padding: 14px; background: #eef5f4; border-radius: 14px; min-height: 260px; max-height: 420px; overflow: auto; }
+    .bl { max-width: 78%; padding: 10px 14px; border-radius: 16px; font-size: 15px; line-height: 1.4; }
+    .bl small { display: block; font-size: 11.5px; opacity: .7; margin-top: 4px; }
+    .bl.c { align-self: flex-start; background: #fff; border-bottom-left-radius: 4px; }
+    .bl.ia { align-self: flex-end; background: #d6f5ec; border-bottom-right-radius: 4px; }
+    .bl.eq { align-self: flex-end; background: var(--brand); color: #fff; border-bottom-right-radius: 4px; }
+    .cv-alerta { background: var(--warn); color: var(--warn-ink); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; font-size: 14px; }
+    @media (max-width: 980px) { .cv { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-papel="prof" data-nav="atendimento.html" data-titulo="Atendimento" data-sub="Conversas do WhatsApp com a atendente de IA e os chamados para a equipe">
+  <main id="conteudo">
+    <div class="stats" id="kpis"></div>
+    <div class="chips" id="filtro" style="margin:18px 0" role="group" aria-label="Filtrar conversas">
+      <button class="chp on" data-f="" type="button">Todas</button><button class="chp" data-f="ch" type="button">Chamados abertos</button><button class="chp" data-f="ia" type="button">Com a IA</button><button class="chp" data-f="humano" type="button">Com a equipe</button><button class="chp" data-f="concluida" type="button">Concluídas</button>
+    </div>
+    <div class="cv">
+      <div class="cd"><h3>Conversas</h3><div class="cv-lista" id="lista"></div></div>
+      <div class="cd" id="painel"></div>
+    </div>
+    <p class="aviso">Protótipo: as conversas são de exemplo e nada é enviado. No sistema real, a atendente de IA só informa e encaminha: qualquer assunto de saúde, reclamação ou pedido de pessoa abre um chamado para a equipe, e quem assume a conversa pausa a IA nela.</p>
+  </main>
+  <script src="dados.js"></script>
+  <script src="sistema.js"></script>
+  <script>
+    (function () {
+      const { D, el, $, $$, toast } = S;
+      const ESTADO = { ia: ['Com a IA', ''], humano: ['Com a equipe', 'w'], concluida: ['Concluída', 'g'] };
+      let filtro = '', atual = D.conversas.find((c) => c.chamado && c.chamado.aberto) || D.conversas[0];
+
+      const abertos = () => D.conversas.filter((c) => c.chamado && c.chamado.aberto);
+      function kpis() {
+        const k = $('#kpis'); k.replaceChildren();
+        [['Conversas hoje', D.conversas.length, 'hl'], ['Com a IA', D.conversas.filter((c) => c.estado === 'ia').length, ''], ['Chamados abertos', abertos().length, ''], ['Com a equipe', D.conversas.filter((c) => c.estado === 'humano').length, '']].forEach(([t, v, c]) => {
+          const d = el('div', 'stat ' + c); d.append(el('b', null, String(v)), el('span', null, t)); k.append(d);
+        });
+      }
+      function lista() {
+        const box = $('#lista'); box.replaceChildren();
+        const itens = D.conversas.filter((c) => !filtro || (filtro === 'ch' ? c.chamado && c.chamado.aberto : c.estado === filtro));
+        if (!itens.length) box.append(el('p', 'vazio', 'Nenhuma conversa neste filtro.'));
+        itens.forEach((c) => {
+          const b = el('button', 'cv-item' + (c === atual ? ' on' : '')); b.type = 'button';
+          const t = el('div'); t.append(el('b', null, c.nome), el('small', null, c.msgs[c.msgs.length - 1].t));
+          const d = el('div'); d.style.cssText = 'display:flex;flex-direction:column;align-items:flex-end;gap:4px';
+          d.append(el('small', null, c.msgs[c.msgs.length - 1].h));
+          if (c.chamado && c.chamado.aberto) d.append(el('span', 'pl w', 'Chamado'));
+          b.append(el('span', 'av lt', S.iniciais(c.nome === 'Contato novo' ? 'Novo' : c.nome)), t, d);
+          b.onclick = () => { atual = c; lista(); painel(); };
+          box.append(b);
+        });
+      }
+      function painel() {
+        const p = $('#painel'); p.replaceChildren();
+        const c = atual; if (!c) return;
+        const top = el('div', 'cv-topo');
+        const t = el('div'); t.append(el('h3', null, c.nome), el('small', 'mu', c.tel + (c.paciente ? ' · paciente' : ' · ainda não é paciente')));
+        t.firstChild.style.margin = '0';
+        const est = el('span', 'pl sp ' + ESTADO[c.estado][1], ESTADO[c.estado][0]); est.style.marginLeft = 'auto';
+        top.append(t, est); p.append(top);
+        if (c.chamado && c.chamado.aberto) p.append(el('div', 'cv-alerta', 'Chamado aberto pela IA: ' + c.chamado.motivo + '. Responda por aqui ou assuma a conversa.'));
+        const m = el('div', 'cv-msgs'); m.setAttribute('aria-label', 'Mensagens');
+        c.msgs.forEach((x) => { const b = el('div', 'bl ' + x.de); b.append(document.createTextNode(x.t), el('small', null, (x.de === 'c' ? 'Cliente' : x.de === 'ia' ? 'Atendente de IA' : 'Equipe') + ' · ' + x.h)); m.append(b); });
+        p.append(m);
+        const ac = el('div', 'acoes'); ac.style.marginTop = '14px';
+        const bt = (txt, cls, fn, off) => { const b = el('button', 'bt sm ' + cls, txt); b.type = 'button'; b.disabled = !!off; b.onclick = fn; ac.append(b); };
+        bt('Assumir conversa', '', () => { c.estado = 'humano'; refaz(); toast('Você assumiu. A atendente de IA ficou quieta nesta conversa.'); }, c.estado === 'humano');
+        bt('Devolver à IA', 'out', () => { c.estado = 'ia'; refaz(); toast('A atendente de IA voltou a responder nesta conversa.'); }, c.estado === 'ia');
+        bt('Marcar chamado como visto', 'out', () => { c.chamado.aberto = false; refaz(); toast('Chamado marcado como visto.'); }, !(c.chamado && c.chamado.aberto));
+        bt('Concluir conversa', 'out', () => { c.estado = 'concluida'; if (c.chamado) c.chamado.aberto = false; refaz(); toast('Conversa concluída.'); }, c.estado === 'concluida');
+        if (c.paciente) { const a = el('a', 'bt out sm', 'Abrir cadastro'); a.href = 'cadastro.html?id=' + c.paciente; ac.append(a); }
+        p.append(ac);
+        const f = el('form'); f.style.cssText = 'display:flex;gap:10px;margin-top:14px';
+        const i = el('input'); i.placeholder = c.estado === 'humano' ? 'Escreva a resposta' : 'Assuma a conversa para responder'; i.disabled = c.estado !== 'humano'; i.setAttribute('aria-label', 'Resposta'); i.style.cssText = 'flex:1;height:44px;border-radius:10px;border:1px solid var(--line);padding:0 12px';
+        const e = el('button', 'bt sm', 'Enviar'); e.disabled = c.estado !== 'humano';
+        f.append(i, e);
+        f.onsubmit = (ev) => { ev.preventDefault(); const v = i.value.trim(); if (!v) return; const h = new Date().toTimeString().slice(0, 5); c.msgs.push({ de: 'eq', h, t: v }); refaz(); toast('Mensagem enviada (protótipo, nada foi enviado).'); };
+        p.append(f);
+      }
+      function refaz() { kpis(); lista(); painel(); }
+      $$('#filtro .chp').forEach((b) => b.onclick = () => { filtro = b.dataset.f; $$('#filtro .chp').forEach((x) => x.classList.toggle('on', x === b)); lista(); });
+      refaz();
+    })();
+  </script>
+</body>
+</html>

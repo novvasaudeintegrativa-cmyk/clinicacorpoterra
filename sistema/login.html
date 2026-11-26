@@ -33,8 +33,8 @@
         <p class="row sm" style="margin-top:12px"><a href="#" id="esqueci" style="color:var(--brand);font-weight:600">Esqueci a senha</a><span class="sp mu">Primeiro acesso? Use o link do WhatsApp</span></p>
       </form>
       <div class="demo" style="max-width:420px">
-        <p style="margin:0 0 8px">Protótipo: nenhum dado é enviado ou guardado. Com <b>luis@exemplo.com</b> (e qualquer senha) você entra como profissional; com qualquer outro e-mail, como paciente.</p>
-        <p class="row" style="gap:16px;margin:0;flex-wrap:wrap"><a href="#" id="demo-prof" style="color:var(--brand);font-weight:600">Ver como profissional</a><a href="#" id="demo-pac" style="color:var(--brand);font-weight:600">Ver como paciente</a></p>
+        <p style="margin:0 0 8px">Protótipo: nenhum dado é enviado ou guardado. Com <b>luis@exemplo.com</b> (e qualquer senha) você entra como profissional; com <b>admin@exemplo.com</b>, como administrador do sistema; com qualquer outro e-mail, como paciente.</p>
+        <p class="row" style="gap:16px;margin:0;flex-wrap:wrap"><a href="#" id="demo-prof" style="color:var(--brand);font-weight:600">Ver como profissional</a><a href="#" id="demo-pac" style="color:var(--brand);font-weight:600">Ver como paciente</a><a href="#" id="demo-adm" style="color:var(--brand);font-weight:600">Ver como administrador</a></p>
       </div>
     </section>
   </main>
@@ -55,13 +55,14 @@
         if (!/^\S+@\S+\.\S+$/.test(email.value.trim())) return (erro.textContent = 'Informe um e-mail válido.');
         if (!document.getElementById('senha').value) return (erro.textContent = 'Informe a senha.');
         // No sistema real, o perfil vem da conta (servidor), não de um botão. Aqui: este e-mail é o profissional.
-        entrar(/^luis@/i.test(email.value.trim()) ? 'prof' : papel);
+        entrar(/^admin@/i.test(email.value.trim()) ? 'adm' : /^luis@/i.test(email.value.trim()) ? 'prof' : papel);
       });
       function entrar(p) {
         sessionStorage.setItem('papel', p);
-        location.href = p === 'prof' ? 'agenda.html' : 'paciente.html';
+        location.href = p === 'adm' ? 'agente.html' : p === 'prof' ? 'agenda.html' : 'paciente.html';
       }
       document.getElementById('demo-prof').onclick = (e) => { e.preventDefault(); entrar('prof'); };
+      document.getElementById('demo-adm').onclick = (e) => { e.preventDefault(); entrar('adm'); };
       document.getElementById('demo-pac').onclick = (e) => { e.preventDefault(); entrar('pac'); };
       document.getElementById('esqueci').onclick = (e) => { e.preventDefault(); document.getElementById('erro').style.color = '#00716f'; document.getElementById('erro').textContent = 'No sistema real, enviaremos um link por e-mail ou WhatsApp.'; };
     })();

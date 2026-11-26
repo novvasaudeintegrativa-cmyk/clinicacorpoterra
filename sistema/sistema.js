@@ -24,15 +24,17 @@
     <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6.5" width="12" height="11" rx="2.5"/><path d="m15 11 6-3.5v9L15 13z"/></symbol>
     <symbol id="i-printer" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4.5V9h15v8H17M7 14h10v7H7z"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
-    <symbol id="i-out" viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+    <symbol id="i-out"viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></symbol>
   </svg>`;
   const ico = (n) => `<svg class="ic"><use href="#${n}"/></svg>`;
 
   const NAV = {
-    prof: [['agenda.html', 'Agenda', 'i-cal'], ['pacientes.html', 'Pacientes', 'i-users'], ['relacionamento.html', 'Relacionamento', 'i-leaf'], ['exames.html', 'Exames', 'i-flask'], ['financeiro.html', 'Financeiro', 'i-wallet'], ['horarios.html', 'Horários', 'i-gear']],
+    prof: [['agenda.html', 'Agenda', 'i-cal'], ['pacientes.html', 'Pacientes', 'i-users'], ['atendimento.html', 'Atendimento', 'i-chat'], ['relacionamento.html', 'Relacionamento', 'i-leaf'],['exames.html', 'Exames', 'i-flask'], ['financeiro.html', 'Financeiro', 'i-wallet'], ['horarios.html', 'Horários', 'i-gear']],
+    adm: [['agente.html', 'Agente de IA', 'i-chat']],
     pac: [['paciente.html', 'Início', 'i-home'], ['paciente-consultas.html', 'Consultas', 'i-cal'], ['paciente-exames.html', 'Exames', 'i-flask'], ['paciente-dados.html', 'Meus dados', 'i-users']],
   };
-  const eu = papel === 'prof' ? { nome: D.profissional.nome, rotulo: 'Profissional' } : { nome: D.pacientes.find((p) => p.id === D.pacienteLogado).nome, rotulo: 'Paciente' };
+  const eu = papel === 'adm' ? { nome: 'Administrador', rotulo: 'Administrador do Sistema' } : papel === 'prof' ? { nome: D.profissional.nome, rotulo: 'Profissional' } : { nome: D.pacientes.find((p) => p.id === D.pacienteLogado).nome, rotulo: 'Paciente' };
   const iniciais = (n) => n.split(' ').slice(0, 2).map((s) => s[0]).join('').toUpperCase();
   const ativo = body.dataset.nav || '';
 
@@ -40,7 +42,7 @@
   const conteudo = document.getElementById('conteudo');
   const side = document.createElement('nav');
   side.className = 'side'; side.setAttribute('aria-label', 'Principal');
-  side.innerHTML = `<a class="brand" href="${NAV[papel][0][0]}"><span>Clínica<br>Corpo Terra<small>${papel === 'prof' ? 'Software de Gestão de Clínica' : 'Área do paciente'}</small></span></a>`
+  side.innerHTML = `<a class="brand" href="${NAV[papel][0][0]}"><span>Clínica<br>Corpo Terra<small>${papel === 'pac' ? 'Área do paciente' : 'Software de Gestão de Clínica'}</small></span></a>`
     + NAV[papel].map(([h, t, i]) => `<a class="nv${h === ativo ? ' on' : ''}" href="${h}"${h === ativo ? ' aria-current="page"' : ''}>${ico(i)}<span>${t}</span></a>`).join('')
     + `<div class="who"><span class="av">${iniciais(eu.nome)}</span><div>${eu.nome}<small>${eu.rotulo}</small></div><button type="button" id="sair" aria-label="Sair">${ico('i-out')}</button></div>`;
 
