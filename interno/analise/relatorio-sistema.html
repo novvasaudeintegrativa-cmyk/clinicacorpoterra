@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório de análise e estrutura do sistema — Clínica Corpo Terra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap">
+<style>
+:root { --ink: #00262c; --muted: #4c6b6e; --line: #c9dcd9; --brand: #00716f; --deep: #00454d; --mint: #00dcc0; --soft: #f1f8f7; --cream: #fdeee3; --red: #9a3324; --amber: #8a5a00; }
+* { box-sizing: border-box; }
+@page { size: A4; margin: 16mm 14mm 18mm; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: #e9efee; color: var(--ink); font: 400 10.5pt/1.5 "Outfit", system-ui, sans-serif; }
+.pagina { max-width: 210mm; margin: 16px auto; background: #fff; padding: 16mm 14mm; box-shadow: 0 2px 12px rgba(0, 38, 44, .12); }
+.barra { max-width: 210mm; margin: 16px auto 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); padding: 0 4px; }
+.barra button { font: 600 14px/1 "Outfit", sans-serif; padding: 12px 22px; border: 0; border-radius: 9999px; background: var(--brand); color: #fff; cursor: pointer; }
+.capa { background: var(--deep); color: #fff; border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.capa small { display: block; font: 700 9pt/1 "Outfit", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--mint); margin-bottom: 8px; }
+.capa h1 { margin: 0 0 6px; font-weight: 300; font-size: 22pt; line-height: 1.15; letter-spacing: -.02em; }
+.capa h1 b { font-weight: 700; color: var(--mint); }
+.capa p { margin: 0; font-weight: 300; color: #d6ece8; font-size: 10.5pt; }
+h2 { margin: 22px 0 6px; font-size: 14pt; font-weight: 700; color: var(--deep); border-bottom: 2px solid var(--mint); padding-bottom: 4px; break-after: avoid; }
+h2 span { color: var(--brand); }
+h3 { margin: 14px 0 4px; font-size: 10.5pt; font-weight: 600; color: var(--brand); text-transform: uppercase; letter-spacing: .05em; break-after: avoid; }
+p { margin: 6px 0; }
+.apoio { color: var(--muted); font-weight: 300; }
+ul, ol { margin: 6px 0; padding-left: 22px; } li { margin: 3px 0; }
+.destaque { background: var(--cream); border-radius: 8px; padding: 10px 16px; margin: 8px 0; break-inside: avoid; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 9.5pt; }
+tr { break-inside: avoid; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; color: var(--deep); }
+td.n { width: 28px; text-align: center; color: var(--muted); }
+.tag { display: inline-block; padding: 1px 8px; border-radius: 9999px; font-size: 8.5pt; font-weight: 600; white-space: nowrap; }
+.t-c { background: #f6dcd6; color: var(--red); } .t-i { background: #fbe9c4; color: var(--amber); } .t-e { background: var(--soft); color: var(--muted); border: 1px solid var(--line); }
+pre.arv { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; font: 400 9pt/1.5 Consolas, "Courier New", monospace; color: var(--ink); white-space: pre; overflow: hidden; break-inside: avoid; }
+.quebra { break-before: page; }
+@media print { body { background: #fff; font-size: 10pt; } .barra { display: none; } .pagina { box-shadow: none; margin: 0; padding: 0; max-width: none; } }
+</style>
+</head>
+<body>
+<div class="barra"><span>Para gerar o PDF, clique no botão e escolha "Salvar como PDF" (papel A4).</span><button type="button" onclick="window.print()">Salvar como PDF</button></div>
+<main class="pagina">
+
+<header class="capa">
+  <small>Relatório · Clínica Corpo Terra</small>
+  <h1>Análise do sistema e <b>estrutura do projeto</b></h1>
+  <p>Fase 1: atendimento e agendamento de consultas, presenciais e online · Financeiro e Loja ficam para a Fase 2</p>
+</header>
+
+<h2><span>1.</span> Resumo</h2>
+<div class="destaque"><b>Veredito: precisa de ajustes.</b> O que existe é um <b>protótipo clicável bem feito</b>, não um sistema pronto. Nada é salvo (os dados somem ao recarregar), o login é de demonstração e o site de agendamento ainda roda com dados de exemplo. O ponto forte é o contrato com o servidor, já descrito em <i>api.js</i>: ligar ao NewCRM/Supabase é direto.</div>
+<ul>
+  <li><b>O que foi analisado:</b> as telas do sistema com login (agenda, pacientes, cadastro, prontuário, exames, horários, login e área do paciente) e o fluxo de agendamento do site.</li>
+  <li><b>Como:</b> leitura do código. O sistema não foi executado em navegador, e não há servidor para testar.</li>
+  <li><b>Dados reais:</b> não foram encontrados dados de pacientes. Nomes e e-mails de exemplo são fictícios.</li>
+</ul>
+
+<h2><span>2.</span> Como a clínica e o sistema estão sendo montados</h2>
+<p class="apoio">Visão geral: quem usa, por onde entra e o que cada parte faz. Desenho da Fase 1, com o que a Fase 2 acrescenta.</p>
+<pre class="arv">CLÍNICA CORPO TERRA
+│
+├── SITE PÚBLICO (qualquer pessoa, sem login)
+│   ├── Página inicial ............ apresenta a clínica e leva ao agendamento
+│   ├── Agendar consulta .......... 5 etapas: profissional → mês → dia e hora → tipo → confirmar
+│   ├── Confirmação ............... resumo e convite para criar a senha do sistema
+│   └── Botão "Entrar" ............ leva ao sistema com login
+│
+├── SISTEMA COM LOGIN (cada pessoa vê só o que o seu perfil permite)
+│   │
+│   ├── PROFISSIONAIS ............. todos os pacientes são compartilhados entre eles
+│   │   ├── Agenda ................ semana, status da consulta, abrir prontuário
+│   │   ├── Pacientes ............. lista e busca
+│   │   │   └── Cadastro .......... contato, interesses, histórico, LGPD
+│   │   ├── Prontuário ............ evolução, condutas, exames, dados (só profissionais)
+│   │   ├── Exames ................ enviar e liberar ao paciente
+│   │   ├── Relacionamento ........ lembretes e mensagens pelo WhatsApp
+│   │   ├── Horários .............. dias, tipos de consulta, regras
+│   │   └── Financeiro ............ Fase 2 (hoje aparece no protótipo)
+│   │
+│   ├── PACIENTE (área própria)
+│   │   ├── Início ................ próxima consulta e exames novos
+│   │   ├── Consultas ............. próximas e anteriores
+│   │   ├── Exames ................ somente os liberados
+│   │   └── Meus dados
+│   │
+│   ├── GESTOR ................... só financeiro (Fase 2)
+│   ├── ADMINISTRADOR DO SISTEMA . desenvolvedor, sem acesso a dados clínicos
+│   └── ATENDENTE ................ a definir com a clínica (agenda sem prontuário)
+│
+├── SERVIDOR (ainda não ligado)
+│   ├── NewCRM / Supabase ........ login, agenda, pacientes, exames, registro de acessos
+│   ├── WhatsApp ................. confirmações e lembretes
+│   └── Videochamada ............. link da consulta online (Zoom, a confirmar)
+│
+└── UNIDADES (mesma base, separadas por unidade_id)
+    ├── Unidade 1: CLÍNICA ....... Fase 1
+    └── Unidade 2: LOJA .......... Fase 2 (tratada como filial)</pre>
+
+<h3>Como o paciente percorre o sistema</h3>
+<pre class="arv">Paciente agenda no site ──► consulta aparece na Agenda dos profissionais
+        │                                   │
+        │                                   ▼
+        │                    confirmar · realizar · cancelar · remarcar
+        │                                   │
+        ▼                                   ▼
+ recebe confirmação ◄──────── lembrete pelo WhatsApp ──► consulta (presencial ou online)
+ e link da consulta                                              │
+                                                                 ▼
+                                    evolução no prontuário · exames liberados ao paciente</pre>
+
+<h2 class="quebra"><span>3.</span> Como o projeto está organizado (pastas)</h2>
+<p class="apoio">O site fica na raiz porque o endereço do site é a raiz. O restante foi agrupado por assunto.</p>
+<pre class="arv">ClinicaCorpoTerra/
+├── index.html · agendar.html · confirmacao.html   Site público e agendamento
+├── app.js · api.js · config.js · styles.css        Código do site (api.js = contrato com o servidor)
+├── assets/ · img/                                  Imagens
+├── sistema/                                        Protótipo do sistema com login
+│   ├── login.html                                  Entrada (paciente ou profissional)
+│   ├── agenda · pacientes · cadastro · prontuario  Telas dos profissionais
+│   ├── exames · relacionamento · financeiro · horarios
+│   ├── paciente · paciente-consultas/-exames/-dados  Área do paciente
+│   ├── sistema.js · sistema.css · dados.js         Estrutura comum e dados fictícios
+├── mockups/                                        Telas de demonstração da apresentação
+├── documentos/                                     Para o cliente
+│   ├── fase-1-clinica.html · fase-2-loja.html
+│   └── apresentacao-sistema.html · levantamento-cliente.html
+├── interno/                                        Uso interno
+│   ├── PRD.md · DESIGN.md · levantamento em texto
+│   ├── plano-site.html · logo.html
+│   └── analise/                                    Este relatório e os pareceres
+├── outros-projetos/                                Dashboard Lançamento Semente (não é da clínica)
+├── arquivo/                                        Versões antigas guardadas
+├── ferramentas/prumo/                              Pacote do time de agentes
+└── README.md</pre>
+
+<h2><span>4.</span> O que foi analisado</h2>
+<table>
+  <thead><tr><th>Área</th><th>O que se verificou</th><th>Resultado</th></tr></thead>
+  <tbody>
+    <tr><td><b>Escopo</b></td><td>O que a Fase 1 pede, o que existe e o que sobra</td><td>Faltam remarcar, marcar pela recepção, presencial e falta do paciente. Financeiro e parte do Relacionamento sobram na Fase 1</td></tr>
+    <tr><td><b>Fluxo e telas</b></td><td>Agendar, cancelar, remarcar; clareza para a recepção</td><td>Fluxo do site é bom. A agenda é uma grade fixa e não há "Nova consulta"</td></tr>
+    <tr><td><b>Dados</b></td><td>Como guarda, limites, risco de perda, encaixe do Financeiro</td><td>Tudo em memória. Agenda presa a posição de grade. Duas listas para a mesma consulta</td></tr>
+    <tr><td><b>Qualidade</b></td><td>Conflito de horário, fuso, falta, campos, link online</td><td>Fuso errado para MT, remarcar duplica, link da videochamada não é criado</td></tr>
+  </tbody>
+</table>
+
+<h2><span>5.</span> Ajustes por prioridade</h2>
+<h3>Crítico</h3>
+<table>
+  <thead><tr><th>#</th><th>Problema</th><th>Onde</th><th>Sugestão</th></tr></thead>
+  <tbody>
+    <tr><td class="n">1</td><td>Nada é salvo; login de demonstração (perfil forjável)</td><td>dados.js, sistema.js, login.html</td><td>Ligar ao servidor com login real e permissão por perfil no servidor</td></tr>
+    <tr><td class="n">2</td><td>Fuso fixo -03:00; Mato Grosso é UTC−4. Todo horário ficaria 1 hora errado</td><td>app.js</td><td>Fuso da clínica configurável (America/Cuiaba), conversão no servidor</td></tr>
+    <tr><td class="n">3</td><td>"Remarcar" do paciente cria consulta nova e deixa a antiga</td><td>paciente.html → agendar.html</td><td>Remarcação que troca o horário da consulta existente</td></tr>
+    <tr><td class="n">4</td><td>Dois agendamentos no mesmo horário só são evitados pela tela</td><td>api.js, banco</td><td>Restrição no banco contra sobreposição por profissional</td></tr>
+    <tr><td class="n">5</td><td>Agenda presa a posição (seg–sex, 7 linhas), não a datas reais</td><td>dados.js, agenda.html</td><td>Consulta com início e fim reais; semana navegável</td></tr>
+  </tbody>
+</table>
+<h3>Importante</h3>
+<table>
+  <thead><tr><th>#</th><th>Problema</th><th>Sugestão</th></tr></thead>
+  <tbody>
+    <tr><td class="n">6</td><td>Recepção não cria consulta</td><td>Botão "Nova consulta" na agenda</td></tr>
+    <tr><td class="n">7</td><td>"Online" fixo no código; falta presencial</td><td>Modalidade no tipo de consulta; endereço no presencial</td></tr>
+    <tr><td class="n">8</td><td>Sem remarcar na agenda; sem status "Faltou" (faltas fixas em 0)</td><td>Remarcar com horários livres; Faltou com contagem real</td></tr>
+    <tr><td class="n">9</td><td>Cancelar sem confirmação e sem motivo</td><td>Pedir confirmação e registrar motivo</td></tr>
+    <tr><td class="n">10</td><td>Horário escolhido antes do tipo; duração pode não caber</td><td>Tipo primeiro, depois horários que cabem</td></tr>
+    <tr><td class="n">11</td><td>Link da consulta online não é criado nem entregue; tela diz Meet, projeto diz Zoom</td><td>Definir sala fixa ou link por consulta; entregar no WhatsApp, no lembrete e na área do paciente</td></tr>
+    <tr><td class="n">12</td><td>Intervalo e antecedência mínima não são usados; horários em texto livre</td><td>Aplicar no cálculo; seletor de hora; feriados e folgas</td></tr>
+    <tr><td class="n">13</td><td>Consulta duplicada em duas listas; faltas e próxima consulta guardadas no paciente</td><td>Uma tabela de consultas; calcular o resto</td></tr>
+    <tr><td class="n">14</td><td>Sem perfil de recepção (se houver)</td><td>Perfil Atendente: agenda sem prontuário</td></tr>
+  </tbody>
+</table>
+<h3>Pode esperar</h3>
+<p>Fila de espera · autor e hora na evolução · validação e armazenamento privado de exames · tirar do site o envio de origem e campanha (combinado: sem marketing no material) · visão por dia no celular · Financeiro e Relacionamento fora do menu até a Fase 2.</p>
+
+<h2><span>6.</span> Encaixe do Financeiro (Fase 2)</h2>
+<p>Não há bloqueio. Para encaixar sem refazer, a Fase 1 já deve ter: consulta com identificador estável; <i>unidade_id</i> em todas as tabelas; <i>profissional_id</i> na consulta; e o valor copiado para a consulta na hora da marcação, para mudar o preço depois sem alterar o histórico.</p>
+
+<h2><span>7.</span> O que ficou de fora</h2>
+<ul>
+  <li>O sistema não foi executado em navegador: cliques, layout em celular e desempenho não foram testados.</li>
+  <li>Integrações (servidor, WhatsApp, videochamada) ainda não existem.</li>
+  <li>Os quatro pareceres foram escritos por papel (escopo, design, dados, qualidade), sem rodar os agentes PRUMO como sessões separadas.</li>
+  <li>Não foram revistas em detalhe as telas de relacionamento, financeiro e lista de pacientes.</li>
+</ul>
+
+<h2><span>8.</span> O que fazer agora</h2>
+<h3>Responder (destravam o desenho)</h3>
+<ol>
+  <li>Quem usa o sistema e quantas pessoas ao mesmo tempo? Há recepção?</li>
+  <li>A clínica fica em Mato Grosso (fuso UTC−4)?</li>
+  <li>Onde é o atendimento presencial, e todos os profissionais fazem os dois tipos?</li>
+  <li>Videochamada: Zoom ou Meet? Sala fixa do profissional ou link novo por consulta?</li>
+  <li>O paciente pode cancelar e remarcar sozinho, com prazo mínimo? Ou sempre pela recepção?</li>
+  <li>O site deve continuar enviando origem e campanha?</li>
+  <li>A clínica quer cobrar as faltas ou só registrar?</li>
+</ol>
+<h3>Aprovar a ordem de correção</h3>
+<ol>
+  <li>Ligar ao servidor, com login real e permissões.</li>
+  <li>Corrigir o fuso horário.</li>
+  <li>Fazer a agenda trabalhar com datas reais.</li>
+  <li>Consertar o remarcar e travar a sobreposição de horários no banco.</li>
+  <li>Criar a marcação pela recepção e o status "Faltou".</li>
+  <li>Incluir presencial e online no tipo de consulta, com o link da videochamada.</li>
+</ol>
+<p class="apoio">Os itens 2 a 5 podem ser feitos já no protótipo, sem esperar o banco. Nada será alterado no sistema sem a sua aprovação.</p>
+
+</main>
+</body>
+</html>
