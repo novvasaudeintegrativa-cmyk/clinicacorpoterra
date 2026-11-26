@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Organograma do projeto — Clínica Corpo Terra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+<style>
+:root { --ink:#00262c; --muted:#4c6b6e; --line:#c9dcd9; --brand:#00716f; --deep:#00454d; --mint:#00dcc0; --soft:#f1f8f7; --cream:#fdeee3; --amber:#8a5a00; --bg:#eef4f3; }
+* { box-sizing:border-box; }
+@page { size:A4 landscape; margin:10mm; }
+html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body { margin:0; background:var(--bg); color:var(--ink); font:400 15px/1.5 "Outfit",system-ui,sans-serif; }
+.ic { width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+.wrap { max-width:1240px; margin:0 auto; padding:24px 24px 56px; }
+.barra { display:flex; justify-content:space-between; align-items:center; gap:12px; color:var(--muted); font-size:14px; margin-bottom:18px; }
+.barra button { font:600 14px/1 "Outfit",sans-serif; padding:12px 22px; border:0; border-radius:9999px; background:var(--brand); color:#fff; cursor:pointer; }
+
+/* ---------- topo e raiz ---------- */
+.raiz { text-align:center; position:relative; }
+.raiz .no { display:inline-flex; align-items:center; gap:16px; background:var(--deep); color:#fff; border-radius:22px; padding:20px 34px; box-shadow:0 10px 30px rgba(0,38,44,.2); }
+.raiz .no .ib { width:54px; height:54px; border-radius:16px; background:rgba(0,220,192,.16); color:var(--mint); display:grid; place-items:center; font-size:30px; }
+.raiz small { display:block; font:700 11px/1 "Outfit",sans-serif; letter-spacing:.14em; text-transform:uppercase; color:var(--mint); margin-bottom:6px; text-align:left; }
+.raiz h1 { margin:0; font-weight:300; font-size:34px; line-height:1.1; letter-spacing:-.02em; text-align:left; } .raiz h1 b { font-weight:700; }
+.raiz p { margin:14px auto 0; color:var(--muted); max-width:70ch; }
+.raiz::after { content:""; display:block; width:2px; height:26px; background:var(--line); margin:14px auto 0; }
+.ramos { display:grid; grid-template-columns:1fr 1fr; gap:24px; position:relative; margin-top:18px; }
+.ramos::before { content:""; position:absolute; top:-18px; left:25%; right:25%; border-top:2px solid var(--line); }
+.ramo { background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px 22px; position:relative; display:flex; gap:16px; align-items:flex-start; }
+.ramo::before { content:""; position:absolute; top:-18px; left:50%; width:2px; height:18px; background:var(--line); }
+.ramo .ib { width:48px; height:48px; border-radius:14px; display:grid; place-items:center; font-size:26px; background:var(--soft); color:var(--brand); }
+.ramo.f2 .ib { background:var(--cream); color:var(--amber); }
+.ramo h2 { margin:0; font-size:21px; font-weight:600; } .ramo p { margin:4px 0 0; color:var(--muted); font-size:14.5px; }
+.sel { display:inline-block; font:700 11px/1 "Outfit",sans-serif; letter-spacing:.1em; text-transform:uppercase; padding:5px 10px; border-radius:9999px; background:var(--mint); color:var(--deep); margin-bottom:8px; }
+.f2 .sel { background:#f3d9bd; color:var(--amber); }
+
+/* ---------- secções ---------- */
+section.bloco { margin-top:48px; }
+.cab { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+.cab .ib { width:44px; height:44px; border-radius:14px; background:var(--deep); color:var(--mint); display:grid; place-items:center; font-size:24px; }
+.cab h2 { margin:0; font-size:26px; font-weight:600; letter-spacing:-.01em; } .cab h2 span { color:var(--brand); }
+.sub { color:var(--muted); margin:0 0 20px 58px; max-width:80ch; }
+
+.flow { display:grid; grid-template-columns:repeat(5,1fr); gap:26px; }
+.st { background:#fff; border:1px solid var(--line); border-radius:18px; padding:18px 16px 16px; position:relative; display:flex; flex-direction:column; gap:10px; }
+.st:not(:last-child)::after { content:""; position:absolute; top:46px; right:-22px; width:18px; height:18px; background:var(--mint); clip-path:polygon(0 0,100% 50%,0 100%,22% 50%); }
+.st .n { position:absolute; top:-12px; left:16px; background:var(--deep); color:#fff; font:700 12px/1 "Outfit",sans-serif; padding:6px 10px; border-radius:9999px; }
+.st .ib { width:46px; height:46px; border-radius:14px; background:var(--soft); color:var(--brand); display:grid; place-items:center; font-size:25px; margin-top:4px; }
+.f2s .st .ib { background:var(--cream); color:var(--amber); }
+.st h3 { margin:0; font-size:17px; font-weight:600; line-height:1.2; }
+.st .o { margin:0; color:var(--muted); font-size:13.5px; line-height:1.45; }
+.st ul { list-style:none; margin:0; padding:0; font-size:13px; }
+.st ul li { padding:3px 0 3px 16px; position:relative; } .st ul li::before { content:""; position:absolute; left:2px; top:10px; width:6px; height:6px; border-radius:50%; background:var(--mint); }
+.rot { font:700 10.5px/1 "Outfit",sans-serif; letter-spacing:.1em; text-transform:uppercase; color:var(--brand); margin:4px 0 -4px; }
+.pills { display:flex; flex-wrap:wrap; gap:5px; }
+.pl { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:500; padding:4px 9px; border-radius:9999px; background:var(--soft); color:var(--deep); border:1px solid var(--line); }
+.pl .ic { font-size:13px; color:var(--brand); }
+.pl.pa { background:#e6fbf7; border-color:#b6efe4; }
+.ent { margin-top:auto; font-size:12px; font-weight:600; color:var(--deep); background:var(--cream); border-radius:8px; padding:6px 9px; }
+
+.base { margin-top:22px; background:var(--deep); color:#fff; border-radius:16px; padding:16px 20px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+.base .ib { width:44px; height:44px; border-radius:12px; background:rgba(0,220,192,.16); color:var(--mint); display:grid; place-items:center; font-size:24px; }
+.base b { display:block; font-size:16px; } .base span { color:#cfe9e5; font-size:13.5px; }
+.base .pills { margin-left:auto; } .base .pl { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.22); color:#fff; } .base .pl .ic { color:var(--mint); }
+
+.perfis { margin-top:18px; display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+.pf { background:#fff; border:1px dashed var(--line); border-radius:14px; padding:12px 14px; font-size:13px; }
+.pf b { display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:3px; } .pf b .ic { color:var(--brand); font-size:18px; } .pf span { color:var(--muted); }
+
+/* ---------- time de agentes ---------- */
+.time { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.ag { background:#fff; border:1px solid var(--line); border-radius:16px; padding:14px 14px 12px; display:flex; flex-direction:column; gap:6px; }
+.ag .top { display:flex; align-items:center; gap:10px; }
+.ag .ib { width:40px; height:40px; border-radius:12px; background:var(--soft); color:var(--brand); display:grid; place-items:center; font-size:22px; }
+.ag h4 { margin:0; font-size:15.5px; font-weight:600; line-height:1.15; } .ag small { color:var(--muted); font-size:12px; display:block; }
+.ag p { margin:0; font-size:13px; color:var(--ink); }
+.ag .on { display:flex; gap:5px; margin-top:auto; }
+.tg { font-size:11px; font-weight:700; padding:3px 8px; border-radius:9999px; letter-spacing:.04em; }
+.tg.a { background:var(--mint); color:var(--deep); } .tg.b { background:#f3d9bd; color:var(--amber); } .tg.c { background:var(--soft); color:var(--muted); border:1px solid var(--line); }
+
+.etapas { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-top:6px; }
+.et { background:#fff; border:1px solid var(--line); border-radius:16px; padding:14px; position:relative; }
+.et:not(:last-child)::after { content:""; position:absolute; top:24px; right:-13px; width:12px; height:12px; background:var(--mint); clip-path:polygon(0 0,100% 50%,0 100%,22% 50%); }
+.et .ib { width:38px; height:38px; border-radius:12px; background:var(--deep); color:var(--mint); display:grid; place-items:center; font-size:21px; }
+.et h4 { margin:8px 0 2px; font-size:15.5px; } .et p { margin:0 0 8px; font-size:12.5px; color:var(--muted); }
+.et .pills { margin-bottom:10px; }
+.st1 { display:flex; flex-direction:column; gap:5px; font-size:12px; border-top:1px dashed var(--line); padding-top:8px; }
+.st1 div { display:flex; justify-content:space-between; gap:8px; align-items:center; } .st1 span:first-child { color:var(--muted); font-weight:500; }
+.ok, .em, .af { font-weight:700; font-size:11px; padding:3px 8px; border-radius:9999px; white-space:nowrap; }
+.ok { background:#d6f5ec; color:#00624f; } .em { background:#fbe9c4; color:var(--amber); } .af { background:var(--soft); color:var(--muted); border:1px solid var(--line); }
+.nota { margin-top:16px; background:var(--cream); border-radius:12px; padding:12px 16px; font-size:13.5px; }
+.leg { display:flex; gap:14px; flex-wrap:wrap; margin:0 0 12px 58px; font-size:13px; color:var(--muted); align-items:center; }
+
+@media (max-width:1100px) { .flow { grid-template-columns:repeat(2,1fr); } .st::after { display:none; } .time { grid-template-columns:repeat(2,1fr); } .etapas { grid-template-columns:repeat(2,1fr); } .et::after { display:none; } .perfis { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:640px) { .wrap { padding:16px 16px 40px; } .ramos, .flow, .time, .etapas, .perfis { grid-template-columns:1fr; } .ramos::before, .ramo::before { display:none; } .raiz .no { padding:16px 20px; } .raiz h1 { font-size:26px; } .sub, .leg { margin-left:0; } .base .pills { margin-left:0; } }
+@media print { .flow, .perfis { grid-template-columns:repeat(5,1fr); } .time { grid-template-columns:repeat(4,1fr); } .etapas { grid-template-columns:repeat(6,1fr); } .st::after, .et::after { display:block; } body { background:#fff; font-size:12px; } .barra { display:none; } .wrap { padding:0; max-width:none; } section.bloco { margin-top:28px; } .bloco:nth-of-type(n+2) { break-before:auto; } .st, .ag, .et, .ramo { break-inside:avoid; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c2-4 5-7 9-9"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M17 14c2.5 0 4 1.7 4 4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 15h9"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M16 14.5h2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M3.5 9 5 4h14l1.5 5"/><path d="M3.5 9c0 1.7 1.3 2.5 2.7 2.5S9 10.7 9 9c0 1.7 1.3 2.5 3 2.5S15 10.7 15 9c0 1.7 1.3 2.5 2.8 2.5s2.7-.8 2.7-2.5M5 11.5V20h14v-8.5"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18M7 15h3"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24"><path d="M5 19 19 5"/><circle cx="7.5" cy="7.5" r="2.3"/><circle cx="16.5" cy="16.5" r="2.3"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20v-7M11 20V5M17 20v-10M3 20h18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.2-4.2"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect x="6" y="4.5" width="12" height="16.5" rx="2"/><path d="M9 4.5h6V7H9zM9 12h6M9 16h4"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 20 1-4L16 5l3 3L8 19zM14 7l3 3"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol>
+  <symbol id="i-arch" viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 3c3 2 5 5 5 9l-2 3H9l-2-3c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.6"/><path d="m9 15-1 4 4-2M15 15l1 4-4-2"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 8 4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></symbol>
+  <symbol id="i-tasks" viewBox="0 0 24 24"><path d="m4 7 1.5 1.5L8 6M11 7h9M4 15l1.5 1.5L8 14M11 15h9"/></symbol>
+  <symbol id="i-team" viewBox="0 0 24 24"><circle cx="12" cy="6.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M12 9v3M12 12 6.5 15M12 12l5.5 3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15zM10 21h4"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20S4 15 4 9.5A4.2 4.2 0 0 1 12 8a4.2 4.2 0 0 1 8 1.5C20 15 12 20 12 20z"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6.5" width="12" height="11" rx="2.5"/><path d="m15 11 6-3.5v9L15 13z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></symbol>
+</svg>
+
+<div class="wrap">
+<div class="barra"><span>Organograma do projeto. Para gerar o PDF, clique no botão e escolha "Salvar como PDF" (papel A4 paisagem).</span><button type="button" onclick="window.print()">Salvar como PDF</button></div>
+
+<!-- ====== RAIZ ====== -->
+<header class="raiz">
+  <div class="no"><span class="ib"><svg class="ic"><use href="#i-leaf"/></svg></span>
+    <div><small>Organograma do projeto</small><h1>Clínica <b>Corpo Terra</b></h1></div></div>
+  <p>Como a clínica e o sistema serão montados, etapa por etapa, e onde o time de agentes atua em cada fase.</p>
+</header>
+
+<div class="ramos">
+  <div class="ramo"><span class="ib"><svg class="ic"><use href="#i-heart"/></svg></span>
+    <div><span class="sel">Fase 1</span><h2>Clínica</h2><p>Tudo o que é atendimento: site de agendamento e sistema com login para agenda, pacientes, prontuário, exames, financeiro básico e WhatsApp.</p></div></div>
+  <div class="ramo f2"><span class="ib"><svg class="ic"><use href="#i-store"/></svg></span>
+    <div><span class="sel">Fase 2</span><h2>Loja</h2><p>Venda de produtos como segunda unidade (filial): estoque, fornecedores, notas, pagamentos, contas e comissões. Se apoia na Fase 1.</p></div></div>
+</div>
+
+<!-- ====== FASE 1 ====== -->
+<section class="bloco">
+  <div class="cab"><span class="ib"><svg class="ic"><use href="#i-heart"/></svg></span><h2><span>Fase 1</span> · Clínica: do site ao acompanhamento</h2></div>
+  <p class="sub">Cinco etapas que o paciente e a equipe percorrem. Embaixo de cada uma, quem usa, em qual entrega ela sai e quais agentes do time atuam nela.</p>
+  <div class="flow">
+    <article class="st"><span class="n">1</span><span class="ib"><svg class="ic"><use href="#i-globe"/></svg></span>
+      <h3>Site e agendamento online</h3><p class="o">O paciente conhece o atendimento e marca a consulta em 5 passos.</p>
+      <ul><li>Textos, SEO e depoimentos</li><li>Agendamento com resumo e confirmação</li><li>Confiança, privacidade e relatório mensal</li></ul>
+      <span class="rot">Quem usa</span><div class="pills"><span class="pl"><svg class="ic"><use href="#i-users"/></svg>Paciente</span></div>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-search"/></svg>Analista de Mercado</span><span class="pl pa"><svg class="ic"><use href="#i-pen"/></svg>Designer</span><span class="pl pa"><svg class="ic"><use href="#i-code"/></svg>Programador</span></div>
+      <span class="ent">Entrega 1 · Atender e agendar</span></article>
+
+    <article class="st"><span class="n">2</span><span class="ib"><svg class="ic"><use href="#i-cal"/></svg></span>
+      <h3>Agenda e horários</h3><p class="o">O agendamento chega ao sistema, confere o horário e cria a conta do paciente.</p>
+      <ul><li>Receptor do agendamento</li><li>Confirmar, remarcar, cancelar</li><li>Dias, horários e tipos de consulta</li></ul>
+      <span class="rot">Quem usa</span><div class="pills"><span class="pl"><svg class="ic"><use href="#i-heart"/></svg>Profissionais</span><span class="pl"><svg class="ic"><use href="#i-users"/></svg>Atendente</span></div>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-arch"/></svg>Engenheiro</span><span class="pl pa"><svg class="ic"><use href="#i-db"/></svg>Analista de Dados</span><span class="pl pa"><svg class="ic"><use href="#i-code"/></svg>Programador</span></div>
+      <span class="ent">Entrega 1 · Atender e agendar</span></article>
+
+    <article class="st"><span class="n">3</span><span class="ib"><svg class="ic"><use href="#i-file"/></svg></span>
+      <h3>Atendimento e prontuário</h3><p class="o">Presencial ou online. Todos os pacientes são compartilhados entre os profissionais.</p>
+      <ul><li>Cadastro único do paciente</li><li>Prontuário: queixa, evolução, condutas</li><li>Exames privados, liberados ao paciente</li></ul>
+      <span class="rot">Quem usa</span><div class="pills"><span class="pl"><svg class="ic"><use href="#i-heart"/></svg>Profissionais</span></div>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-target"/></svg>Gerente de Prioridades</span><span class="pl pa"><svg class="ic"><use href="#i-pen"/></svg>Designer</span><span class="pl pa"><svg class="ic"><use href="#i-check"/></svg>Controle de Qualidade</span></div>
+      <span class="ent">Entrega 1 (cadastro) e 2 (prontuário e exames)</span></article>
+
+    <article class="st"><span class="n">4</span><span class="ib"><svg class="ic"><use href="#i-wallet"/></svg></span>
+      <h3>Gestão da clínica</h3><p class="o">Financeiro básico e a equipe, com cada pessoa vendo só o que lhe cabe.</p>
+      <ul><li>Receitas e despesas, visão do mês</li><li>Equipe, atendente e permissões</li><li>Termo de uso dos dados e registro de acessos</li></ul>
+      <span class="rot">Quem usa</span><div class="pills"><span class="pl"><svg class="ic"><use href="#i-wallet"/></svg>Gestor</span><span class="pl"><svg class="ic"><use href="#i-gear"/></svg>Administrador</span></div>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-db"/></svg>Analista de Dados</span><span class="pl pa"><svg class="ic"><use href="#i-code"/></svg>Programador</span><span class="pl pa"><svg class="ic"><use href="#i-check"/></svg>Controle de Qualidade</span></div>
+      <span class="ent">Entrega 2 · Atender com segurança</span></article>
+
+    <article class="st"><span class="n">5</span><span class="ib"><svg class="ic"><use href="#i-chat"/></svg></span>
+      <h3>Relacionamento e área do paciente</h3><p class="o">O paciente acompanha tudo e a clínica mantém contato pelo WhatsApp.</p>
+      <ul><li>Consultas, exames e dados do paciente</li><li>Conversas, lembretes e confirmações</li><li>Faltas, remarcações e reativação</li></ul>
+      <span class="rot">Quem usa</span><div class="pills"><span class="pl"><svg class="ic"><use href="#i-users"/></svg>Paciente</span><span class="pl"><svg class="ic"><use href="#i-heart"/></svg>Profissionais</span></div>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-tasks"/></svg>Coord. de Tarefas</span><span class="pl pa"><svg class="ic"><use href="#i-code"/></svg>Programador</span><span class="pl pa"><svg class="ic"><use href="#i-rocket"/></svg>Expedição</span></div>
+      <span class="ent">Entrega final · Relacionamento e fechamento</span></article>
+  </div>
+
+  <div class="base"><span class="ib"><svg class="ic"><use href="#i-shield"/></svg></span>
+    <div><b>Base do sistema (por baixo de todas as etapas)</b><span>Banco de dados, login e senha, perfis e permissões no servidor, LGPD, sessão que expira e registro de quem abriu cada ficha.</span></div>
+    <div class="pills"><span class="pl"><svg class="ic"><use href="#i-db"/></svg>NewCRM / Supabase</span><span class="pl"><svg class="ic"><use href="#i-chat"/></svg>WhatsApp</span><span class="pl"><svg class="ic"><use href="#i-video"/></svg>Videochamada (Zoom)</span></div></div>
+
+  <div class="perfis">
+    <div class="pf"><b><svg class="ic"><use href="#i-heart"/></svg>Profissionais</b><span>Agenda, todos os pacientes, prontuário e exames.</span></div>
+    <div class="pf"><b><svg class="ic"><use href="#i-wallet"/></svg>Gestor</b><span>Somente o financeiro.</span></div>
+    <div class="pf"><b><svg class="ic"><use href="#i-gear"/></svg>Administrador do Sistema</b><span>Desenvolvedor. Sem acesso a dados clínicos.</span></div>
+    <div class="pf"><b><svg class="ic"><use href="#i-users"/></svg>Paciente</b><span>Só as próprias consultas, exames e dados.</span></div>
+    <div class="pf"><b><svg class="ic"><use href="#i-lock"/></svg>Atendente</b><span>A definir com a clínica. Agenda, sem prontuário.</span></div>
+  </div>
+  <p class="nota">Os acessos serão definidos junto com a clínica. Já projetamos e vamos ajustando no caminho.</p>
+</section>
+
+<!-- ====== FASE 2 ====== -->
+<section class="bloco">
+  <div class="cab"><span class="ib" style="background:#8a5a00;color:#fff"><svg class="ic"><use href="#i-store"/></svg></span><h2><span style="color:var(--amber)">Fase 2</span> · Loja: do estoque às comissões</h2></div>
+  <p class="sub">A Loja entra como segunda unidade dentro do mesmo sistema, com um só cadastro de cliente. Uma venda pode ter serviço e produto, e o injetável baixa o estoque.</p>
+  <div class="flow f2s">
+    <article class="st"><span class="n">1</span><span class="ib"><svg class="ic"><use href="#i-box"/></svg></span>
+      <h3>Cadastros e estoque</h3><p class="o">Loja cadastrada ao lado da Clínica, com produtos e fornecedores.</p>
+      <ul><li>Base da Loja e acessos (a definir)</li><li>Produtos, custo, venda, estoque mínimo</li><li>Fornecedores e histórico de compras</li></ul>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-arch"/></svg>Engenheiro</span><span class="pl pa"><svg class="ic"><use href="#i-db"/></svg>Analista de Dados</span></div>
+      <span class="ent">Entrega 1 · Cadastros e estoque</span></article>
+    <article class="st"><span class="n">2</span><span class="ib"><svg class="ic"><use href="#i-file"/></svg></span>
+      <h3>Notas e entrada de estoque</h3><p class="o">Notas de compra alimentam o estoque. O sistema registra e controla, sem emitir a nota.</p>
+      <ul><li>Notas fiscais de entrada</li><li>Alerta de estoque baixo</li><li>Ajustes de inventário</li></ul>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-code"/></svg>Programador</span><span class="pl pa"><svg class="ic"><use href="#i-check"/></svg>Controle de Qualidade</span></div>
+      <span class="ent">Entrega 1 · Cadastros e estoque</span></article>
+    <article class="st"><span class="n">3</span><span class="ib"><svg class="ic"><use href="#i-card"/></svg></span>
+      <h3>Vendas e pagamentos</h3><p class="o">Consulta, terapia, injetável e produto no mesmo fechamento.</p>
+      <ul><li>À vista e parcelado</li><li>Bandeiras e taxa da maquininha</li><li>Valor líquido e notas de saída</li></ul>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-pen"/></svg>Designer</span><span class="pl pa"><svg class="ic"><use href="#i-code"/></svg>Programador</span></div>
+      <span class="ent">Entrega 2 · Vendas e financeiro</span></article>
+    <article class="st"><span class="n">4</span><span class="ib"><svg class="ic"><use href="#i-wallet"/></svg></span>
+      <h3>Pagar e receber</h3><p class="o">Contas com vencimento e baixa, por centro de custo e por área.</p>
+      <ul><li>Contas a pagar e a receber</li><li>Centro de custo</li><li>Cada lançamento marca Clínica ou Loja</li></ul>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-db"/></svg>Analista de Dados</span><span class="pl pa"><svg class="ic"><use href="#i-check"/></svg>Controle de Qualidade</span></div>
+      <span class="ent">Entrega 2 · Vendas e financeiro</span></article>
+    <article class="st"><span class="n">5</span><span class="ib"><svg class="ic"><use href="#i-percent"/></svg></span>
+      <h3>Comissões e relatórios</h3><p class="o">Cálculo no fechamento da venda e visão por área e total.</p>
+      <ul><li>Regra por profissional, tipo e produto</li><li>Controle de faltas</li><li>Relatórios de vendas, margem e financeiro</li></ul>
+      <span class="rot">Time atua</span><div class="pills"><span class="pl pa"><svg class="ic"><use href="#i-chart"/></svg>Analista de Dados</span><span class="pl pa"><svg class="ic"><use href="#i-rocket"/></svg>Expedição</span></div>
+      <span class="ent">Entrega final · Comissões e relatórios</span></article>
+  </div>
+  <div class="base" style="background:#5c3b00"><span class="ib"><svg class="ic"><use href="#i-heart"/></svg></span>
+    <div><b>Apoia-se na Fase 1</b><span>Clientes, profissionais, agenda e financeiro da Clínica. Por isso a Loja vem depois. Um paciente pode comprar sem cadastro duplicado, e o prontuário continua só dos profissionais.</span></div></div>
+</section>
+
+<!-- ====== TIME ====== -->
+<section class="bloco">
+  <div class="cab"><span class="ib"><svg class="ic"><use href="#i-team"/></svg></span><h2>O <span>time de agentes</span> PRUMO</h2></div>
+  <p class="sub">Doze agentes, cada um com um papel. Abaixo, o que cada um faz e em qual fase ele mais entra neste projeto.</p>
+  <div class="leg"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span><span class="tg c">TODO O PROJETO</span></div>
+  <div class="time">
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-crown"/></svg></span><div><h4>Diretor Geral</h4><small>Orquestra o time</small></div></div><p>Olha o que já existe, distribui o trabalho e decide quem entra em cada passo.</p><div class="on"><span class="tg c">TODO O PROJETO</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-search"/></svg></span><div><h4>Analista de Mercado</h4><small>Pesquisa e entendimento</small></div></div><p>Lê o material do cliente, faz as perguntas certas e pesquisa palavras-chave e concorrência do site.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-clip"/></svg></span><div><h4>Gerente de Planejamento</h4><small>Mapa do sistema</small></div></div><p>Desenha o mapa completo do sistema e a ordem das entregas.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-target"/></svg></span><div><h4>Gerente de Prioridades</h4><small>Escopo</small></div></div><p>Decide o que entra agora, o que sobra e o que fica para depois.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-arch"/></svg></span><div><h4>Engenheiro</h4><small>Estrutura técnica</small></div></div><p>Define como o sistema é montado e guardado, os limites e como a Loja se encaixa depois.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-db"/></svg></span><div><h4>Analista de Dados</h4><small>Banco de dados</small></div></div><p>Modela pacientes, consultas, estoque e financeiro, com as regras de acesso no banco.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-pen"/></svg></span><div><h4>Designer</h4><small>Telas e experiência</small></div></div><p>Desenha as telas, o fluxo de agendar e a área do paciente, pensando na recepção.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-tasks"/></svg></span><div><h4>Coordenador de Tarefas</h4><small>Organização</small></div></div><p>Quebra cada entrega em tarefas pequenas e acompanha o andamento.</p><div class="on"><span class="tg c">TODO O PROJETO</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-code"/></svg></span><div><h4>Programador</h4><small>Construção</small></div></div><p>Constrói o site e o sistema, tela por tela, e liga tudo ao servidor.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-check"/></svg></span><div><h4>Controle de Qualidade</h4><small>Testes</small></div></div><p>Procura falhas: conflito de horário, fuso, falta do paciente, permissões e link da consulta online.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-rocket"/></svg></span><div><h4>Expedição</h4><small>Publicação</small></div></div><p>Cuida do repositório, publica o site e o sistema e explica como abrir e o que ficou de fora.</p><div class="on"><span class="tg a">FASE 1</span><span class="tg b">FASE 2</span></div></div>
+    <div class="ag"><div class="top"><span class="ib"><svg class="ic"><use href="#i-team"/></svg></span><div><h4>RH</h4><small>Monta equipes</small></div></div><p>Cria equipes especializadas quando o projeto pede um tipo de trabalho novo.</p><div class="on"><span class="tg c">SOB DEMANDA</span></div></div>
+  </div>
+</section>
+
+<!-- ====== ONDE ATUAMOS ====== -->
+<section class="bloco">
+  <div class="cab"><span class="ib"><svg class="ic"><use href="#i-rocket"/></svg></span><h2>Onde <span>atuamos</span> em cada etapa do projeto</h2></div>
+  <p class="sub">As seis etapas do trabalho, quem entra em cada uma e em que ponto estamos hoje na Fase 1 e na Fase 2.</p>
+  <div class="etapas">
+    <div class="et"><span class="ib"><svg class="ic"><use href="#i-search"/></svg></span><h4>1 · Descobrir</h4><p>Entender a clínica e o que ela precisa.</p>
+      <div class="pills"><span class="pl pa">Diretor Geral</span><span class="pl pa">Analista de Mercado</span></div>
+      <div class="st1"><div><span>Fase 1</span><span class="ok">Feito</span></div><div><span>Fase 2</span><span class="ok">Feito</span></div></div></div>
+    <div class="et"><span class="ib"><svg class="ic"><use href="#i-clip"/></svg></span><h4>2 · Planejar</h4><p>Mapa, escopo e ordem das entregas.</p>
+      <div class="pills"><span class="pl pa">Gerente de Planejamento</span><span class="pl pa">Gerente de Prioridades</span></div>
+      <div class="st1"><div><span>Fase 1</span><span class="ok">Feito</span></div><div><span>Fase 2</span><span class="ok">Feito</span></div></div></div>
+    <div class="et"><span class="ib"><svg class="ic"><use href="#i-pen"/></svg></span><h4>3 · Desenhar</h4><p>Telas, fluxo e estrutura de dados.</p>
+      <div class="pills"><span class="pl pa">Designer</span><span class="pl pa">Engenheiro</span><span class="pl pa">Analista de Dados</span></div>
+      <div class="st1"><div><span>Fase 1</span><span class="ok">Protótipo pronto</span></div><div><span>Fase 2</span><span class="em">Em parte</span></div></div></div>
+    <div class="et"><span class="ib"><svg class="ic"><use href="#i-code"/></svg></span><h4>4 · Construir</h4><p>Tarefas e código, ligado ao servidor.</p>
+      <div class="pills"><span class="pl pa">Coord. de Tarefas</span><span class="pl pa">Programador</span></div>
+      <div class="st1"><div><span>Fase 1</span><span class="em">Próximo passo</span></div><div><span>Fase 2</span><span class="af">A fazer</span></div></div></div>
+    <div class="et"><span class="ib"><svg class="ic"><use href="#i-check"/></svg></span><h4>5 · Testar</h4><p>Falhas, permissões e uso real com a equipe.</p>
+      <div class="pills"><span class="pl pa">Controle de Qualidade</span></div>
+      <div class="st1"><div><span>Fase 1</span><span class="em">Análise feita</span></div><div><span>Fase 2</span><span class="af">A fazer</span></div></div></div>
+    <div class="et"><span class="ib"><svg class="ic"><use href="#i-rocket"/></svg></span><h4>6 · Publicar</h4><p>Site e sistema no ar, com instruções.</p>
+      <div class="pills"><span class="pl pa">Expedição</span></div>
+      <div class="st1"><div><span>Fase 1</span><span class="af">A fazer</span></div><div><span>Fase 2</span><span class="af">A fazer</span></div></div></div>
+  </div>
+  <p class="nota"><b>Leitura rápida:</b> a Fase 1 já passou por descobrir, planejar e desenhar (protótipo com dados de exemplo) e teve a primeira análise de qualidade. O próximo passo é construir de verdade, ligando ao servidor com login real. A Fase 2 está planejada e começa a ser desenhada depois que a Fase 1 estiver no ar.</p>
+</section>
+</div>
+</body>
+</html>
